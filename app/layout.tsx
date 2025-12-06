@@ -39,8 +39,6 @@ export default function RootLayout({
           colorShimmer: "rgba(255, 255, 255, 0.1)",
           colorTextSecondary: "#f8fafc",
           colorTextOnPrimaryBackground: "#ffffff",
-          colorTextOnDangerBackground: "#ffffff",
-          colorTextOnSuccessBackground: "#ffffff",
         },
         elements: {
           userButtonPopoverCard: {
