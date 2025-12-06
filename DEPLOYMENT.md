@@ -7,7 +7,7 @@ This guide will help you deploy your Kraken Elite Fitness app to Vercel for free
 1. A GitHub account (free)
 2. A Vercel account (free) - sign up at [vercel.com](https://vercel.com)
 3. Your Neon database connection string
-4. Your Clerk authentication keys
+4. A secure NEXTAUTH_SECRET
 
 ## Step-by-Step Deployment
 
@@ -55,12 +55,6 @@ vercel login
 vercel
 
 # Follow the prompts
-# - Set up and deploy? Yes
-# - Which scope? Your account
-# - Link to existing project? No
-# - Project name? kraken-example (or your choice)
-# - Directory? ./
-# - Override settings? No
 ```
 
 ### 3. Configure Environment Variables
@@ -78,41 +72,25 @@ DATABASE_URL=postgresql://user:password@ep-xxx-xxx.region.aws.neon.tech/dbname?s
 ```
 
 ```
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+NEXTAUTH_SECRET=your-generated-secret-key-here
 ```
 
 ```
-CLERK_SECRET_KEY=sk_test_...
-```
-
-#### Optional Variables (if you have them):
-
-```
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
+NEXTAUTH_URL=https://your-app.vercel.app
 ```
 
 **Important:**
 - Add these for **Production**, **Preview**, and **Development** environments
 - After adding variables, you need to **redeploy** for them to take effect
+- Generate `NEXTAUTH_SECRET` using: `openssl rand -base64 32`
 
-### 4. Update Clerk Settings
-
-1. Go to your [Clerk Dashboard](https://dashboard.clerk.com)
-2. Navigate to your application
-3. Go to "Domains" or "Settings"
-4. Add your Vercel domain to allowed domains:
-   - Production: `your-app.vercel.app`
-   - Custom domain (if you add one later)
-
-### 5. Deploy Database Schema
+### 4. Deploy Database Schema
 
 After deployment, you need to push your database schema:
 
 ```bash
 # Option 1: Run locally (recommended for first time)
+# Make sure you have DATABASE_URL in your local .env.local
 npm run db:push
 
 # Option 2: Use Vercel CLI to run commands
@@ -120,22 +98,30 @@ vercel env pull .env.local  # Pull env vars locally
 npm run db:push
 ```
 
+### 5. Create Manager User
+
+After deploying, create a manager user in your database. See [README-DATABASE.md](./README-DATABASE.md) for instructions.
+
+**Important:** When creating a manager user directly in the database, make sure to set `approved: true` in the SQL INSERT statement.
+
 ### 6. Verify Deployment
 
 1. Visit your Vercel URL: `https://your-app.vercel.app`
 2. Test the application:
-   - Sign in with Clerk
+   - Register a new user
+   - Sign in
    - Create a profile
    - Make a reservation
    - Add a personal record
+   - Test manager features (if you created a manager account)
 
 ## Post-Deployment Checklist
 
 - [ ] Environment variables are set in Vercel
 - [ ] Database schema is pushed (`npm run db:push`)
-- [ ] Clerk domain is configured
+- [ ] Manager user is created in database
 - [ ] App is accessible at Vercel URL
-- [ ] Authentication works
+- [ ] Authentication works (register/login)
 - [ ] Database connections work
 - [ ] All features are functional
 
@@ -148,19 +134,28 @@ If you see "DATABASE_URL env var is not set":
 2. Ensure `DATABASE_URL` is added for all environments
 3. Redeploy after adding variables
 
-### Clerk Authentication Issues
+### NextAuth Issues
 
 If sign-in doesn't work:
-1. Check Clerk dashboard → Allowed domains
-2. Add your Vercel domain
-3. Verify environment variables are set correctly
+1. Check that `NEXTAUTH_SECRET` is set and is a secure random string
+2. Verify `NEXTAUTH_URL` matches your Vercel domain
+3. Ensure environment variables are set correctly
+4. Check browser console for errors
 
 ### Build Errors
 
 If build fails:
 1. Check build logs in Vercel dashboard
 2. Ensure all dependencies are in `package.json`
-3. Check for TypeScript errors locally first
+3. Check for TypeScript errors locally first: `npm run build`
+
+### Database Schema Issues
+
+If database operations fail:
+1. Verify `DATABASE_URL` is correct
+2. Check Neon database is active (not paused)
+3. Run `npm run db:push` locally to ensure schema is up to date
+4. Check Neon dashboard for connection issues
 
 ## Free Tier Limits
 
@@ -194,10 +189,12 @@ git push
 1. In Vercel dashboard → Settings → Domains
 2. Add your custom domain
 3. Follow DNS configuration instructions
-4. Update Clerk allowed domains
+4. Update `NEXTAUTH_URL` environment variable to your custom domain
 
 ## Support
 
 - Vercel Docs: https://vercel.com/docs
 - Next.js Deployment: https://nextjs.org/docs/deployment
 - Neon Docs: https://neon.tech/docs
+- NextAuth.js Docs: https://next-auth.js.org
+

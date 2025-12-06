@@ -1,25 +1,61 @@
-import { auth } from "@clerk/nextjs/server";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/src/db";
 import { reservations, classSlots } from "@/src/db/schema";
 import { eq, and, sql } from "drizzle-orm";
 import { getOrCreateUser } from "@/src/lib/server/user";
+import { authOptions } from "@/src/lib/auth";
 
 export async function GET() {
   try {
-    const { userId } = await auth();
+    const session = await getServerSession(authOptions);
 
-    if (!userId) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userReservations = await db
+    const userId = parseInt(session.user.id);
+    const user = await getOrCreateUser(userId);
+
+    const now = new Date();
+    // Get start of current week (Monday)
+    const startOfWeek = new Date(now);
+    const dayOfWeek = startOfWeek.getDay();
+    const diff = startOfWeek.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust when day is Sunday
+    startOfWeek.setDate(diff);
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    // Get all reservations for the user
+    const allReservations = await db
       .select()
       .from(reservations)
-      .where(eq(reservations.clerkId, userId))
+      .where(eq(reservations.userId, user.id))
       .orderBy(reservations.date);
 
-    return NextResponse.json({ reservations: userReservations });
+    // Filter out past reservations (only keep current week and future)
+    const activeReservations = allReservations.filter((reservation) => {
+      const reservationDate = new Date(reservation.date);
+      return reservationDate >= startOfWeek;
+    });
+
+    // Delete old reservations (past week) in the background
+    const oldReservations = allReservations.filter((reservation) => {
+      const reservationDate = new Date(reservation.date);
+      return reservationDate < startOfWeek;
+    });
+
+    if (oldReservations.length > 0) {
+      // Delete old reservations asynchronously
+      Promise.all(
+        oldReservations.map((oldRes) =>
+          db.delete(reservations).where(eq(reservations.id, oldRes.id))
+        )
+      ).catch((error) => {
+        console.error("Error deleting old reservations:", error);
+      });
+    }
+
+    return NextResponse.json({ reservations: activeReservations });
   } catch (error) {
     console.error("Error fetching reservations:", error);
     return NextResponse.json(
@@ -31,10 +67,21 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const { userId } = await auth();
+    const session = await getServerSession(authOptions);
 
-    if (!userId) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const userId = parseInt(session.user.id);
+    const user = await getOrCreateUser(userId);
+
+    // Check if user is approved (managers are always approved)
+    if (user.role === "client" && !user.approved) {
+      return NextResponse.json(
+        { error: "Tu cuenta está pendiente de aprobación. Por favor espera a que el administrador apruebe tu cuenta." },
+        { status: 403 }
+      );
     }
 
     const body = await request.json();
@@ -53,7 +100,7 @@ export async function POST(request: NextRequest) {
       .from(reservations)
       .where(
         and(
-          eq(reservations.clerkId, userId),
+          eq(reservations.userId, user.id),
           eq(reservations.day, day),
           eq(reservations.time, time)
         )
@@ -120,16 +167,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get or create user record first
-    const user = await getOrCreateUser(userId);
-    
     // Calculate date from day and time
     const date = calculateDate(day, time);
 
     const newReservation = await db
       .insert(reservations)
       .values({
-        clerkId: userId,
         userId: user.id, // Properly linked to user table
         day,
         time,

@@ -16,7 +16,7 @@ async function verifyConnection() {
     if (userCount.length > 0) {
       console.log("   Sample users:");
       userCount.slice(0, 3).forEach((user) => {
-        console.log(`     - ${user.name} (${user.email}) - Clerk ID: ${user.clerkId}`);
+        console.log(`     - ${user.name} (${user.email}) - ID: ${user.id}`);
       });
     }
     console.log("");
@@ -107,10 +107,11 @@ async function verifyConnection() {
     console.log(`   Class Slots: ${slotCount.length}`);
     console.log("\n🎉 Database connection is working correctly!");
     console.log("\n💡 To see data, use the app and:");
-    console.log("   1. Sign in with Clerk");
-    console.log("   2. Create a profile");
-    console.log("   3. Add personal records");
-    console.log("   4. Make reservations");
+    console.log("   1. Register a new account at /register");
+    console.log("   2. Sign in at /login");
+    console.log("   3. Create a profile");
+    console.log("   4. Add personal records");
+    console.log("   5. Make reservations");
 
     process.exit(0);
   } catch (error: any) {

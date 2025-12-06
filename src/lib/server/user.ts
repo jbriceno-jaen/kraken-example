@@ -1,51 +1,44 @@
 import { db } from "@/src/db";
 import { users } from "@/src/db/schema";
 import { eq } from "drizzle-orm";
-import { currentUser } from "@clerk/nextjs/server";
 
 /**
- * Gets or creates a user record in the database from Clerk ID
+ * Gets or creates a user record in the database
  * This ensures all users have a proper database record that can be referenced
  * 
- * @param clerkId - The Clerk user ID
+ * @param userId - The user ID (from NextAuth session)
  * @returns The user record from the database
  */
-export async function getOrCreateUser(clerkId: string) {
-  // First, try to find existing user
+export async function getOrCreateUser(userId: string | number) {
+  const userIdNum = typeof userId === "string" ? parseInt(userId) : userId;
+  
+  if (isNaN(userIdNum)) {
+    throw new Error("Invalid user ID");
+  }
+
+  // Try to find existing user
   const existingUser = await db
     .select()
     .from(users)
-    .where(eq(users.clerkId, clerkId))
+    .where(eq(users.id, userIdNum))
     .limit(1);
 
   if (existingUser.length > 0) {
     return existingUser[0];
   }
 
-  // If user doesn't exist, get info from Clerk and create it
-  const clerkUser = await currentUser();
-  
-  if (!clerkUser) {
-    throw new Error("Clerk user not found");
-  }
+  throw new Error("User not found");
+}
 
-  // Extract name and email from Clerk user
-  const name = clerkUser.firstName && clerkUser.lastName
-    ? `${clerkUser.firstName} ${clerkUser.lastName}`
-    : clerkUser.firstName || clerkUser.lastName || clerkUser.username || "User";
-  
-  const email = clerkUser.emailAddresses[0]?.emailAddress || `${clerkId}@unknown.com`;
+/**
+ * Get user by email
+ */
+export async function getUserByEmail(email: string) {
+  const user = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
 
-  // Create new user in database
-  const [newUser] = await db
-    .insert(users)
-    .values({
-      clerkId,
-      name,
-      email,
-      age: 0, // Default age, can be updated later
-    })
-    .returning();
-
-  return newUser;
+  return user.length > 0 ? user[0] : null;
 }

@@ -1,22 +1,26 @@
-import { auth } from "@clerk/nextjs/server";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/src/db";
 import { personalRecords } from "@/src/db/schema";
 import { eq } from "drizzle-orm";
 import { getOrCreateUser } from "@/src/lib/server/user";
+import { authOptions } from "@/src/lib/auth";
 
 export async function GET() {
   try {
-    const { userId } = await auth();
+    const session = await getServerSession(authOptions);
 
-    if (!userId) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    const userId = parseInt(session.user.id);
+    const user = await getOrCreateUser(userId);
 
     const records = await db
       .select()
       .from(personalRecords)
-      .where(eq(personalRecords.clerkId, userId))
+      .where(eq(personalRecords.userId, user.id))
       .orderBy(personalRecords.createdAt);
 
     return NextResponse.json({ records });
@@ -31,11 +35,14 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const { userId } = await auth();
+    const session = await getServerSession(authOptions);
 
-    if (!userId) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    const userId = parseInt(session.user.id);
+    const user = await getOrCreateUser(userId);
 
     const body = await request.json();
     const { exercise, weight } = body;
@@ -47,13 +54,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get or create user record first
-    const user = await getOrCreateUser(userId);
-
     const newRecord = await db
       .insert(personalRecords)
       .values({
-        clerkId: userId,
         userId: user.id, // Properly linked to user table
         exercise: exercise.trim(),
         weight: weight.trim(),

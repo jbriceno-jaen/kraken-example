@@ -45,15 +45,15 @@ export default function SchedulePreview() {
       </div>
 
       <Card className="border border-white/10 bg-black/50 p-4 sm:p-6 transition-all duration-300 hover:border-red-500/20">
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2.5 sm:gap-2">
           {tabs.map((tab) => (
             <Button
               key={tab}
               variant={tab === active ? "default" : "outline"}
-              className={`h-9 rounded-full border-white/20 text-sm transition-all duration-200 ${
+              className={`min-h-[44px] sm:min-h-0 h-10 sm:h-9 rounded-full border-white/20 text-sm sm:text-xs transition-all duration-200 active:scale-95 ${
                 tab === active
                   ? "bg-red-500 text-white shadow-lg shadow-red-500/30"
-                  : "text-white hover:bg-white/10 hover:border-red-500/30"
+                  : "text-white active:bg-white/10 active:border-red-500/30"
               }`}
               onClick={() => setActive(tab)}
             >

@@ -1,19 +1,24 @@
-import { auth } from "@clerk/nextjs/server";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/src/db";
 import { reservations } from "@/src/db/schema";
 import { eq, and } from "drizzle-orm";
+import { getOrCreateUser } from "@/src/lib/server/user";
+import { authOptions } from "@/src/lib/auth";
 
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { userId } = await auth();
+    const session = await getServerSession(authOptions);
 
-    if (!userId) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    const userId = parseInt(session.user.id);
+    const user = await getOrCreateUser(userId);
 
     const { id } = await params;
     const reservationId = parseInt(id);
@@ -29,7 +34,7 @@ export async function DELETE(
       .where(
         and(
           eq(reservations.id, reservationId),
-          eq(reservations.clerkId, userId)
+          eq(reservations.userId, user.id)
         )
       )
       .limit(1);
@@ -43,7 +48,7 @@ export async function DELETE(
       .where(
         and(
           eq(reservations.id, reservationId),
-          eq(reservations.clerkId, userId)
+          eq(reservations.userId, user.id)
         )
       );
 
