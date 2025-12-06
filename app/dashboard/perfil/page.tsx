@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/toast";
 import { DatePicker } from "@/components/ui/date-picker";
-import { formatDateLocal } from "@/lib/utils";
+import { formatDateLocal, parseDateLocal } from "@/lib/utils";
 
 export default function PerfilPage() {
   const { data: session, status } = useSession();
@@ -42,6 +42,7 @@ export default function PerfilPage() {
     confirmPassword: "",
   });
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [subscriptionExpires, setSubscriptionExpires] = useState<string | null>(null);
 
   const fetchProfile = async () => {
     try {
@@ -54,7 +55,9 @@ export default function PerfilPage() {
         if (profileData) {
           let dateOfBirthFormatted = "";
           if (profileData.dateOfBirth) {
-            const date = new Date(profileData.dateOfBirth);
+            const date = parseDateLocal(profileData.dateOfBirth instanceof Date 
+              ? formatDateLocal(profileData.dateOfBirth) 
+              : profileData.dateOfBirth.toString());
             if (!isNaN(date.getTime())) {
               dateOfBirthFormatted = formatDateLocal(date);
             }
@@ -86,6 +89,7 @@ export default function PerfilPage() {
       if (userRes.ok) {
         const userData = await userRes.json();
         setProfileImage(userData.image || null);
+        setSubscriptionExpires(userData.subscriptionExpires || null);
       }
     } catch (error) {
       console.error("Error fetching profile:", error);
@@ -128,7 +132,9 @@ export default function PerfilPage() {
           
           let dateOfBirthFormatted = "";
           if (updatedProfile.dateOfBirth) {
-            const date = new Date(updatedProfile.dateOfBirth);
+            const date = parseDateLocal(updatedProfile.dateOfBirth instanceof Date 
+              ? formatDateLocal(updatedProfile.dateOfBirth) 
+              : updatedProfile.dateOfBirth.toString());
             if (!isNaN(date.getTime())) {
               dateOfBirthFormatted = formatDateLocal(date);
             }
@@ -167,7 +173,9 @@ export default function PerfilPage() {
         if (profileData) {
           let dateOfBirthFormatted = "";
           if (profileData.dateOfBirth) {
-            const date = new Date(profileData.dateOfBirth);
+            const date = parseDateLocal(profileData.dateOfBirth instanceof Date 
+              ? formatDateLocal(profileData.dateOfBirth) 
+              : profileData.dateOfBirth.toString());
             if (!isNaN(date.getTime())) {
               dateOfBirthFormatted = formatDateLocal(date);
             }
@@ -374,9 +382,26 @@ export default function PerfilPage() {
           <Badge variant="secondary" className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
             Perfil
           </Badge>
-          <h3 className="mt-4 text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
-            Actualiza tus datos
-          </h3>
+          <div className="flex items-center gap-3 flex-wrap mt-4">
+            <h3 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
+              Actualiza tus datos
+            </h3>
+            {subscriptionExpires && (() => {
+              const expires = new Date(subscriptionExpires);
+              const now = new Date();
+              const diffTime = expires.getTime() - now.getTime();
+              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+              
+              if (diffDays < 0) {
+                return (
+                  <Badge className="bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)] text-xs">
+                    Suscripción Vencida
+                  </Badge>
+                );
+              }
+              return null;
+            })()}
+          </div>
           <p className="text-sm text-zinc-300 mt-2">
             Mantén tu información y objetivos al día para tus coach.
           </p>

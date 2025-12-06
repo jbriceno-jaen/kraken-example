@@ -281,7 +281,7 @@ export default function PRsPage() {
                         <Button
                           onClick={handleSaveEdit}
                           size="sm"
-                          className="flex-1 min-h-[40px] bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
+                          className="flex-1 min-h-[40px] bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg shadow-red-500/50 active:scale-[0.98] transition-all duration-200"
                         >
                           <Check className="mr-2 size-4" />
                           Guardar

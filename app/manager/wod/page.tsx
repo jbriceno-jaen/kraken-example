@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/toast";
 import { WODModal } from "@/components/manager/wod-modal";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { formatDateLocal } from "@/lib/utils";
+import { formatDateLocal, parseDateLocal } from "@/lib/utils";
 
 interface WOD {
   id: number;
@@ -136,7 +136,7 @@ export default function WODPage() {
         <div className="space-y-3">
           {wodList.length > 0 ? (
             wodList.map((wod) => {
-              const wodDate = new Date(wod.date);
+              const wodDate = parseDateLocal(wod.date);
               const isToday = wodDate.toDateString() === new Date().toDateString();
               return (
                 <Card
@@ -236,21 +236,23 @@ export default function WODPage() {
           </DialogHeader>
           <div className="flex gap-3 mt-4">
             <Button
-              onClick={handleConfirmDeleteWOD}
-              disabled={isDeletingWod}
-              className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 min-h-[48px]"
-            >
-              {isDeletingWod ? "Eliminando..." : "Eliminar"}
-            </Button>
-            <Button
+              type="button"
+              variant="outline"
               onClick={() => {
                 setShowDeleteWodConfirm(false);
                 setWodToDelete(null);
               }}
-              variant="outline"
-              className="flex-1 border-red-500/30 min-h-[48px]"
+              className="flex-1 border-zinc-500/40 bg-zinc-500/10 text-zinc-300 hover:bg-zinc-500/20 hover:border-zinc-500/50 active:scale-[0.98] transition-all duration-200 min-h-[48px]"
             >
               Cancelar
+            </Button>
+            <Button
+              type="button"
+              onClick={handleConfirmDeleteWOD}
+              disabled={isDeletingWod}
+              className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 active:scale-[0.98] transition-all duration-200 min-h-[48px] disabled:opacity-50"
+            >
+              {isDeletingWod ? "Eliminando..." : "Eliminar"}
             </Button>
           </div>
         </DialogContent>

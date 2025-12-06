@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import { Menu, X, LogOut, User, Settings, CalendarClock, Trophy, Dumbbell } from "lucide-react";
+import { Menu, X, LogOut, User, Settings, CalendarClock, Trophy, Dumbbell, Users, Clock, Home } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -27,6 +29,7 @@ const links = [
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
@@ -93,19 +96,100 @@ export default function Navbar() {
           <span className="text-lg font-bold font-[family-name:var(--font-orbitron)] group-hover:text-red-400 transition-colors">Elite Fitness</span>
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium text-zinc-300 sm:flex">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="py-2 transition-all duration-300 hover:text-white active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 hover:after:w-full font-[family-name:var(--font-orbitron)]"
-            >
-              {link.label}
-            </a>
-          ))}
-          {session && (
-            <Link href="/dashboard" className="py-2 transition-all duration-300 hover:text-red-400 active:scale-95 font-[family-name:var(--font-orbitron)] relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 hover:after:w-full">
-              Dashboard
-            </Link>
+          {session ? (
+            <>
+              {session.user?.role === "manager" ? (
+                <>
+                  <Link 
+                    href="/manager/usuarios" 
+                    className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
+                      pathname === "/manager/usuarios" 
+                        ? "text-red-400 font-semibold after:w-full animate-pulse" 
+                        : "hover:text-white after:w-0 hover:after:w-full"
+                    }`}
+                  >
+                    Usuarios
+                  </Link>
+                  <Link 
+                    href="/manager/wod" 
+                    className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
+                      pathname === "/manager/wod" 
+                        ? "text-red-400 font-semibold after:w-full animate-pulse" 
+                        : "hover:text-white after:w-0 hover:after:w-full"
+                    }`}
+                  >
+                    WOD
+                  </Link>
+                  <Link 
+                    href="/manager/clases" 
+                    className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
+                      pathname === "/manager/clases" 
+                        ? "text-red-400 font-semibold after:w-full animate-pulse" 
+                        : "hover:text-white after:w-0 hover:after:w-full"
+                    }`}
+                  >
+                    Clases
+                  </Link>
+                  <Link 
+                    href="/manager/horarios" 
+                    className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
+                      pathname === "/manager/horarios" 
+                        ? "text-red-400 font-semibold after:w-full animate-pulse" 
+                        : "hover:text-white after:w-0 hover:after:w-full"
+                    }`}
+                  >
+                    Horarios
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link 
+                    href="/dashboard/reservas" 
+                    className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
+                      pathname === "/dashboard/reservas" 
+                        ? "text-red-400 font-semibold after:w-full animate-pulse" 
+                        : "hover:text-white after:w-0 hover:after:w-full"
+                    }`}
+                  >
+                    Reservas
+                  </Link>
+                  <Link 
+                    href="/dashboard/prs" 
+                    className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
+                      pathname === "/dashboard/prs" 
+                        ? "text-red-400 font-semibold after:w-full animate-pulse" 
+                        : "hover:text-white after:w-0 hover:after:w-full"
+                    }`}
+                  >
+                    Mis PR's
+                  </Link>
+                  {userData?.wodEnabled && (
+                    <Link 
+                      href="/dashboard/programacion" 
+                      className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
+                        pathname === "/dashboard/programacion" 
+                          ? "text-red-400 font-semibold after:w-full animate-pulse" 
+                          : "hover:text-white after:w-0 hover:after:w-full"
+                      }`}
+                    >
+                      Programación
+                    </Link>
+                  )}
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              {links.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="py-2 transition-all duration-300 hover:text-white active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 hover:after:w-full font-[family-name:var(--font-orbitron)]"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </>
           )}
         </nav>
         <div className="flex items-center gap-3">
@@ -157,7 +241,24 @@ export default function Navbar() {
                     </div>
                     {userData?.subscriptionExpires && (
                       <div className="pt-2 border-t border-white/10">
-                        <p className="text-xs text-zinc-400">Suscripción</p>
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="text-xs text-zinc-400">Suscripción</p>
+                          {(() => {
+                            const expires = new Date(userData.subscriptionExpires);
+                            const now = new Date();
+                            const diffTime = expires.getTime() - now.getTime();
+                            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                            
+                            if (diffDays < 0) {
+                              return (
+                                <Badge className="bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)] text-xs px-2 py-0.5">
+                                  Vencido
+                                </Badge>
+                              );
+                            }
+                            return null;
+                          })()}
+                        </div>
                         <p className="text-xs text-white">
                           {(() => {
                             const expires = new Date(userData.subscriptionExpires);
@@ -179,44 +280,151 @@ export default function Navbar() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-white/10" />
-                <DropdownMenuItem asChild>
-                  <Link
-                    href="/dashboard/reservas"
-                    className="flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10"
-                  >
-                    <CalendarClock className="mr-2 size-4" />
-                    Reservas
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link
-                    href="/dashboard/perfil"
-                    className="flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10"
-                  >
-                    <Settings className="mr-2 size-4" />
-                    Editar Perfil
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link
-                    href="/dashboard/prs"
-                    className="flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10"
-                  >
-                    <Trophy className="mr-2 size-4" />
-                    Mis PR's
-                  </Link>
-                </DropdownMenuItem>
-                {userData?.wodEnabled && (
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href="/dashboard/programacion"
-                      className="flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10"
-                    >
-                      <Dumbbell className="mr-2 size-4" />
-                      Programación
-                    </Link>
-                  </DropdownMenuItem>
+                {session?.user?.role === "manager" ? (
+                  <>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/manager/usuarios"
+                        className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
+                          pathname === "/manager/usuarios" ? "bg-red-500/20 text-red-400" : ""
+                        }`}
+                      >
+                        <Users className="mr-2 size-4" />
+                        Usuarios
+                        {pathname === "/manager/usuarios" && (
+                          <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
+                        )}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/manager/wod"
+                        className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
+                          pathname === "/manager/wod" ? "bg-red-500/20 text-red-400" : ""
+                        }`}
+                      >
+                        <Dumbbell className="mr-2 size-4" />
+                        WOD del Día
+                        {pathname === "/manager/wod" && (
+                          <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
+                        )}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/manager/clases"
+                        className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
+                          pathname === "/manager/clases" ? "bg-red-500/20 text-red-400" : ""
+                        }`}
+                      >
+                        <CalendarClock className="mr-2 size-4" />
+                        Clases
+                        {pathname === "/manager/clases" && (
+                          <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
+                        )}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/manager/horarios"
+                        className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
+                          pathname === "/manager/horarios" ? "bg-red-500/20 text-red-400" : ""
+                        }`}
+                      >
+                        <Clock className="mr-2 size-4" />
+                        Horarios
+                        {pathname === "/manager/horarios" && (
+                          <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
+                        )}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/dashboard/perfil"
+                        className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
+                          pathname === "/dashboard/perfil" ? "bg-red-500/20 text-red-400" : ""
+                        }`}
+                      >
+                        <Settings className="mr-2 size-4" />
+                        Editar Perfil
+                        {pathname === "/dashboard/perfil" && (
+                          <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
+                        )}
+                      </Link>
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/dashboard/reservas"
+                        className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
+                          pathname === "/dashboard/reservas" ? "bg-red-500/20 text-red-400" : ""
+                        }`}
+                      >
+                        <CalendarClock className="mr-2 size-4" />
+                        Reservas
+                        {pathname === "/dashboard/reservas" && (
+                          <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
+                        )}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/dashboard/perfil"
+                        className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
+                          pathname === "/dashboard/perfil" ? "bg-red-500/20 text-red-400" : ""
+                        }`}
+                      >
+                        <Settings className="mr-2 size-4" />
+                        Editar Perfil
+                        {pathname === "/dashboard/perfil" && (
+                          <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
+                        )}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/dashboard/prs"
+                        className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
+                          pathname === "/dashboard/prs" ? "bg-red-500/20 text-red-400" : ""
+                        }`}
+                      >
+                        <Trophy className="mr-2 size-4" />
+                        Mis PR's
+                        {pathname === "/dashboard/prs" && (
+                          <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
+                        )}
+                      </Link>
+                    </DropdownMenuItem>
+                    {userData?.wodEnabled && (
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/dashboard/programacion"
+                          className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
+                            pathname === "/dashboard/programacion" ? "bg-red-500/20 text-red-400" : ""
+                          }`}
+                        >
+                          <Dumbbell className="mr-2 size-4" />
+                          Programación
+                          {pathname === "/dashboard/programacion" && (
+                            <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
+                          )}
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
+                  </>
                 )}
+                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuItem asChild>
+                  <Link
+                    href="/"
+                    className="flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10"
+                  >
+                    <Home className="mr-2 size-4" />
+                    Volver al Inicio
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-white/10" />
                 <DropdownMenuItem
                   onClick={handleSignOut}
@@ -228,16 +436,18 @@ export default function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
           )}
-          <button
-            aria-label="Toggle navigation"
-            onClick={toggle}
-            className="flex size-11 items-center justify-center rounded-lg border border-white/15 text-white active:scale-95 active:bg-white/5 transition-all sm:hidden min-w-[44px] min-h-[44px]"
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
+          {!session && (
+            <button
+              aria-label="Toggle navigation"
+              onClick={toggle}
+              className="flex size-11 items-center justify-center rounded-lg border border-white/15 text-white active:scale-95 active:bg-white/5 transition-all sm:hidden min-w-[44px] min-h-[44px]"
+            >
+              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          )}
         </div>
       </div>
-      {open && (
+      {open && !session && (
         <div className="sm:hidden border-t border-white/10 bg-black/95 backdrop-blur-xl">
           <div className="mx-4 my-4 space-y-2 rounded-2xl border border-white/10 bg-black/80 p-4 text-sm text-zinc-200 shadow-lg">
             {links.map((link) => (

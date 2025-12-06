@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/toast";
 import { UserPlus, X } from "lucide-react";
-import { formatDateLocal } from "@/lib/utils";
+import { formatDateLocal, parseDateLocal } from "@/lib/utils";
 
 interface User {
   id: number;
@@ -42,7 +42,7 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
   useEffect(() => {
     if (editingUser) {
       const days = editingUser.subscriptionExpires
-        ? Math.ceil((new Date(editingUser.subscriptionExpires).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+        ? Math.ceil((parseDateLocal(editingUser.subscriptionExpires).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
         : 0;
       setFormData({
         name: editingUser.name,
@@ -247,22 +247,73 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
                   className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                 />
                 <p className="text-xs text-zinc-500">Dejar vacío para sin suscripción</p>
-                {calculatedEndDate && (
-                  <div className="mt-2 p-3 rounded-lg border border-green-500/20 bg-green-500/10">
-                    <p className="text-xs text-green-400 font-[family-name:var(--font-orbitron)] font-semibold mb-1">
-                      Fecha de expiración calculada:
-                    </p>
-                    <p className="text-sm text-green-300 font-[family-name:var(--font-orbitron)]">
-                      {new Date(calculatedEndDate).toLocaleDateString("es-ES", {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </p>
-                  </div>
-                )}
+                {calculatedEndDate && (() => {
+                  const endDate = parseDateLocal(calculatedEndDate);
+                  const now = new Date();
+                  const diffTime = endDate.getTime() - now.getTime();
+                  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                  
+                  let borderColor = "border-green-500/20";
+                  let bgColor = "bg-green-500/10";
+                  let textColor = "text-green-400";
+                  let textColorSecondary = "text-green-300";
+                  
+                  if (diffDays < 0) {
+                    // Expired - Red
+                    borderColor = "border-red-500/30";
+                    bgColor = "bg-red-500/10";
+                    textColor = "text-red-400";
+                    textColorSecondary = "text-red-300";
+                  } else if (diffDays <= 5) {
+                    // Expiring soon (5 days or less) - Yellow
+                    borderColor = "border-yellow-500/30";
+                    bgColor = "bg-yellow-500/10";
+                    textColor = "text-yellow-400";
+                    textColorSecondary = "text-yellow-300";
+                  }
+                  // More than 5 days - Green (default)
+                  
+                  return (
+                    <div className={`mt-2 p-3 rounded-lg border ${borderColor} ${bgColor}`}>
+                      <p className={`text-xs ${textColor} font-[family-name:var(--font-orbitron)] font-semibold mb-1`}>
+                        Fecha de expiración calculada:
+                      </p>
+                      <p className={`text-sm ${textColorSecondary} font-[family-name:var(--font-orbitron)]`}>
+                        {endDate.toLocaleDateString("es-ES", {
+                          weekday: "long",
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </p>
+                    </div>
+                  );
+                })()}
               </div>
+
+              {editingUser && editingUser.subscriptionExpires && (() => {
+                const expires = new Date(editingUser.subscriptionExpires);
+                const now = new Date();
+                const diffTime = expires.getTime() - now.getTime();
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const isExpired = diffDays < 0;
+                
+                if (isExpired) {
+                  return (
+                    <div className="mb-3 p-3 rounded-lg border border-red-500/30 bg-red-500/10">
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)] text-xs">
+                          Suscripción Vencida
+                        </Badge>
+                        <p className="text-xs text-red-400 font-[family-name:var(--font-orbitron)]">
+                          La suscripción de este usuario ha expirado
+                        </p>
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              })()}
 
               <div className="flex items-center gap-3">
                 <input
@@ -273,7 +324,7 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
                   className="w-5 h-5 rounded border-red-500/20 bg-white/5 text-red-500 focus:ring-2 focus:ring-red-500/20"
                 />
                 <label htmlFor="wodEnabled" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Habilitar WOD para este cliente
+                  Habilitar PRO (Programación) para este cliente
                 </label>
               </div>
             </>

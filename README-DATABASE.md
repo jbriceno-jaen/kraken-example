@@ -116,6 +116,7 @@ El sistema utiliza las siguientes tablas:
 - **class_slots**: Horarios disponibles de clases
 - **workout_of_day**: Workout del día (WOD)
 - **class_attendees**: Asignación de usuarios a clases específicas
+- **password_reset_tokens**: Tokens para restablecimiento de contraseña (expiran después de 1 hora)
 
 ## Scripts Disponibles
 

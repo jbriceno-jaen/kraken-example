@@ -79,7 +79,7 @@ export async function GET() {
           );
         
         const currentReservations = Number(reservationResults[0]?.count || 0);
-        const isAvailable = slot.available && currentReservations < slot.capacity;
+        // Keep the original available status from the slot, don't override it
         const spotsRemaining = Math.max(0, slot.capacity - currentReservations);
         
         return {
@@ -87,7 +87,7 @@ export async function GET() {
           day: slot.day,
           time: slot.time,
           capacity: slot.capacity,
-          available: isAvailable,
+          available: slot.available, // Use the actual available status from database
           spotsRemaining,
           currentReservations,
         };

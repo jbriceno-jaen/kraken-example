@@ -30,21 +30,28 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
     setIsLoading(true);
 
     try {
-      // TODO: Implement actual password reset email sending
-      // For now, we'll just show a success message
-      // In production, you would send an email with a reset link
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setIsSuccess(true);
-      showToast("Si el correo existe, recibirás instrucciones para restablecer tu contraseña.", "info");
-      
-      setTimeout(() => {
-        onOpenChange(false);
-        setIsSuccess(false);
-        setEmail("");
-      }, 3000);
+      const response = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsSuccess(true);
+        showToast(data.message || "Si el correo existe, recibirás instrucciones para restablecer tu contraseña.", "info");
+        
+        setTimeout(() => {
+          onOpenChange(false);
+          setIsSuccess(false);
+          setEmail("");
+        }, 3000);
+      } else {
+        showToast(data.error || "Error al procesar la solicitud. Por favor intenta de nuevo.", "error");
+      }
     } catch (error) {
       console.error("Forgot password error:", error);
       showToast("Error al procesar la solicitud. Por favor intenta de nuevo.", "error");

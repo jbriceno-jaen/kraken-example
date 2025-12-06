@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/toast";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import {
   days,
@@ -35,7 +36,32 @@ export default function ReservasPage() {
   const [selectedTime, setSelectedTime] = useState(earliestTime);
   const [bookings, setBookings] = useState<Array<{ day: string; time: string; id?: number }>>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingSlots, setLoadingSlots] = useState(false);
   const [slotCounts, setSlotCounts] = useState<Record<string, { current: number; capacity: number; available: boolean }>>({});
+
+  const fetchSlots = async () => {
+    try {
+      setLoadingSlots(true);
+      const slotsRes = await fetch("/api/class-slots");
+      if (slotsRes.ok) {
+        const { slots } = await slotsRes.json();
+        const countsMap: Record<string, { current: number; capacity: number; available: boolean }> = {};
+        slots.forEach((slot: { day: string; time: string; currentReservations: number; capacity: number; available: boolean }) => {
+          const key = `${slot.day}-${slot.time}`;
+          countsMap[key] = {
+            current: slot.currentReservations,
+            capacity: slot.capacity,
+            available: slot.available,
+          };
+        });
+        setSlotCounts(countsMap);
+      }
+    } catch (error) {
+      console.error("Error fetching slots:", error);
+    } finally {
+      setLoadingSlots(false);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -52,20 +78,7 @@ export default function ReservasPage() {
         setBookings(filteredReservations.map((r: { day: string; time: string; id: number }) => ({ day: r.day, time: r.time, id: r.id })));
       }
 
-      const slotsRes = await fetch("/api/class-slots");
-      if (slotsRes.ok) {
-        const { slots } = await slotsRes.json();
-        const countsMap: Record<string, { current: number; capacity: number; available: boolean }> = {};
-        slots.forEach((slot: { day: string; time: string; currentReservations: number; capacity: number; available: boolean }) => {
-          const key = `${slot.day}-${slot.time}`;
-          countsMap[key] = {
-            current: slot.currentReservations,
-            capacity: slot.capacity,
-            available: slot.available,
-          };
-        });
-        setSlotCounts(countsMap);
-      }
+      await fetchSlots();
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -85,6 +98,25 @@ export default function ReservasPage() {
   }, [selectedDay]);
 
   const handleBook = async () => {
+    // Check if the slot is canceled
+    const slotKey = `${selectedDay}-${selectedTime}`;
+    const slotInfo = slotCounts[slotKey];
+    if (slotInfo && !slotInfo.available) {
+      showToast("Esta clase está cancelada. No se pueden realizar reservas.", "error");
+      return;
+    }
+    
+    // Check if the slot is full
+    if (slotInfo) {
+      const isFull = slotInfo.current >= slotInfo.capacity;
+      if (isFull) {
+        showToast("Este horario está lleno. No hay espacios disponibles.", "error");
+        // Refresh slots to get latest data
+        await fetchSlots();
+        return;
+      }
+    }
+    
     if (hasReservationForDay(selectedDay, bookings)) {
       showToast("Ya tienes una reserva para este día. Solo puedes reservar un horario por día.", "warning");
       return;
@@ -126,10 +158,8 @@ export default function ReservasPage() {
         });
         
         showToast(`Reserva creada exitosamente: ${selectedDay} | ${selectedTime}`, "success");
-        // Refresh data to show updated counts
-        setTimeout(() => {
-          fetchData();
-        }, 500);
+        // Refresh slots immediately to show updated counts and availability
+        await fetchSlots();
       } else {
         const error = await res.json();
         // Check if it's an approval error
@@ -173,10 +203,8 @@ export default function ReservasPage() {
           });
           
           showToast(`Reserva cancelada: ${day} | ${time}`, "success");
-          // Refresh data to show updated counts
-          setTimeout(() => {
-            fetchData();
-          }, 500);
+          // Refresh slots immediately to show updated counts and availability
+          await fetchSlots();
         } else {
           showToast("Error al cancelar la reserva", "error");
         }
@@ -187,10 +215,8 @@ export default function ReservasPage() {
     } else {
       setBookings(bookings.filter((b) => !(b.day === day && b.time === time)));
       showToast(`Reserva cancelada: ${day} | ${time}`, "success");
-      // Refresh data to show updated counts
-      setTimeout(() => {
-        fetchData();
-      }, 500);
+      // Refresh slots immediately to show updated counts and availability
+      await fetchSlots();
     }
   };
 
@@ -258,13 +284,6 @@ export default function ReservasPage() {
                     day !== selectedDay && !isDisabled && "active:border-red-500/50 active:scale-95",
                     isDisabled && "opacity-50 cursor-not-allowed"
                   )}
-                  title={
-                    isDisabled
-                      ? hasReservationForDay(day, bookings)
-                        ? "Ya tienes una reserva para este día"
-                        : "Solo puedes reservar para hoy o mañana"
-                      : undefined
-                  }
                 >
                   {day.slice(0, 3)}
                 </button>
@@ -281,15 +300,22 @@ export default function ReservasPage() {
             <div className="flex items-center justify-between mb-1">
               <p className="text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">Horarios</p>
               <div className="flex items-center gap-2">
-                <Button
-                  onClick={fetchData}
-                  variant="outline"
-                  size="sm"
-                  className="min-h-[36px] sm:min-h-[32px] border-blue-500/40 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 hover:border-blue-500/50 active:scale-[0.98] transition-all duration-200"
-                  title="Refrescar horarios"
-                >
-                  <RotateCw className="size-3.5 sm:size-3" />
-                </Button>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      onClick={fetchSlots}
+                      disabled={loadingSlots}
+                      variant="outline"
+                      size="sm"
+                      className="min-h-[36px] sm:min-h-[32px] border-blue-500/40 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 hover:border-blue-500/50 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <RotateCw className={cn("size-3.5 sm:size-3", loadingSlots && "animate-spin")} />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Refrescar horarios</p>
+                  </TooltipContent>
+                </Tooltip>
                 <div className="hidden items-center gap-2 rounded-full bg-red-500/20 border border-red-500/30 backdrop-blur-sm px-4 py-2 min-h-[36px] sm:min-h-[32px] text-xs font-semibold text-white font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 sm:flex">
                   <CalendarClock className="size-3.5 sm:size-3 text-red-400" />
                   Vista semanal
@@ -302,63 +328,93 @@ export default function ReservasPage() {
             </p>
           </div>
           <div className="grid gap-3 sm:gap-2 sm:grid-cols-2">
-            {times.map((time) => {
-              const isPassed = isTimeSlotPassed(selectedDay, time);
-              const slotKey = `${selectedDay}-${time}`;
-              const slotInfo = slotCounts[slotKey] || { current: 0, capacity: 14, available: true };
-              const isFull = slotInfo.current >= slotInfo.capacity;
-              const isDisabled = isPassed || isFull || !slotInfo.available;
-              const spotsRemaining = slotInfo.capacity - slotInfo.current;
-              
-              return (
-                <button
-                  key={time}
-                  onClick={() => !isDisabled && setSelectedTime(time)}
-                  disabled={isDisabled}
-                  className={cn(
-                    "flex items-center justify-between rounded-xl border transition-all duration-200 text-white",
-                    "px-4 py-3.5 sm:px-3 sm:py-2",
-                    "min-h-[56px] sm:min-h-0",
-                    "text-base sm:text-sm",
-                    "active:scale-[0.98]",
-                    time === selectedTime && !isDisabled
-                      ? "border-red-400 bg-red-500/10 shadow-md shadow-red-500/20"
-                      : !isDisabled
-                      ? "border-white/20 active:border-red-200/60 active:bg-white/5"
-                      : "border-white/10 bg-white/5 opacity-40 cursor-not-allowed"
-                  )}
-                  title={
-                    isDisabled
-                      ? isPassed
-                        ? "Este horario ya ha pasado"
-                        : isFull
-                        ? `Lleno (${slotInfo.current}/${slotInfo.capacity})`
-                        : "No disponible"
-                      : `${slotInfo.current}/${slotInfo.capacity} personas - ${spotsRemaining} lugares disponibles`
-                  }
-                >
+            {loadingSlots ? (
+              <div className="col-span-2 flex flex-col items-center justify-center py-12">
+                <div className="relative size-16">
+                  <div className="absolute inset-0 rounded-full border-4 border-red-500/20"></div>
+                  <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-red-500 animate-spin"></div>
+                </div>
+                <p className="mt-4 text-sm text-zinc-400 font-[family-name:var(--font-orbitron)]">Cargando horarios...</p>
+              </div>
+            ) : (
+              times
+                .filter((time) => {
+                  // Filter out canceled classes and deleted slots
+                  const slotKey = `${selectedDay}-${time}`;
+                  const slotInfo = slotCounts[slotKey];
+                  // Only show slots that exist in the database and are available
+                  return slotInfo && slotInfo.available;
+                })
+                .map((time) => {
+                  const isPassed = isTimeSlotPassed(selectedDay, time);
+                  const slotKey = `${selectedDay}-${time}`;
+                  const slotInfo = slotCounts[slotKey] || { current: 0, capacity: 14, available: true };
+                  const isFull = slotInfo.current >= slotInfo.capacity;
+                  const isDisabled = isPassed || isFull || !slotInfo.available;
+                  const spotsRemaining = slotInfo.capacity - slotInfo.current;
+                  
+                  const tooltipText = isDisabled
+                    ? isPassed
+                      ? "Este horario ya ha pasado"
+                      : !slotInfo.available
+                      ? "Clase cancelada"
+                      : isFull
+                      ? `Lleno (${slotInfo.current}/${slotInfo.capacity})`
+                      : "No disponible"
+                    : `${spotsRemaining} lugares disponibles`;
+
+                  return (
+                    <Tooltip key={time}>
+                      <TooltipTrigger asChild>
+                        <button
+                          onClick={() => !isDisabled && setSelectedTime(time)}
+                          disabled={isDisabled}
+                          className={cn(
+                            "flex items-center justify-between rounded-xl border transition-all duration-200 text-white",
+                            "px-4 py-3.5 sm:px-3 sm:py-2",
+                            "min-h-[56px] sm:min-h-0",
+                            "text-base sm:text-sm",
+                            "active:scale-[0.98]",
+                            time === selectedTime && !isDisabled
+                              ? "border-red-400 bg-red-500/10 shadow-md shadow-red-500/20"
+                              : !isDisabled
+                              ? "border-white/20 active:border-red-200/60 active:bg-white/5"
+                              : "border-white/10 bg-white/5 opacity-40 cursor-not-allowed"
+                          )}
+                        >
                   <div className="flex flex-col items-start">
                     <span>{time}</span>
-                    <span className="text-xs text-zinc-400 mt-0.5">
-                      {slotInfo.current}/{slotInfo.capacity} personas
-                    </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    {isFull ? (
-                      <span className="text-xs text-red-400 font-semibold">LLENO</span>
+                    {!slotInfo.available ? (
+                      <Badge className="bg-orange-500/20 border border-orange-500/30 text-orange-400 font-[family-name:var(--font-orbitron)] text-xs">
+                        Clase Cancelada
+                      </Badge>
+                    ) : isFull ? (
+                      <Badge className="bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)] text-xs">
+                        LLENO
+                      </Badge>
                     ) : (
                       <span className="text-xs text-green-400 font-semibold">
                         {spotsRemaining} disponibles
                       </span>
                     )}
-                    <div className="flex items-center gap-1">
-                      <Timer className="size-4" />
-                      <span className="text-xs text-zinc-400">1h</span>
-                    </div>
+                    {slotInfo.available && (
+                      <div className="flex items-center gap-1">
+                        <Timer className="size-4" />
+                        <span className="text-xs text-zinc-400">1h</span>
+                      </div>
+                    )}
                   </div>
-                </button>
-              );
-            })}
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{tooltipText}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  );
+                })
+            )}
           </div>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <Button
@@ -366,7 +422,14 @@ export default function ReservasPage() {
               disabled={
                 isMoreThanOneDayAhead(selectedDay) ||
                 hasReservationForDay(selectedDay, bookings) ||
-                isTimeSlotPassed(selectedDay, selectedTime)
+                isTimeSlotPassed(selectedDay, selectedTime) ||
+                (() => {
+                  const slotKey = `${selectedDay}-${selectedTime}`;
+                  const slotInfo = slotCounts[slotKey];
+                  if (!slotInfo) return false;
+                  const isFull = slotInfo.current >= slotInfo.capacity;
+                  return !slotInfo.available || isFull;
+                })()
               }
               className="w-full sm:w-auto min-h-[48px] sm:min-h-0 text-base sm:text-sm bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50"
             >
@@ -376,17 +439,31 @@ export default function ReservasPage() {
               <p className="text-xs text-zinc-400">
                 Toca un día y hora para añadirlos a tus reservas de la semana.
               </p>
-              {(isMoreThanOneDayAhead(selectedDay) ||
-                hasReservationForDay(selectedDay, bookings) ||
-                isTimeSlotPassed(selectedDay, selectedTime)) && (
-                <p className="text-xs text-red-400">
-                  {isMoreThanOneDayAhead(selectedDay)
-                    ? "Solo puedes reservar para hoy o mañana"
-                    : hasReservationForDay(selectedDay, bookings)
-                    ? "Ya tienes una reserva para este día"
-                    : "Este horario ya ha pasado"}
-                </p>
-              )}
+              {(() => {
+                const slotKey = `${selectedDay}-${selectedTime}`;
+                const slotInfo = slotCounts[slotKey];
+                const isCanceled = slotInfo && !slotInfo.available;
+                const isFull = slotInfo && slotInfo.current >= slotInfo.capacity;
+                const isDisabled = isMoreThanOneDayAhead(selectedDay) ||
+                  hasReservationForDay(selectedDay, bookings) ||
+                  isTimeSlotPassed(selectedDay, selectedTime) ||
+                  isCanceled ||
+                  isFull;
+                
+                return isDisabled && (
+                  <p className="text-xs text-red-400">
+                    {isCanceled
+                      ? "Esta clase está cancelada"
+                      : isFull
+                      ? "Este horario está lleno. No hay espacios disponibles."
+                      : isMoreThanOneDayAhead(selectedDay)
+                      ? "Solo puedes reservar para hoy o mañana"
+                      : hasReservationForDay(selectedDay, bookings)
+                      ? "Ya tienes una reserva para este día"
+                      : "Este horario ya ha pasado"}
+                  </p>
+                );
+              })()}
             </div>
           </div>
         </div>
@@ -432,28 +509,34 @@ export default function ReservasPage() {
                       <span className="text-xs text-zinc-500 mt-1">Ya pasó</span>
                     )}
                   </div>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    onClick={() => handleCancelBooking(booking.day, booking.time)}
-                    disabled={!canCancel || isPassed}
-                    className={cn(
-                      "text-red-400 active:text-red-300 active:bg-red-500/10",
-                      "min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0",
-                      "active:scale-95",
-                      (!canCancel || isPassed) && "opacity-50 cursor-not-allowed"
-                    )}
-                    aria-label={`Cancelar reserva ${booking.day} ${booking.time}`}
-                    title={
-                      !canCancel
-                        ? "No se puede cancelar con menos de 1 hora de anticipación"
-                        : isPassed
-                        ? "Esta reserva ya pasó"
-                        : "Cancelar reserva"
-                    }
-                  >
-                    <X className="size-5 sm:size-4" />
-                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        onClick={() => handleCancelBooking(booking.day, booking.time)}
+                        disabled={!canCancel || isPassed}
+                        className={cn(
+                          "text-red-400 active:text-red-300 active:bg-red-500/10",
+                          "min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0",
+                          "active:scale-95",
+                          (!canCancel || isPassed) && "opacity-50 cursor-not-allowed"
+                        )}
+                        aria-label={`Cancelar reserva ${booking.day} ${booking.time}`}
+                      >
+                        <X className="size-5 sm:size-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>
+                        {!canCancel
+                          ? "No se puede cancelar con menos de 1 hora de anticipación"
+                          : isPassed
+                          ? "Esta reserva ya pasó"
+                          : "Cancelar reserva"}
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
               );
             })}

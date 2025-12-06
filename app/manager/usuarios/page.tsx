@@ -2,12 +2,19 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { Users, UserPlus, Trash2, Edit, CheckCircle2, XCircle, Clock } from "lucide-react";
+import { Users, UserPlus, Trash2, Edit, CheckCircle2, XCircle, Clock, AlertTriangle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/toast";
 import { AddUserModal } from "@/components/manager/add-user-modal";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 interface User {
   id: number;
@@ -27,6 +34,10 @@ export default function UsuariosPage() {
   const [loading, setLoading] = useState(true);
   const [showAddUser, setShowAddUser] = useState(false);
   const [showEditUser, setShowEditUser] = useState<User | null>(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showRejectConfirm, setShowRejectConfirm] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<number | null>(null);
+  const [userToReject, setUserToReject] = useState<number | null>(null);
 
   const fetchUsers = async () => {
     try {
@@ -49,19 +60,19 @@ export default function UsuariosPage() {
     }
   }, [status, session]);
 
-  const handleDeleteUser = async (userId: number) => {
-    if (!confirm("¿Estás seguro de que quieres eliminar este usuario? Todas sus reservas serán canceladas.")) {
-      return;
-    }
+  const handleDeleteUser = async () => {
+    if (!userToDelete) return;
 
     try {
-      const res = await fetch(`/api/manager/users/${userId}`, {
+      const res = await fetch(`/api/manager/users/${userToDelete}`, {
         method: "DELETE",
       });
 
       if (res.ok) {
         const data = await res.json();
         showToast(data.message || "Usuario eliminado exitosamente. Todas sus reservas han sido canceladas.", "success");
+        setShowDeleteConfirm(false);
+        setUserToDelete(null);
         fetchUsers();
       } else {
         const { error } = await res.json();
@@ -83,6 +94,10 @@ export default function UsuariosPage() {
       if (res.ok) {
         const data = await res.json();
         showToast(data.message || (approve ? "Usuario aprobado exitosamente" : "Usuario rechazado exitosamente. Todas sus reservas han sido canceladas."), "success");
+        if (!approve) {
+          setShowRejectConfirm(false);
+          setUserToReject(null);
+        }
         // Refresh to show updated state
         setTimeout(() => {
           fetchUsers();
@@ -198,9 +213,8 @@ export default function UsuariosPage() {
                           variant="outline"
                           size="sm"
                           onClick={() => {
-                            if (confirm("¿Estás seguro de que quieres rechazar este usuario? Todas sus reservas serán canceladas.")) {
-                              handleApproveUser(user.id, false);
-                            }
+                            setUserToReject(user.id);
+                            setShowRejectConfirm(true);
                           }}
                           className="flex-1 sm:flex-initial min-h-[44px] sm:min-h-[36px] border-red-500/40 bg-red-500/10 text-red-300 hover:bg-red-500/20 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200"
                         >
@@ -243,14 +257,9 @@ export default function UsuariosPage() {
                           >
                             {user.role === "manager" ? "Manager" : "Cliente"}
                           </Badge>
-                          {user.role === "client" && user.approved && (
-                            <Badge className="bg-green-500/20 border border-green-500/30 text-green-400 font-[family-name:var(--font-orbitron)] text-xs">
-                              Aprobado
-                            </Badge>
-                          )}
                           {user.wodEnabled && (
                             <Badge className="bg-green-500/20 border border-green-500/30 text-green-400 font-[family-name:var(--font-orbitron)] text-xs">
-                              WOD
+                              PRO
                             </Badge>
                           )}
                         </div>
@@ -260,7 +269,12 @@ export default function UsuariosPage() {
                         <div className="text-sm space-y-1">
                           {daysRemaining !== null ? (
                             <>
-                              <div>
+                              <div className="flex items-center gap-2 flex-wrap">
+                                {daysRemaining <= 0 && (
+                                  <Badge className="bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)] text-xs">
+                                    Vencido
+                                  </Badge>
+                                )}
                                 <span
                                   className={
                                     daysRemaining > 7
@@ -307,7 +321,10 @@ export default function UsuariosPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => handleDeleteUser(user.id)}
+                        onClick={() => {
+                          setUserToDelete(user.id);
+                          setShowDeleteConfirm(true);
+                        }}
                         className="min-h-[44px] sm:min-h-[36px] min-w-[44px] sm:min-w-[36px] border-red-500/40 bg-red-500/10 text-red-300 hover:bg-red-500/20 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200"
                       >
                         <Trash2 className="size-4 sm:size-3.5" />
@@ -346,6 +363,118 @@ export default function UsuariosPage() {
         }}
         editingUser={showEditUser}
       />
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
+          <DialogHeader>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
+                Kraken
+              </span>
+              <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
+            </div>
+            <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+              Confirmar Eliminación
+            </Badge>
+            <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">
+              ¿Estás seguro?
+            </DialogTitle>
+            <DialogDescription className="text-sm text-zinc-400 text-center">
+              Esta acción no se puede deshacer. Todas las reservas del usuario serán canceladas.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-6 p-4 rounded-lg border border-red-500/20 bg-red-500/10">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="size-5 text-red-400 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm text-red-300 font-[family-name:var(--font-orbitron)] font-semibold mb-1">
+                  Advertencia
+                </p>
+                <p className="text-xs text-zinc-400">
+                  Al eliminar este usuario, se cancelarán todas sus reservas y se perderá acceso al sistema.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-3 pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setShowDeleteConfirm(false);
+                setUserToDelete(null);
+              }}
+              className="flex-1 border-zinc-500/40 bg-zinc-500/10 text-zinc-300 hover:bg-zinc-500/20 hover:border-zinc-500/50 active:scale-[0.98] transition-all duration-200"
+            >
+              Cancelar
+            </Button>
+            <Button
+              type="button"
+              onClick={handleDeleteUser}
+              className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 active:scale-[0.98] transition-all duration-200"
+            >
+              Eliminar
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Reject Confirmation Dialog */}
+      <Dialog open={showRejectConfirm} onOpenChange={setShowRejectConfirm}>
+        <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
+          <DialogHeader>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
+                Kraken
+              </span>
+              <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
+            </div>
+            <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+              Confirmar Rechazo
+            </Badge>
+            <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">
+              ¿Rechazar usuario?
+            </DialogTitle>
+            <DialogDescription className="text-sm text-zinc-400 text-center">
+              Al rechazar este usuario, se cancelarán todas sus reservas y no podrá acceder al sistema.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-6 p-4 rounded-lg border border-red-500/20 bg-red-500/10">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="size-5 text-red-400 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm text-red-300 font-[family-name:var(--font-orbitron)] font-semibold mb-1">
+                  Advertencia
+                </p>
+                <p className="text-xs text-zinc-400">
+                  Esta acción cancelará todas las reservas del usuario y le impedirá iniciar sesión.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-3 pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setShowRejectConfirm(false);
+                setUserToReject(null);
+              }}
+              className="flex-1 border-zinc-500/40 bg-zinc-500/10 text-zinc-300 hover:bg-zinc-500/20 hover:border-zinc-500/50 active:scale-[0.98] transition-all duration-200"
+            >
+              Cancelar
+            </Button>
+            <Button
+              type="button"
+              onClick={() => userToReject && handleApproveUser(userToReject, false)}
+              className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 active:scale-[0.98] transition-all duration-200"
+            >
+              Rechazar
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

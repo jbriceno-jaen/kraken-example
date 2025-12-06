@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { cn, formatDateLocal } from "@/lib/utils";
+import { cn, formatDateLocal, parseDateLocal } from "@/lib/utils";
 
 interface DatePickerProps {
   value: string; // YYYY-MM-DD format
@@ -21,7 +21,7 @@ export function DatePicker({ value, onChange, minDate, maxDate, className }: Dat
 
   useEffect(() => {
     if (value) {
-      const date = new Date(value);
+      const date = parseDateLocal(value);
       setCurrentMonth(new Date(date.getFullYear(), date.getMonth(), 1));
     } else {
       // If no value, show current month
@@ -45,7 +45,7 @@ export function DatePicker({ value, onChange, minDate, maxDate, className }: Dat
     };
   }, [isOpen]);
 
-  const selectedDate = value ? new Date(value) : null;
+  const selectedDate = value ? parseDateLocal(value) : null;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -88,7 +88,7 @@ export function DatePicker({ value, onChange, minDate, maxDate, className }: Dat
 
   const formatDisplayDate = (dateStr: string) => {
     if (!dateStr) return "Seleccionar fecha";
-    const date = new Date(dateStr);
+    const date = parseDateLocal(dateStr);
     return date.toLocaleDateString("es-ES", {
       weekday: "short",
       day: "numeric",

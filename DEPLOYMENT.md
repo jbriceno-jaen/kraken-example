@@ -79,10 +79,22 @@ NEXTAUTH_SECRET=your-generated-secret-key-here
 NEXTAUTH_URL=https://your-app.vercel.app
 ```
 
+#### Optional Variables (for Password Reset):
+
+```
+RESEND_API_KEY=re_your_api_key_here
+```
+
+```
+RESEND_FROM_EMAIL=Kraken Elite Fitness <noreply@yourdomain.com>
+```
+
 **Important:**
 - Add these for **Production**, **Preview**, and **Development** environments
 - After adding variables, you need to **redeploy** for them to take effect
 - Generate `NEXTAUTH_SECRET` using: `openssl rand -base64 32`
+- For password reset functionality, you need to configure Resend (see [RESEND_SETUP.md](./RESEND_SETUP.md))
+- If you don't configure Resend, password reset will not work, but the rest of the app will function normally
 
 ### 4. Deploy Database Schema
 

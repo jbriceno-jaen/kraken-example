@@ -79,3 +79,13 @@ export const classAttendees = pgTable("class_attendees", {
   addedBy: integer().references(() => users.id).notNull(), // Manager who added the user
   createdAt: timestamp().defaultNow().notNull(),
 });
+
+// Password reset tokens
+export const passwordResetTokens = pgTable("password_reset_tokens", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  userId: integer().references(() => users.id).notNull(),
+  token: varchar({ length: 255 }).notNull().unique(),
+  expiresAt: timestamp().notNull(),
+  used: boolean().default(false).notNull(),
+  createdAt: timestamp().defaultNow().notNull(),
+});

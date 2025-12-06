@@ -16,6 +16,11 @@ A modern CrossFit gym management platform built with Next.js, featuring class re
 - 📅 **WOD Management**: Workout of the Day creation and management
 - ⏰ **Class Scheduling**: Flexible class slot management per day of the week
 - 🔔 **Notifications**: Automatic notifications when users are added, approved, or deleted
+- 🔐 **Password Recovery**: Forgot password functionality with email-based password reset
+- ⚡ **Turbopack**: Fast development builds with Next.js 16's Turbopack bundler
+- 🍪 **Optimized Sessions**: JWT sessions optimized to stay under 4096 bytes cookie limit
+- 🔄 **Real-time Updates**: Loading screens and refresh functionality for class schedules and attendance
+- 🎯 **Smart Date Handling**: Timezone-safe date pickers throughout the application
 
 ## Tech Stack
 
@@ -60,6 +65,10 @@ DATABASE_URL=postgresql://user:password@host:port/database?sslmode=require
 # NextAuth
 NEXTAUTH_SECRET=your-secret-key-here-change-in-production
 NEXTAUTH_URL=http://localhost:3000
+
+# Email (Resend) - Required for password reset functionality
+RESEND_API_KEY=re_your_api_key_here
+RESEND_FROM_EMAIL=Kraken Elite Fitness <noreply@yourdomain.com>
 ```
 
 **Generate NEXTAUTH_SECRET:**
@@ -104,7 +113,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 kraken-example/
 ├── app/                    # Next.js app directory
 │   ├── api/               # API routes
-│   │   ├── auth/          # Authentication endpoints
+│   │   ├── auth/          # Authentication endpoints (login, register, forgot-password, reset-password)
 │   │   ├── manager/       # Manager-only endpoints
 │   │   ├── profile/       # User profile management
 │   │   ├── reservations/  # Class reservations
@@ -119,19 +128,22 @@ kraken-example/
 │   │   ├── wod/           # WOD management
 │   │   ├── clases/        # Class attendance
 │   │   └── horarios/      # Class slots management
+│   ├── reset-password/    # Password reset page
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Home page
 ├── components/            # React components
 │   ├── ui/               # Reusable UI components
 │   ├── manager/          # Manager-specific components
-│   └── auth/             # Authentication modals
+│   └── auth/             # Authentication modals (login, register, forgot-password)
 ├── src/
 │   └── db/               # Database configuration
 │       ├── client.ts      # Database client
 │       └── schema.ts      # Database schema
-└── lib/                  # Utility functions
-    ├── utils.ts          # General utilities
-    └── dashboard-helpers.ts  # Dashboard helper functions
+└── src/
+    └── lib/              # Utility functions
+        ├── utils.ts      # General utilities
+        ├── auth.ts       # NextAuth configuration
+        └── email.ts      # Email sending utilities (Resend)
 ```
 
 ## Available Scripts
@@ -152,7 +164,10 @@ kraken-example/
 
 ### Authentication
 - `POST /api/auth/register` - Register new user (requires manager approval for clients)
-- `POST /api/auth/change-password` - Change user password
+- `POST /api/auth/change-password` - Change user password (requires authentication)
+- `POST /api/auth/forgot-password` - Request password reset email
+- `POST /api/auth/reset-password` - Reset password with token
+- `POST /api/auth/verify-reset-token` - Verify reset token validity
 - `POST /api/auth/check-approval` - Check if user account is approved and subscription status
 
 ### Profile
@@ -200,6 +215,7 @@ kraken-example/
 - **class_slots**: Available class time slots
 - **workout_of_day**: Workout of the Day (WOD)
 - **class_attendees**: Manager-assigned class attendees
+- **password_reset_tokens**: Password reset tokens (expire after 1 hour)
 
 ## User Roles
 
@@ -219,6 +235,7 @@ kraken-example/
 - [Style Guide](./README-STYLES.md) - UI/UX design patterns and guidelines
 - [Deployment Guide](./DEPLOYMENT.md) - Production deployment instructions
 - [NextAuth Setup](./NEXTAUTH_SETUP.md) - Authentication configuration
+- [Resend Setup](./RESEND_SETUP.md) - Email service configuration for password reset
 
 ## Contributing
 

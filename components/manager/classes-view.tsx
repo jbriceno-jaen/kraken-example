@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/toast";
 import { Users, Calendar, Clock, UserPlus, X, RotateCw } from "lucide-react";
-import { cn, formatDateLocal } from "@/lib/utils";
+import { cn, formatDateLocal, parseDateLocal } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface ClassSlot {
   id: number;
@@ -64,7 +65,9 @@ const getDateForDay = (dayName: string, baseDate: Date = new Date()): Date => {
     daysToAdd += 7;
   }
 
+  // Create date in local timezone to avoid timezone issues
   const date = new Date(today);
+  date.setHours(0, 0, 0, 0); // Set to midnight to avoid timezone shifts
   date.setDate(today.getDate() + daysToAdd);
   return date;
 };
@@ -83,6 +86,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
   const [users, setUsers] = useState<Array<{ id: number; name: string; email: string }>>([]);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [hasInitialized, setHasInitialized] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     fetchSlots();
@@ -198,7 +202,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
             if (!reservation.date || !reservation.time) continue;
             
             try {
-              const reservationDate = new Date(reservation.date);
+              const reservationDate = parseDateLocal(reservation.date);
               
               // Parse time string (e.g., "5:00 AM") and set it on the date
               const timeMatch = reservation.time.match(/(\d+):(\d+)\s*(AM|PM)/i);
@@ -276,7 +280,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
       if (!reservation.date) continue;
       
       try {
-        const reservationDate = new Date(reservation.date);
+        const reservationDate = parseDateLocal(reservation.date);
         
         const timeMatch = reservation.time?.match(/(\d+):(\d+)\s*(AM|PM)/i);
         if (timeMatch) {
@@ -302,7 +306,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
     }
     
     if (nearestReservation && nearestReservation.date && nearestReservation.time) {
-      const nearestDate = new Date(nearestReservation.date);
+      const nearestDate = parseDateLocal(nearestReservation.date);
       const nearestDayName = getCurrentDayName(nearestDate);
       
       setSelectedDay(nearestDayName);
@@ -321,6 +325,13 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
   };
 
   const handleTimeClick = (time: string) => {
+    // Check if the slot is canceled
+    const slot = slots.find((s) => s.day === selectedDay && s.time === time);
+    if (slot && !slot.available) {
+      showToast("Esta clase está cancelada. No se pueden realizar acciones.", "warning");
+      return;
+    }
+    
     setSelectedTime(time);
     // Scroll to the attendance section to show the selected time's attendees
     setTimeout(() => {
@@ -334,6 +345,13 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
   const handleAddAttendee = async () => {
     if (!selectedDay || !selectedTime || !selectedUserId || !selectedDate) {
       showToast("Por favor completa todos los campos", "error");
+      return;
+    }
+    
+    // Check if the slot is canceled
+    const slot = slots.find((s) => s.day === selectedDay && s.time === selectedTime);
+    if (slot && !slot.available) {
+      showToast("Esta clase está cancelada. No se pueden agregar asistentes.", "error");
       return;
     }
 
@@ -389,6 +407,14 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
   };
 
   const handleRemoveAttendeeClick = (attendeeId: number, source?: 'reservation' | 'manager', time?: string) => {
+    // Check if the slot is canceled
+    if (time) {
+      const slot = slots.find((s) => s.day === selectedDay && s.time === time);
+      if (slot && !slot.available) {
+        showToast("Esta clase está cancelada. No se pueden eliminar asistentes.", "error");
+        return;
+      }
+    }
     setAttendeeToDelete({ id: attendeeId, source, time });
     setShowDeleteConfirm(true);
   };
@@ -510,7 +536,22 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
+      {/* Loading Overlay */}
+      {refreshing && (
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center rounded-lg">
+          <div className="flex flex-col items-center gap-4">
+            <div className="relative size-16">
+              <div className="size-full animate-spin rounded-full border-4 border-red-500/30 border-t-red-500" />
+              <RotateCw className="absolute left-1/2 top-1/2 size-8 -translate-x-1/2 -translate-y-1/2 text-red-400 animate-pulse" />
+            </div>
+            <p className="text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">
+              Actualizando horarios y asistencia...
+            </p>
+          </div>
+        </div>
+      )}
+      
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
@@ -573,43 +614,114 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
               <Badge className="bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)] min-h-[44px] sm:min-h-[40px] flex items-center px-3 sm:px-4 py-2 text-xs sm:text-sm">
                 Horarios
               </Badge>
-              <Button
-                onClick={() => {
-                  fetchSlots();
-                  if (selectedDay && selectedDate) {
-                    fetchAllDayAttendees(selectedDay, selectedDate);
-                  }
-                }}
-                variant="outline"
-                size="sm"
-                className="min-h-[44px] sm:min-h-[40px] border-blue-500/40 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 hover:border-blue-500/50 active:scale-[0.98] transition-all duration-200"
-                title="Refrescar horarios y asistentes"
-              >
-                <RotateCw className="size-4 mr-2" />
-                <span className="text-xs">Refrescar</span>
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    onClick={async () => {
+                      setRefreshing(true);
+                      try {
+                        // Refresh both slots and attendees in parallel
+                        await Promise.all([
+                          fetchSlots(),
+                          selectedDay && selectedDate 
+                            ? fetchAllDayAttendees(selectedDay, selectedDate)
+                            : Promise.resolve()
+                        ]);
+                        showToast("Horarios y asistencia actualizados", "success");
+                      } catch (error) {
+                        console.error("Error refreshing:", error);
+                        showToast("Error al actualizar", "error");
+                      } finally {
+                        setRefreshing(false);
+                      }
+                    }}
+                    variant="outline"
+                    size="sm"
+                    disabled={refreshing}
+                    className="min-h-[44px] sm:min-h-[40px] border-blue-500/40 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 hover:border-blue-500/50 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <RotateCw className={`size-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+                    <span className="text-xs">{refreshing ? "Actualizando..." : "Refrescar"}</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Refrescar horarios y asistentes</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
 
             <div className="space-y-2">
-              {times.map((time) => {
-                const slot = slots.find((s) => s.day === selectedDay && s.time === time);
-                const isSelected = selectedTime === time;
-                const isFull = slot && slot.spotsRemaining === 0;
-                const timeAttendees = attendeesByTime[time] || [];
-                const attendeeCount = timeAttendees.length;
+              {(() => {
+                // Get all unique times from slots for the selected day
+                const availableTimes = slots
+                  .filter(s => s.day === selectedDay)
+                  .map(s => s.time)
+                  .filter((time, index, self) => self.indexOf(time) === index)
+                  .sort((a, b) => {
+                    // Sort times properly
+                    const parseTime = (t: string) => {
+                      const [time, period] = t.split(' ');
+                      const [hours, minutes] = time.split(':');
+                      let h = parseInt(hours);
+                      if (period === 'PM' && h !== 12) h += 12;
+                      if (period === 'AM' && h === 12) h = 0;
+                      return h * 60 + parseInt(minutes);
+                    };
+                    return parseTime(a) - parseTime(b);
+                  });
+                
+                // If no slots exist, show all times as unavailable
+                if (availableTimes.length === 0) {
+                  return times.map((time) => (
+                    <div
+                      key={time}
+                      className="w-full text-left p-4 sm:p-5 rounded-lg border border-zinc-500/20 bg-zinc-500/5 opacity-50 cursor-not-allowed min-h-[60px] sm:min-h-[56px]"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <Clock className="size-5 text-zinc-500" />
+                          <div className="flex flex-col">
+                            <span className="font-medium font-[family-name:var(--font-orbitron)] text-zinc-500">
+                              {time}
+                            </span>
+                          </div>
+                        </div>
+                        <Badge className="bg-zinc-500/20 border border-zinc-500/30 text-zinc-500 font-[family-name:var(--font-orbitron)]">
+                          No disponible
+                        </Badge>
+                      </div>
+                    </div>
+                  ));
+                }
+                
+                return availableTimes.map((time) => {
+                  const slot = slots.find((s) => s.day === selectedDay && s.time === time);
+                  const isSelected = selectedTime === time;
+                  const isFull = slot && slot.spotsRemaining === 0;
+                  const isCanceled = slot && !slot.available;
+                  const timeAttendees = attendeesByTime[time] || [];
+                  const attendeeCount = timeAttendees.length;
+                  
+                  // Default values if no slot exists (shouldn't happen but just in case)
+                  const defaultCapacity = 14;
+                  const defaultSpotsRemaining = slot ? slot.spotsRemaining : defaultCapacity;
 
-                return (
-                  <button
-                    key={time}
-                    onClick={() => handleTimeClick(time)}
-                    className={cn(
-                      "w-full text-left p-4 sm:p-5 rounded-lg border transition-all duration-300 min-h-[60px] sm:min-h-[56px]",
-                      isSelected
-                        ? "border-red-500 bg-gradient-to-br from-red-500/20 via-red-500/10 to-black shadow-lg shadow-red-500/30 ring-2 ring-red-500/20"
-                        : "border-red-500/20 hover:border-red-500/40 hover:bg-red-500/5 active:scale-[0.98]",
-                      isFull && "opacity-60"
-                    )}
-                  >
+                  return (
+                    <button
+                      key={time}
+                      onClick={() => !isCanceled && handleTimeClick(time)}
+                      disabled={isCanceled}
+                      className={cn(
+                        "w-full text-left p-4 sm:p-5 rounded-lg border transition-all duration-300 min-h-[60px] sm:min-h-[56px]",
+                        isCanceled && "cursor-not-allowed opacity-60",
+                        !isCanceled && isSelected
+                          ? "border-red-500 bg-gradient-to-br from-red-500/20 via-red-500/10 to-black shadow-lg shadow-red-500/30 ring-2 ring-red-500/20"
+                          : !isCanceled
+                          ? "border-red-500/20 hover:border-red-500/40 hover:bg-red-500/5 active:scale-[0.98]"
+                          : "border-orange-500/30 bg-orange-500/5",
+                        isFull && !isCanceled && "opacity-60"
+                      )}
+                    >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <Clock className={cn("size-5", isSelected ? "text-red-400" : "text-zinc-400")} />
@@ -627,21 +739,28 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
                           )}
                         </div>
                       </div>
-                      {slot && (
-                        <Badge
-                          className={
-                            isFull
-                              ? "bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)]"
-                              : "bg-green-500/20 border border-green-500/30 text-green-400 font-[family-name:var(--font-orbitron)]"
-                          }
-                        >
-                          {slot.spotsRemaining}/{slot.capacity}
-                        </Badge>
-                      )}
+                      <div className="flex items-center gap-2">
+                        {isCanceled ? (
+                          <Badge className="bg-orange-500/20 border border-orange-500/30 text-orange-400 font-[family-name:var(--font-orbitron)]">
+                            Clase Cancelada
+                          </Badge>
+                        ) : (
+                          <Badge
+                            className={
+                              isFull
+                                ? "bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)]"
+                                : "bg-green-500/20 border border-green-500/30 text-green-400 font-[family-name:var(--font-orbitron)]"
+                            }
+                          >
+                            {defaultSpotsRemaining} disponibles
+                          </Badge>
+                        )}
+                      </div>
                     </div>
                   </button>
-                );
-              })}
+                  );
+                });
+              })()}
             </div>
           </Card>
 
@@ -657,9 +776,20 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
                     showToast("Por favor selecciona un horario primero", "warning");
                     return;
                   }
+                  // Check if the slot is canceled
+                  const slot = slots.find((s) => s.day === selectedDay && s.time === selectedTime);
+                  if (slot && !slot.available) {
+                    showToast("Esta clase está cancelada. No se pueden agregar asistentes.", "error");
+                    return;
+                  }
                   setShowAddAttendee(true);
                 }}
-                className="min-h-[44px] sm:min-h-[40px] bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg shadow-red-500/30 active:scale-[0.98] transition-all duration-200"
+                disabled={(() => {
+                  if (!selectedTime) return false;
+                  const slot = slots.find((s) => s.day === selectedDay && s.time === selectedTime);
+                  return slot && !slot.available;
+                })()}
+                className="min-h-[44px] sm:min-h-[40px] bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg shadow-red-500/30 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <UserPlus className="mr-2 size-4 sm:size-3.5" />
                 <span className="text-sm sm:text-xs">Agregar</span>
@@ -722,7 +852,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
                                   <p className="text-xs sm:text-sm text-zinc-400 break-words">{attendee.userEmail}</p>
                                   {attendee.source === 'reservation' && attendee.date && (
                                     <p className="text-xs text-zinc-500 mt-1">
-                                      {new Date(attendee.date).toLocaleDateString("es-ES", {
+                                      {parseDateLocal(attendee.date).toLocaleDateString("es-ES", {
                                         weekday: "short",
                                         day: "numeric",
                                         month: "short",
@@ -731,15 +861,32 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
                                     </p>
                                   )}
                                 </div>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => handleRemoveAttendeeClick(attendee.id, attendee.source, attendee.time)}
-                                  className="min-h-[36px] sm:min-h-[32px] min-w-[36px] sm:min-w-[32px] border-red-500/40 bg-red-500/10 text-red-300 hover:bg-red-500/20 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200 flex-shrink-0 ml-2"
-                                  title="Eliminar cliente"
-                                >
-                                  <X className="size-3.5 sm:size-3" />
-                                </Button>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => handleRemoveAttendeeClick(attendee.id, attendee.source, attendee.time)}
+                                      disabled={(() => {
+                                        if (!attendee.time) return false;
+                                        const slot = slots.find((s) => s.day === selectedDay && s.time === attendee.time);
+                                        return slot && !slot.available;
+                                      })()}
+                                      className="min-h-[36px] sm:min-h-[32px] min-w-[36px] sm:min-w-[32px] border-red-500/40 bg-red-500/10 text-red-300 hover:bg-red-500/20 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200 flex-shrink-0 ml-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                      <X className="size-3.5 sm:size-3" />
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>
+                                      {(() => {
+                                        if (!attendee.time) return "Eliminar cliente";
+                                        const slot = slots.find((s) => s.day === selectedDay && s.time === attendee.time);
+                                        return slot && !slot.available ? "Clase cancelada - No se pueden eliminar asistentes" : "Eliminar cliente";
+                                      })()}
+                                    </p>
+                                  </TooltipContent>
+                                </Tooltip>
                               </div>
                             ))}
                           </div>
@@ -770,7 +917,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
                     return (
                       <div className="space-y-3">
                         {reservations.map((attendee) => {
-                          const reservationDate = attendee.date ? new Date(attendee.date) : null;
+                          const reservationDate = attendee.date ? parseDateLocal(attendee.date) : null;
                           return (
                             <div
                               key={`reservation-${attendee.id}`}
@@ -800,15 +947,32 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
                                   </div>
                                 )}
                               </div>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => handleRemoveAttendeeClick(attendee.id, attendee.source, attendee.time)}
-                                className="min-h-[36px] sm:min-h-[32px] min-w-[36px] sm:min-w-[32px] border-red-500/40 bg-red-500/10 text-red-300 hover:bg-red-500/20 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200 flex-shrink-0 ml-2"
-                                title="Eliminar cliente"
-                              >
-                                <X className="size-3.5 sm:size-3" />
-                              </Button>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => handleRemoveAttendeeClick(attendee.id, attendee.source, attendee.time)}
+                                    disabled={(() => {
+                                      if (!attendee.time) return false;
+                                      const slot = slots.find((s) => s.day === selectedDay && s.time === attendee.time);
+                                      return slot && !slot.available;
+                                    })()}
+                                    className="min-h-[36px] sm:min-h-[32px] min-w-[36px] sm:min-w-[32px] border-red-500/40 bg-red-500/10 text-red-300 hover:bg-red-500/20 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200 flex-shrink-0 ml-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                  >
+                                    <X className="size-3.5 sm:size-3" />
+                                  </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    {(() => {
+                                      if (!attendee.time) return "Eliminar cliente";
+                                      const slot = slots.find((s) => s.day === selectedDay && s.time === attendee.time);
+                                      return slot && !slot.available ? "Clase cancelada - No se pueden eliminar asistentes" : "Eliminar cliente";
+                                    })()}
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
                             </div>
                           );
                         })}
@@ -906,7 +1070,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
                 Fecha
               </label>
               <div className="min-h-[48px] text-base sm:text-sm border border-red-500/20 bg-white/5 text-white rounded-md px-3 py-2 flex items-center">
-                {selectedDate ? new Date(selectedDate).toLocaleDateString("es-ES", {
+                {selectedDate ? parseDateLocal(selectedDate).toLocaleDateString("es-ES", {
                   weekday: "long",
                   year: "numeric",
                   month: "long",

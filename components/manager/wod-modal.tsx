@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Dumbbell } from "lucide-react";
-import { formatDateLocal } from "@/lib/utils";
+import { formatDateLocal, parseDateLocal } from "@/lib/utils";
 
 interface WOD {
   id: number;
@@ -36,22 +36,28 @@ export function WODModal({ open, onOpenChange, onSuccess, editingWOD, selectedDa
 
   useEffect(() => {
     if (editingWOD) {
-      const wodDate = new Date(editingWOD.date);
-      const dateStr = formatDateLocal(wodDate);
+      // Parse the date and ensure it's at midnight to avoid timezone issues
+      const wodDate = parseDateLocal(editingWOD.date);
+      const dateAtMidnight = new Date(wodDate.getFullYear(), wodDate.getMonth(), wodDate.getDate());
+      const dateStr = formatDateLocal(dateAtMidnight);
       setFormData({
         date: dateStr,
         title: editingWOD.title,
         description: editingWOD.description,
       });
     } else if (selectedDate) {
-      const dateStr = formatDateLocal(selectedDate);
+      // Ensure selectedDate is at midnight to avoid timezone issues
+      const dateAtMidnight = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+      const dateStr = formatDateLocal(dateAtMidnight);
       setFormData({
         date: dateStr,
         title: "",
         description: "",
       });
     } else {
+      // Create today's date at midnight to avoid timezone issues
       const today = new Date();
+      today.setHours(0, 0, 0, 0);
       const dateStr = formatDateLocal(today);
       setFormData({
         date: dateStr,
