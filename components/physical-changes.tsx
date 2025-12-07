@@ -136,7 +136,7 @@ export default function PhysicalChanges() {
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
           {physicalChanges.map((change, index) => {
             const key = change.name.toLowerCase().includes("grasa") ? "grasa" :
                        change.name.toLowerCase().includes("masa muscular") ? "musculo" :
@@ -146,8 +146,13 @@ export default function PhysicalChanges() {
                        change.name.toLowerCase().includes("flexibilidad") ? "flexibilidad" : "musculo";
             const currentValue = animatedValues[key] || 0;
             
-            // Use change.after as maxValue to match animation logic
-            const maxValue = change.after;
+            // Use a higher maxValue to show progress without filling completely
+            const maxValue = change.name.toLowerCase().includes("grasa") ? 30 : 
+                            change.name.toLowerCase().includes("masa muscular") ? 5 :
+                            change.name.toLowerCase().includes("resistencia") ? 35 :
+                            change.name.toLowerCase().includes("fuerza") ? 30 : 
+                            change.name.toLowerCase().includes("cardiovascular") ? 20 :
+                            change.name.toLowerCase().includes("flexibilidad") ? 30 : 5;
             const percentage = (currentValue / maxValue) * 100;
             const isHovered = hoveredIndex === index;
             const Icon = change.icon;
@@ -155,13 +160,13 @@ export default function PhysicalChanges() {
             return (
               <Card
                 key={change.name}
-                className="group/item border border-red-500/50 bg-black/30 p-5 sm:p-6 lg:p-7 transition-all duration-500 hover:border-red-500/70 hover:bg-black/50 overflow-hidden relative cursor-pointer"
+                className="group/item border border-red-500/50 bg-black/30 p-5 sm:p-6 lg:p-7 transition-all duration-500 hover:border-red-500/70 hover:bg-black/50 overflow-hidden relative cursor-pointer flex flex-col"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-red-500/0 to-red-500/0 group-hover/item:from-red-500/5 group-hover/item:to-transparent transition-all duration-500" />
                 
-                <div className="relative space-y-4">
+                <div className="relative space-y-4 flex-1 flex flex-col">
                   <div className="flex items-start gap-3">
                     <div className={`flex size-10 sm:size-12 items-center justify-center rounded-lg bg-black border border-red-500/20 text-red-500/70 flex-shrink-0 transition-all duration-300 ${isHovered ? 'scale-110 border-red-500/50 text-red-500' : ''}`}>
                       <Icon className="size-5 sm:size-6" />
@@ -176,36 +181,39 @@ export default function PhysicalChanges() {
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <div className="flex items-baseline justify-between">
-                      {change.before > 0 && (
-                        <span className="text-xs text-zinc-500 line-through">
-                          {change.before}{change.unit}
-                        </span>
-                      )}
+                  <div className="space-y-2 mt-auto">
+                    <div className="flex items-baseline justify-end">
                       <span className={`text-xl sm:text-2xl font-black text-red-500 font-[family-name:var(--font-orbitron)] transition-all duration-300 ${isHovered ? 'scale-110' : ''}`}>
                         {currentValue > 0 ? `${currentValue}${change.unit}` : `+${change.after}${change.unit}`}
                       </span>
                     </div>
                     
-                    <div className="relative h-3 sm:h-4 rounded-full bg-black/50 border border-red-500/20 overflow-hidden group-hover/item:border-red-500/40 transition-all duration-300">
+                    <div 
+                      className={`relative h-3 sm:h-4 rounded-full bg-black/50 border border-red-500/20 overflow-hidden group-hover/item:border-red-500/50 transition-all duration-300 ${isHovered ? 'scale-105 shadow-lg shadow-red-500/30' : ''}`}
+                      onClick={() => setHoveredIndex(isHovered ? null : index)}
+                    >
                       <div
-                        className={`absolute left-0 top-0 h-full bg-gradient-to-r ${change.color} rounded-full transition-all duration-500 ease-out shadow-lg shadow-red-500/30 ${isHovered ? 'shadow-red-500/50' : ''}`}
+                        className={`absolute left-0 top-0 h-full bg-gradient-to-r ${change.color} rounded-full transition-all duration-700 ease-out shadow-lg shadow-red-500/30 ${isHovered ? 'shadow-red-500/70 shadow-2xl animate-pulse-glow' : ''}`}
                         style={{
                           width: `${Math.min(percentage, 100)}%`,
                           transitionDelay: `${index * 100}ms`,
                         }}
                       >
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
                         {isHovered && (
-                          <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/30 to-white/10 animate-pulse" />
+                          <>
+                            <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-white/40 to-white/20 animate-pulse" />
+                            <div className="absolute inset-0 bg-gradient-to-br from-red-400/30 via-transparent to-red-600/30 animate-scale-bounce" />
+                          </>
                         )}
+                        <div className="absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-red-500/50 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-300" />
                       </div>
                       {isHovered && (
-                        <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-black text-red-500 font-[family-name:var(--font-orbitron)] animate-fade-in">
+                        <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-black text-red-400 font-[family-name:var(--font-orbitron)] animate-fade-in drop-shadow-lg bg-black/50 px-2 py-0.5 rounded">
                           {Math.round(percentage)}%
                         </div>
                       )}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 pointer-events-none" />
                     </div>
                   </div>
                 </div>
