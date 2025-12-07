@@ -11,9 +11,10 @@ A modern CrossFit gym management platform built with Next.js, featuring class re
 - ✅ **User Approval System**: New client registrations require manager approval before access
 - ⏰ **Subscription Management**: Clients with expired subscriptions cannot log in and are notified
 - 💾 **Database**: PostgreSQL database (Neon) with Drizzle ORM
-- 🎨 **Modern UI**: Beautiful, responsive design with smooth animations and vibrant red gradients
+- 🎨 **Modern UI**: Minimalist and professional design with black backgrounds and red accents
 - 🎯 **Brand Identity**: Consistent Kraken Elite Fitness branding with Orbitron font and custom red color scheme
 - 🎨 **Custom Select Styling**: Custom dropdown arrows positioned optimally for better UX
+- 🖤 **Minimalist Design**: Clean black backgrounds with subtle red borders and expanded spacing for better visual hierarchy
 - 👥 **Manager Dashboard**: Complete management system for gym administrators
 - 📅 **WOD Management**: Workout of the Day creation and management with timezone-safe date handling
 - ⏰ **Class Scheduling**: Flexible class slot management per day of the week

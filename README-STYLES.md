@@ -5,9 +5,16 @@ Esta guía documenta los estilos y patrones de diseño utilizados en toda la apl
 ## 🎨 Esquema de Colores
 
 ### Colores Principales
-- **Rojo**: `red-500`, `red-600` - Color principal de la marca (CrossFit)
-- **Negro**: `black`, `slate-950` - Fondos principales
-- **Blanco**: `white`, `zinc-300` - Texto principal y acentos
+- **Rojo**: `red-500`, `red-600` - Color principal de la marca (CrossFit) - usado para acentos y bordes
+- **Negro**: `black` - Fondo principal de toda la aplicación (diseño minimalista)
+- **Blanco**: `white` - Texto principal
+- **Zinc**: `zinc-500`, `zinc-600` - Texto secundario y placeholders
+
+### Filosofía de Diseño
+- **Minimalista y Profesional**: Fondos negros puros (`bg-black`) sin gradientes
+- **Bordes Difuminados**: Bordes negros sutiles (`border-black/50`) que se integran con el fondo
+- **Sin Bordes Primarios**: Las Cards principales no tienen bordes visibles para un look más limpio
+- **Espaciado Expandido**: Elementos con más padding y spacing para mejor legibilidad
 
 ### Colores de Estado
 - **Éxito (Success)**: Verde (`green-500/20`, `green-500/40`, `green-300`)
@@ -74,23 +81,25 @@ Todos los modals siguen el mismo formato visual consistente.
 #### Estructura Base
 
 ```tsx
-<DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md max-h-[90vh] overflow-y-auto">
+<DialogContent className="border border-red-500/50 bg-black text-white max-w-md max-h-[90vh] overflow-y-auto">
   <DialogHeader>
     {/* Logo compacto */}
     <Logo variant="compact" className="mb-2" />
     
-    {/* Badge de sección con gradiente */}
-    <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+    {/* Badge de sección minimalista */}
+    <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5 w-fit mx-auto">
       Título de Sección
     </Badge>
     
-    {/* Título */}
-    <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">
-      Título del Modal
+    {/* Título minimalista */}
+    <DialogTitle className="text-2xl sm:text-3xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white text-center pt-2">
+      TÍTULO
+      <br />
+      <span className="text-red-500">DEL MODAL</span>
     </DialogTitle>
     
     {/* Descripción */}
-    <DialogDescription className="text-sm text-zinc-400 text-center">
+    <DialogDescription className="text-sm text-zinc-500 text-center font-light">
       Descripción del modal
     </DialogDescription>
   </DialogHeader>
@@ -105,11 +114,11 @@ Todos los modals siguen el mismo formato visual consistente.
 - **`variant="compact"`**: Tamaño compacto para modals (recomendado)
 
 #### Características
-- Fondo: Gradiente negro (`from-black via-slate-950 to-black`)
-- Borde: Rojo semitransparente (`border-red-500/20`)
+- Fondo: Negro puro (`bg-black`) - diseño minimalista
+- Borde: Rojo semitransparente (`border-red-500/50`) - más visible que antes
 - Ancho máximo: `max-w-md` (formularios) o `max-w-2xl` (contenido largo)
 - Altura máxima: `max-h-[90vh]` con scroll vertical
-- Texto: Blanco con gradiente en títulos
+- Texto: Blanco con partes en rojo para títulos (`font-black tracking-tighter`)
 
 ### Botones
 
@@ -117,7 +126,7 @@ Todos los modals siguen el mismo formato visual consistente.
 Usado para acciones principales: Agregar, Guardar, Crear, Confirmar
 
 ```tsx
-<Button className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-red-500/50">
+<Button className="bg-gradient-to-r from-red-500 via-red-600 to-red-500 hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-red-500/50">
   Texto del Botón
 </Button>
 ```
@@ -128,7 +137,7 @@ Usado para cancelar acciones o cerrar modals
 ```tsx
 <Button 
   variant="outline"
-  className="border-zinc-500/40 bg-zinc-500/10 text-zinc-300 hover:bg-zinc-500/20 hover:border-zinc-500/50 active:scale-[0.98] transition-all duration-200"
+  className="border-black/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200"
 >
   Cancelar
 </Button>
@@ -174,7 +183,7 @@ Usado para acciones destructivas
 
 ```tsx
 <Input
-  className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+  className="min-h-[48px] text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
 />
 ```
 
@@ -182,9 +191,9 @@ Usado para acciones destructivas
 
 ```tsx
 <div className="relative">
-  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
+  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-600" />
   <Input
-    className="min-h-[48px] pl-10 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+    className="min-h-[48px] pl-10 text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
   />
 </div>
 ```
@@ -193,7 +202,7 @@ Usado para acciones destructivas
 
 ```tsx
 <select
-  className="w-full min-h-[48px] text-base sm:text-sm border border-red-500/20 bg-black text-white rounded-md px-3 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 [&>option]:bg-black [&>option]:text-white"
+  className="w-full min-h-[48px] text-base sm:text-sm border border-red-500/50 bg-black text-white rounded-md px-3 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 [&>option]:bg-black [&>option]:text-white"
 >
   <option value="" className="bg-black text-white">Selecciona una opción</option>
 </select>
@@ -209,17 +218,18 @@ Usado para acciones destructivas
 
 ```tsx
 <textarea
-  className="w-full text-base sm:text-sm border border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 rounded-md px-3 py-2 resize-none"
+  className="w-full text-base sm:text-sm border border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 rounded-md px-3 py-2 resize-none"
   rows={8}
 />
 ```
 
 #### Características
 - Altura mínima: `min-h-[48px]` para mejor ergonomía móvil
-- Fondo: `bg-white/5` (semitransparente)
-- Borde: `border-red-500/20`
-- Focus: `focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20`
+- Fondo: `bg-black/30` (negro semitransparente para integración con fondo)
+- Borde: `border-red-500/50` (más visible, 50% opacidad)
+- Focus: `focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20`
 - Placeholder: `text-zinc-500`
+- Iconos: `text-zinc-600` (más sutiles)
 
 ### Labels (Etiquetas)
 
@@ -234,7 +244,7 @@ Usado para acciones destructivas
 #### Badge Principal
 
 ```tsx
-<Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
+<Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
   Texto del Badge
 </Badge>
 ```
@@ -295,35 +305,47 @@ transition-all duration-300
 - **Toasts**: `slideIn` (0.3s ease-out)
 - **Modals**: Animaciones de entrada/salida de Radix UI
 
-## 🎨 Gradientes
+## 🎨 Gradientes y Fondos
 
-### Gradiente de Fondo (Modals, Cards)
+### Fondo Minimalista (Modals, Cards)
 ```css
-bg-gradient-to-br from-black via-slate-950 to-black
+bg-black
 ```
+**Nota**: Se eliminaron los gradientes en favor de fondos negros puros para un look más minimalista y profesional.
 
-### Gradiente de Texto (Títulos)
+### Estilo de Títulos
 ```css
-bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent
+/* Títulos minimalistas con partes en rojo */
+font-black tracking-tighter text-white
+/* Parte destacada en rojo */
+text-red-500
 ```
 
 ### Gradiente de Botón Principal
 ```css
-bg-gradient-to-r from-red-500 to-red-600
-hover:from-red-600 hover:to-red-700
+bg-gradient-to-r from-red-500 via-red-600 to-red-500
+hover:from-red-600 hover:via-red-700 hover:to-red-600
 ```
 
 ## 📐 Espaciado
 
 ### Padding de Cards
-- **Móvil**: `p-4` o `p-5`
-- **Tablet**: `sm:p-6` o `sm:p-7`
-- **Desktop**: `lg:p-8`
+- **Cards Principales**:
+  - **Móvil**: `p-4`
+  - **Tablet**: `sm:p-6`
+  - **Desktop**: `lg:p-8`
+  - **XL**: `xl:p-10` (expansión para mejor uso del espacio)
+- **Cards Internas**:
+  - **Móvil**: `p-5`
+  - **Tablet**: `sm:p-6`
+  - **Desktop**: `lg:p-7`
+- **Sin Bordes Primarios**: Las Cards principales no tienen bordes visibles para un look más limpio
 
 ### Gap entre Elementos
-- **Formularios**: `space-y-5` o `space-y-6`
-- **Grids**: `gap-4` o `gap-6`
+- **Formularios**: `space-y-5 sm:space-y-6` (expandido para mejor legibilidad)
+- **Grids**: `gap-4 sm:gap-5` o `gap-6 sm:gap-8` (más espacio en desktop)
 - **Flex**: `gap-2`, `gap-3`, `gap-4`
+- **Secciones**: `mt-8 sm:mt-10` (más espacio vertical entre secciones)
 
 ## ✅ Mejores Prácticas
 
@@ -442,6 +464,13 @@ import { Logo } from "@/components/logo";
 
 ## 📐 Mejoras de UX Recientes
 
+### Diseño Minimalista y Profesional
+- **Fondos Negros Puros**: Todas las Cards y secciones usan `bg-black` sin gradientes
+- **Bordes Difuminados**: Bordes negros sutiles (`border-black/50`) que se integran con el fondo
+- **Sin Bordes Primarios**: Las Cards principales no tienen bordes visibles para un look más limpio
+- **Expansión de Elementos**: Más padding (`xl:p-10`) y spacing (`mt-8 sm:mt-10`) para mejor uso del espacio
+- **Bordes Rojos Más Visibles**: Cards internas con `border-red-500/50` (50% opacidad) para mejor definición
+
 ### Posicionamiento de Tags de Información
 - Los badges de información (rol, PRO, "Hoy", "Pendiente") aparecen inline con los títulos/nombres para mejor legibilidad
 - Ejemplo: En WOD, el badge "Hoy" aparece junto al nombre del WOD en la misma línea
@@ -453,6 +482,12 @@ import { Logo } from "@/components/logo";
 - Enlaces en footer con espaciado reducido para mobile
 - Dropdown arrows con mejor posicionamiento (12px desde el borde derecho) en todos los selects
 - Flechas personalizadas en todos los dropdowns para consistencia visual
+- Elementos expandidos con más padding y spacing para mejor legibilidad
+
+### Eliminación de Bordes Blancos
+- Todos los bordes blancos (`border-white/10`, `border-white/15`, etc.) fueron reemplazados por `border-black/50`
+- Fondos blancos sutiles (`bg-white/5`, `bg-white/10`) cambiados a `bg-black/30` o `bg-black/50`
+- Mejor integración visual con el fondo negro de la aplicación
 
 ### Manejo de Fechas
 - Parsing de fechas en timezone local para evitar desplazamientos de día
@@ -462,5 +497,14 @@ import { Logo } from "@/components/logo";
 ---
 
 **Última actualización**: Enero 2025
-**Versión**: 1.1.0
+**Versión**: 2.0.0
+
+### Cambios en Versión 2.0.0
+- ✨ Rediseño completo con estilo minimalista y profesional
+- 🖤 Fondos negros puros sin gradientes
+- 🎨 Bordes rojos más visibles (50% opacidad)
+- 📐 Expansión de elementos con más padding y spacing
+- 🔲 Eliminación de bordes primarios en Cards principales
+- 🌫️ Bordes blancos difuminados con el fondo negro
+- 📱 Mejor responsividad con breakpoints expandidos
 
