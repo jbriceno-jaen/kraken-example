@@ -6,6 +6,7 @@ import { Users, UserPlus, Trash2, Edit, CheckCircle2, XCircle, Clock, AlertTrian
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Logo } from "@/components/logo";
 import { useToast } from "@/components/ui/toast";
 import { AddUserModal } from "@/components/manager/add-user-modal";
 import {
@@ -138,10 +139,7 @@ export default function UsuariosPage() {
       <Card className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-4 sm:p-6 lg:p-8 shadow-2xl">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
-            <Badge variant="secondary" className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
-              Usuarios
-            </Badge>
-            <h2 className="mt-4 text-2xl sm:text-3xl font-bold font-[family-name:var(--font-orbitron)] text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-orbitron)] text-white">
               Gestión de Usuarios
             </h2>
             <p className="text-sm text-zinc-300 mt-2">
@@ -182,11 +180,11 @@ export default function UsuariosPage() {
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-start sm:items-center gap-3 mb-2">
-                          <h3 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-orbitron)] text-white break-words flex-1">
+                        <div className="flex items-center gap-2 mb-2 flex-wrap">
+                          <h3 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-orbitron)] text-white break-words">
                             {user.name}
                           </h3>
-                          <Badge className="bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 font-[family-name:var(--font-orbitron)] text-xs">
+                          <Badge className="bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 font-[family-name:var(--font-orbitron)] text-xs flex-shrink-0">
                             Pendiente
                           </Badge>
                         </div>
@@ -243,26 +241,24 @@ export default function UsuariosPage() {
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-start sm:items-center gap-3 mb-2">
-                        <h3 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-orbitron)] text-white break-words flex-1">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        <h3 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-orbitron)] text-white break-words">
                           {user.name}
                         </h3>
-                        <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
-                          <Badge
-                            className={
-                              user.role === "manager"
-                                ? "bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)] text-xs"
-                                : "bg-blue-500/20 border border-blue-500/30 text-blue-400 font-[family-name:var(--font-orbitron)] text-xs"
-                            }
-                          >
-                            {user.role === "manager" ? "Manager" : "Cliente"}
+                        <Badge
+                          className={
+                            user.role === "manager"
+                              ? "bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)] text-xs flex-shrink-0"
+                              : "bg-blue-500/20 border border-blue-500/30 text-blue-400 font-[family-name:var(--font-orbitron)] text-xs flex-shrink-0"
+                          }
+                        >
+                          {user.role === "manager" ? "Manager" : "Cliente"}
+                        </Badge>
+                        {user.wodEnabled && (
+                          <Badge className="bg-green-500/20 border border-green-500/30 text-green-400 font-[family-name:var(--font-orbitron)] text-xs flex-shrink-0">
+                            PRO
                           </Badge>
-                          {user.wodEnabled && (
-                            <Badge className="bg-green-500/20 border border-green-500/30 text-green-400 font-[family-name:var(--font-orbitron)] text-xs">
-                              PRO
-                            </Badge>
-                          )}
-                        </div>
+                        )}
                       </div>
                       <p className="text-zinc-400 text-sm mb-2 break-words">{user.email}</p>
                       {user.role === "client" && (
@@ -369,12 +365,9 @@ export default function UsuariosPage() {
         <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-                Kraken
-              </span>
-              <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
+              <Logo variant="compact" showLink={false} className="justify-center" />
             </div>
-            <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
               Confirmar Eliminación
             </Badge>
             <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">
@@ -425,12 +418,9 @@ export default function UsuariosPage() {
         <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-                Kraken
-              </span>
-              <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
+              <Logo variant="compact" showLink={false} className="justify-center" />
             </div>
-            <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
               Confirmar Rechazo
             </Badge>
             <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">

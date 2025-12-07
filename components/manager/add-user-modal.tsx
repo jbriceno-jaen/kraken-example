@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Logo } from "@/components/logo";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/toast";
 import { UserPlus, X } from "lucide-react";
@@ -153,13 +154,8 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-              Kraken
-            </span>
-            <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
-          </div>
-          <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+            <Logo variant="compact" showLink={false} className="justify-center mb-2" />
+          <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
             {editingUser ? "Editar Usuario" : "Agregar Usuario"}
           </Badge>
           <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">

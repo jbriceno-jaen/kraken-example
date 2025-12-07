@@ -20,6 +20,7 @@ import {
 import { LoginModal } from "@/components/auth/login-modal";
 import { RegisterModal } from "@/components/auth/register-modal";
 import { ForgotPasswordModal } from "@/components/auth/forgot-password-modal";
+import { Logo } from "@/components/logo";
 
 const links = [
   { href: "#workouts", label: "Workouts" },
@@ -89,12 +90,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-30 border-b border-red-500/20 bg-black/80 backdrop-blur-xl transition-all duration-300 shadow-lg shadow-black/50">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2 text-white group">
-          <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50 group-hover:shadow-red-500/70 transition-all duration-300 group-hover:scale-105">
-            Kraken
-          </span>
-          <span className="text-lg font-bold font-[family-name:var(--font-orbitron)] group-hover:text-red-400 transition-colors">Elite Fitness</span>
-        </Link>
+        <Logo variant="default" />
         <nav className="hidden items-center gap-6 text-sm font-medium text-zinc-300 sm:flex">
           {session ? (
             <>
@@ -197,7 +193,7 @@ export default function Navbar() {
             <div className="hidden items-center gap-2 sm:flex">
               <Button 
                 onClick={() => setRegisterOpen(true)}
-                className="min-h-[40px] bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 active:scale-[0.98] shadow-lg shadow-red-500/50 transition-all duration-300"
+                className="min-h-[40px] bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300"
               >
                 Registrarse
               </Button>
@@ -476,7 +472,7 @@ export default function Navbar() {
                     setRegisterOpen(true);
                     close();
                   }}
-                  className="w-full min-h-[48px] text-base bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 active:scale-[0.98] shadow-lg shadow-red-500/50"
+                  className="w-full min-h-[48px] text-base bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300"
                 >
                   Registrarse
                 </Button>

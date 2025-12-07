@@ -76,18 +76,11 @@ Todos los modals siguen el mismo formato visual consistente.
 ```tsx
 <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md max-h-[90vh] overflow-y-auto">
   <DialogHeader>
-    {/* Logo y Badge */}
-    <div className="flex items-center justify-center gap-2 mb-2">
-      <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-        Kraken
-      </span>
-      <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">
-        Elite Fitness
-      </span>
-    </div>
+    {/* Logo compacto */}
+    <Logo variant="compact" className="mb-2" />
     
-    {/* Badge de sección */}
-    <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+    {/* Badge de sección con gradiente */}
+    <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
       Título de Sección
     </Badge>
     
@@ -105,6 +98,11 @@ Todos los modals siguen el mismo formato visual consistente.
   {/* Contenido del formulario */}
 </DialogContent>
 ```
+
+#### Variantes del Logo
+- **`variant="default"`**: Tamaño estándar para páginas principales
+- **`variant="footer"`**: Tamaño reducido para footer
+- **`variant="compact"`**: Tamaño compacto para modals (recomendado)
 
 #### Características
 - Fondo: Gradiente negro (`from-black via-slate-950 to-black`)
@@ -200,6 +198,12 @@ Usado para acciones destructivas
   <option value="" className="bg-black text-white">Selecciona una opción</option>
 </select>
 ```
+
+**Nota**: Los selects tienen estilos globales aplicados en `globals.css` que:
+- Remueven la flecha nativa del navegador (`appearance: none`)
+- Agregan una flecha personalizada blanca posicionada a `right 0.75rem` (12px desde el borde derecho) para mejor legibilidad
+- Aseguran padding derecho suficiente (`2.5rem`) para la flecha personalizada
+- La flecha está más separada del borde derecho para una mejor experiencia visual
 
 #### Textarea
 
@@ -357,6 +361,28 @@ hover:from-red-600 hover:to-red-700
 ```css
 --font-orbitron: 'Orbitron', sans-serif;
 --font-geist-sans: 'Geist Sans', sans-serif;
+--kraken-red: oklch(0.577 0.245 27.325);
+--kraken-red-dark: oklch(0.488 0.243 22.216);
+--kraken-red-light: oklch(0.704 0.191 22.216);
+--kraken-red-vibrant: oklch(0.577 0.245 27.325);
+--kraken-red-gradient-start: oklch(0.577 0.245 27.325);
+--kraken-red-gradient-end: oklch(0.488 0.243 22.216);
+```
+
+### Estilos Globales para Selects
+```css
+/* Custom select arrow positioning - move arrow more to the left */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,..."); /* Flecha blanca personalizada */
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center; /* 12px desde el borde derecho */
+  background-size: 1rem;
+}
+
+select:not([class*="pr-"]) {
+  padding-right: 2.5rem; /* Espacio suficiente para la flecha */
+}
 ```
 
 ### Animaciones
@@ -373,6 +399,13 @@ hover:from-red-600 hover:to-red-700
 }
 ```
 
+### Componente Logo
+El componente `Logo` está disponible en `components/logo.tsx` con las siguientes características:
+- **Sin animación hover**: El logo no tiene efectos hover para mantener consistencia visual en todas las áreas (modals, páginas, etc.)
+- **Variantes**: `default`, `footer`, `compact`
+- **Estilo**: "KRAKEN" en blanco + "ELITE FITNESS" en rojo con fuente Orbitron
+- **Uso en modals**: Se recomienda usar `variant="compact"` para modals junto con un badge de sección
+
 ## 📚 Referencias
 
 - **Tailwind CSS**: [https://tailwindcss.com](https://tailwindcss.com)
@@ -380,8 +413,54 @@ hover:from-red-600 hover:to-red-700
 - **Lucide Icons**: [https://lucide.dev](https://lucide.dev)
 - **Google Fonts - Orbitron**: [https://fonts.google.com/specimen/Orbitron](https://fonts.google.com/specimen/Orbitron)
 
+## 🎨 Componente Logo
+
+El logo de Kraken Elite Fitness es un componente reutilizable disponible en `components/logo.tsx`.
+
+### Características
+- **Sin animación hover**: Mantiene consistencia visual sin efectos hover
+- **Fuente**: Orbitron para ambos textos
+- **Colores**: "KRAKEN" en blanco, "ELITE FITNESS" en rojo (`red-500`)
+- **Variantes**: `default`, `footer`, `compact`
+
+### Uso
+```tsx
+import { Logo } from "@/components/logo";
+
+// Logo estándar
+<Logo />
+
+// Logo en footer
+<Logo variant="footer" />
+
+// Logo compacto (para modals)
+<Logo variant="compact" />
+
+// Logo sin enlace
+<Logo showLink={false} />
+```
+
+## 📐 Mejoras de UX Recientes
+
+### Posicionamiento de Tags de Información
+- Los badges de información (rol, PRO, "Hoy", "Pendiente") aparecen inline con los títulos/nombres para mejor legibilidad
+- Ejemplo: En WOD, el badge "Hoy" aparece junto al nombre del WOD en la misma línea
+- Ejemplo: En Usuarios, los badges de rol y PRO aparecen junto al nombre del usuario
+- Ejemplo: En Usuarios Pendientes, el badge "Pendiente" aparece junto al nombre del usuario
+
+### Ajustes de Espaciado
+- Footer más compacto en mobile view (padding y gaps reducidos)
+- Enlaces en footer con espaciado reducido para mobile
+- Dropdown arrows con mejor posicionamiento (12px desde el borde derecho) en todos los selects
+- Flechas personalizadas en todos los dropdowns para consistencia visual
+
+### Manejo de Fechas
+- Parsing de fechas en timezone local para evitar desplazamientos de día
+- Uso de `new Date(year, month, day, 0, 0, 0, 0)` para crear fechas locales
+- Aplicado en WOD management y otros componentes que manejan fechas
+
 ---
 
 **Última actualización**: Enero 2025
-**Versión**: 1.0.0
+**Versión**: 1.1.0
 

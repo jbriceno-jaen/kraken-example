@@ -65,8 +65,20 @@ export async function PUT(
       );
     }
 
-    const wodDate = new Date(date);
-    wodDate.setHours(0, 0, 0, 0);
+    // Parse date in local timezone to avoid timezone shift issues
+    // Handle YYYY-MM-DD format (from formatDateLocal)
+    let wodDate: Date;
+    if (typeof date === 'string' && date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      const parts = date.split('-');
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed
+      const day = parseInt(parts[2], 10);
+      wodDate = new Date(year, month, day, 0, 0, 0, 0);
+    } else {
+      // Handle ISO strings or Date objects
+      const tempDate = new Date(date);
+      wodDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0, 0, 0);
+    }
 
     // Check if another WOD already exists for this date (excluding the current WOD)
     const startOfDay = new Date(wodDate);

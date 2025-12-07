@@ -110,10 +110,7 @@ export default function WODPage() {
       <Card className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-4 sm:p-6 lg:p-8 shadow-2xl">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
-            <Badge variant="secondary" className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
-              WOD del Día
-            </Badge>
-            <h2 className="mt-4 text-2xl sm:text-3xl font-bold font-[family-name:var(--font-orbitron)] text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-orbitron)] text-white">
               Workout del Día
             </h2>
             <p className="text-sm text-zinc-300 mt-2">
@@ -145,12 +142,12 @@ export default function WODPage() {
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-start gap-3 mb-2">
-                        <h3 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-orbitron)] text-white break-words flex-1">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        <h3 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-orbitron)] text-white break-words">
                           {wod.title}
                         </h3>
                         {isToday && (
-                          <Badge className="bg-green-500/20 border border-green-500/30 text-green-400 font-[family-name:var(--font-orbitron)] text-xs">
+                          <Badge className="bg-green-500/20 border border-green-500/30 text-green-400 font-[family-name:var(--font-orbitron)] text-xs flex-shrink-0">
                             Hoy
                           </Badge>
                         )}

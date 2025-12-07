@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";
 import Navbar from "@/components/navbar";
+import { Logo } from "@/components/logo";
 import { Mail, Lock, ArrowRight, Flame, AlertCircle } from "lucide-react";
 
 export default function LoginPage() {
@@ -185,13 +186,8 @@ export default function LoginPage() {
         <Card className="w-full max-w-md border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-8 shadow-2xl">
           <div className="space-y-6">
             <div className="text-center space-y-4">
-              <div className="flex items-center justify-center gap-2">
-                <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-                  Kraken
-                </span>
-                <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
-              </div>
-              <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
+              <Logo variant="compact" showLink={false} className="justify-center" />
+              <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
                 Iniciar Sesión
               </Badge>
               <h1 className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
@@ -257,7 +253,7 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full min-h-[48px] text-base sm:text-sm gap-2 bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 transition-all duration-300"
+                className="w-full min-h-[48px] text-base sm:text-sm gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300"
               >
                 {isLoading ? (
                   <>

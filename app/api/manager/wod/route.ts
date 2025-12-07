@@ -27,7 +27,19 @@ export async function GET(request: NextRequest) {
 
     let targetDate: Date;
     if (dateParam) {
-      targetDate = new Date(dateParam);
+      // Parse date in local timezone to avoid timezone shift issues
+      // Handle YYYY-MM-DD format (from formatDateLocal)
+      if (dateParam.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        const parts = dateParam.split('-');
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed
+        const day = parseInt(parts[2], 10);
+        targetDate = new Date(year, month, day, 0, 0, 0, 0);
+      } else {
+        // Handle ISO strings
+        const tempDate = new Date(dateParam);
+        targetDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0, 0, 0);
+      }
     } else {
       targetDate = new Date();
       targetDate.setHours(0, 0, 0, 0);
@@ -87,8 +99,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const wodDate = new Date(date);
-    wodDate.setHours(0, 0, 0, 0);
+    // Parse date in local timezone to avoid timezone shift issues
+    // Handle YYYY-MM-DD format (from formatDateLocal)
+    let wodDate: Date;
+    if (typeof date === 'string' && date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      const parts = date.split('-');
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed
+      const day = parseInt(parts[2], 10);
+      wodDate = new Date(year, month, day, 0, 0, 0, 0);
+    } else {
+      // Handle ISO strings or Date objects
+      const tempDate = new Date(date);
+      wodDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(), 0, 0, 0, 0);
+    }
 
     const managerId = parseInt(session.user.id);
 

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Logo } from "@/components/logo";
 import { useToast } from "@/components/ui/toast";
 import {
   Dialog,
@@ -80,13 +81,8 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
         ) : (
           <>
             <DialogHeader>
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-                  Kraken
-                </span>
-                <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
-              </div>
-              <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+              <Logo variant="compact" showLink={false} className="justify-center mb-2" />
+              <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
                 Recuperar Contraseña
               </Badge>
               <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">

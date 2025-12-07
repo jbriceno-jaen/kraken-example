@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Logo } from "@/components/logo";
 import { useToast } from "@/components/ui/toast";
 import { Clock, Plus, Edit, Trash2, X, Check, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -42,7 +43,9 @@ export function SlotsManagement() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [formData, setFormData] = useState({
     day: "",
-    time: "",
+    hour: "5",
+    minute: "00",
+    period: "AM",
     capacity: "14",
     available: true,
   });
@@ -88,10 +91,13 @@ export function SlotsManagement() {
   };
 
   const handleAddSlot = async () => {
-    if (!formData.day || !formData.time) {
+    if (!formData.day || !formData.hour || !formData.minute || !formData.period) {
       showToast("Día y hora son requeridos", "error");
       return;
     }
+
+    // Combine hour, minute, and period into time string
+    const time = `${formData.hour}:${formData.minute} ${formData.period}`;
 
     try {
       const res = await fetch("/api/manager/class-slots", {
@@ -99,8 +105,9 @@ export function SlotsManagement() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           day: formData.day,
-          time: formData.time,
+          time: time,
           capacity: parseInt(formData.capacity),
+          available: formData.available,
         }),
       });
 
@@ -109,7 +116,7 @@ export function SlotsManagement() {
       if (res.ok) {
         showToast("Horario creado exitosamente", "success");
         setShowAddModal(false);
-        setFormData({ day: "", time: "", capacity: "14", available: true });
+        setFormData({ day: "", hour: "5", minute: "00", period: "AM", capacity: "14", available: true });
         fetchSlots();
       } else {
         showToast(data.error || "Error al crear horario", "error");
@@ -121,10 +128,13 @@ export function SlotsManagement() {
   };
 
   const handleEditSlot = async () => {
-    if (!selectedSlot || !formData.day || !formData.time) {
+    if (!selectedSlot || !formData.day || !formData.hour || !formData.minute || !formData.period) {
       showToast("Día y hora son requeridos", "error");
       return;
     }
+
+    // Combine hour, minute, and period into time string
+    const time = `${formData.hour}:${formData.minute} ${formData.period}`;
 
     try {
       const res = await fetch(`/api/manager/class-slots/${selectedSlot.id}`, {
@@ -132,7 +142,7 @@ export function SlotsManagement() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           day: formData.day,
-          time: formData.time,
+          time: time,
           capacity: parseInt(formData.capacity),
           available: formData.available,
         }),
@@ -144,7 +154,7 @@ export function SlotsManagement() {
         showToast("Horario actualizado exitosamente", "success");
         setShowEditModal(false);
         setSelectedSlot(null);
-        setFormData({ day: "", time: "", capacity: "14", available: true });
+        setFormData({ day: "", hour: "5", minute: "00", period: "AM", capacity: "14", available: true });
         fetchSlots();
       } else {
         showToast(data.error || "Error al actualizar horario", "error");
@@ -182,11 +192,27 @@ export function SlotsManagement() {
     }
   };
 
+  // Helper function to parse time string (e.g., "5:00 AM") into hour, minute, period
+  const parseTime = (timeStr: string): { hour: string; minute: string; period: string } => {
+    const match = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+    if (match) {
+      return {
+        hour: match[1],
+        minute: match[2],
+        period: match[3].toUpperCase(),
+      };
+    }
+    return { hour: "5", minute: "00", period: "AM" };
+  };
+
   const openEditModal = (slot: ClassSlot) => {
     setSelectedSlot(slot);
+    const parsedTime = parseTime(slot.time);
     setFormData({
       day: slot.day,
-      time: slot.time,
+      hour: parsedTime.hour,
+      minute: parsedTime.minute,
+      period: parsedTime.period,
       capacity: slot.capacity.toString(),
       available: slot.available,
     });
@@ -198,8 +224,25 @@ export function SlotsManagement() {
     setShowDeleteConfirm(true);
   };
 
+  // Helper function to convert 12h time to 24h for sorting
+  const timeTo24h = (timeStr: string): number => {
+    const match = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+    if (!match) return 0;
+    let hours = parseInt(match[1]);
+    const minutes = parseInt(match[2]);
+    const period = match[3].toUpperCase();
+    
+    if (period === "PM" && hours !== 12) hours += 12;
+    if (period === "AM" && hours === 12) hours = 0;
+    
+    return hours * 60 + minutes; // Convert to minutes for easy sorting
+  };
+
   const slotsByDay = days.reduce((acc, day) => {
-    acc[day] = slots.filter((slot) => slot.day === day);
+    const daySlots = slots.filter((slot) => slot.day === day);
+    // Sort slots by time (ascending)
+    daySlots.sort((a, b) => timeTo24h(a.time) - timeTo24h(b.time));
+    acc[day] = daySlots;
     return acc;
   }, {} as Record<string, ClassSlot[]>);
 
@@ -239,7 +282,9 @@ export function SlotsManagement() {
           onClick={() => {
             setFormData({ 
               day: selectedDay || "", 
-              time: "", 
+              hour: "5", 
+              minute: "00", 
+              period: "AM", 
               capacity: "14", 
               available: true 
             });
@@ -403,12 +448,9 @@ export function SlotsManagement() {
         <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-                Kraken
-              </span>
-              <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
+              <Logo variant="compact" showLink={false} className="justify-center" />
             </div>
-            <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
               Nuevo Horario
             </Badge>
             <DialogTitle className="text-2xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">
@@ -447,16 +489,50 @@ export function SlotsManagement() {
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                Hora * (formato: 5:00 AM o 5:00 PM)
+                Hora *
               </label>
-              <Input
-                type="text"
-                value={formData.time}
-                onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                placeholder="5:00 AM"
-                required
-                className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
-              />
+              <div className="flex gap-2 items-center">
+                <Input
+                  type="number"
+                  min="1"
+                  max="12"
+                  value={formData.hour}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === "" || (parseInt(value) >= 1 && parseInt(value) <= 12)) {
+                      setFormData({ ...formData, hour: value });
+                    }
+                  }}
+                  placeholder="5"
+                  required
+                  className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+                />
+                <span className="text-white font-bold">:</span>
+                <Input
+                  type="number"
+                  min="0"
+                  max="59"
+                  value={formData.minute}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === "" || (parseInt(value) >= 0 && parseInt(value) <= 59)) {
+                      setFormData({ ...formData, minute: value.padStart(2, "0") });
+                    }
+                  }}
+                  placeholder="00"
+                  required
+                  className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+                />
+                <select
+                  value={formData.period}
+                  onChange={(e) => setFormData({ ...formData, period: e.target.value })}
+                  required
+                  className="min-h-[48px] text-base sm:text-sm border border-red-500/20 bg-black text-white rounded-md px-3 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 [&>option]:bg-black [&>option]:text-white"
+                >
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -498,12 +574,9 @@ export function SlotsManagement() {
         <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-                Kraken
-              </span>
-              <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
+              <Logo variant="compact" showLink={false} className="justify-center" />
             </div>
-            <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
               Editar Horario
             </Badge>
             <DialogTitle className="text-2xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">
@@ -541,16 +614,50 @@ export function SlotsManagement() {
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                Hora * (formato: 5:00 AM o 5:00 PM)
+                Hora *
               </label>
-              <Input
-                type="text"
-                value={formData.time}
-                onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                placeholder="5:00 AM"
-                required
-                className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
-              />
+              <div className="flex gap-2 items-center">
+                <Input
+                  type="number"
+                  min="1"
+                  max="12"
+                  value={formData.hour}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === "" || (parseInt(value) >= 1 && parseInt(value) <= 12)) {
+                      setFormData({ ...formData, hour: value });
+                    }
+                  }}
+                  placeholder="5"
+                  required
+                  className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+                />
+                <span className="text-white font-bold">:</span>
+                <Input
+                  type="number"
+                  min="0"
+                  max="59"
+                  value={formData.minute}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === "" || (parseInt(value) >= 0 && parseInt(value) <= 59)) {
+                      setFormData({ ...formData, minute: value.padStart(2, "0") });
+                    }
+                  }}
+                  placeholder="00"
+                  required
+                  className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+                />
+                <select
+                  value={formData.period}
+                  onChange={(e) => setFormData({ ...formData, period: e.target.value })}
+                  required
+                  className="min-h-[48px] text-base sm:text-sm border border-red-500/20 bg-black text-white rounded-md px-3 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 [&>option]:bg-black [&>option]:text-white"
+                >
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -613,12 +720,9 @@ export function SlotsManagement() {
         <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-                Kraken
-              </span>
-              <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
+              <Logo variant="compact" showLink={false} className="justify-center" />
             </div>
-            <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
               Confirmar Eliminación
             </Badge>
             <DialogTitle className="text-2xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">

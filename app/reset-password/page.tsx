@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";
 import Navbar from "@/components/navbar";
+import { Logo } from "@/components/logo";
 import { Lock, Eye, EyeOff, CheckCircle2, XCircle, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -147,7 +148,7 @@ export default function ResetPasswordPage() {
               El enlace de restablecimiento de contraseña no es válido o ha expirado. Por favor, solicita un nuevo enlace.
             </p>
             <Link href="/login">
-              <Button className="w-full min-h-[48px] bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700">
+              <Button className="w-full min-h-[48px] bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300">
                 Volver al Login
               </Button>
             </Link>
@@ -175,7 +176,7 @@ export default function ResetPasswordPage() {
               Tu contraseña ha sido restablecida exitosamente. Serás redirigido al login en unos segundos.
             </p>
             <Link href="/login">
-              <Button className="w-full min-h-[48px] bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700">
+              <Button className="w-full min-h-[48px] bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300">
                 Ir al Login
               </Button>
             </Link>
@@ -191,13 +192,8 @@ export default function ResetPasswordPage() {
       <div className="container mx-auto px-4 py-20 flex items-center justify-center">
         <div className="max-w-md w-full space-y-6">
           <div className="text-center space-y-4">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-                Kraken
-              </span>
-              <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
-            </div>
-            <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+            <Logo variant="compact" showLink={false} className="justify-center mb-2" />
+            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
               Restablecer Contraseña
             </Badge>
             <h1 className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
@@ -262,7 +258,7 @@ export default function ResetPasswordPage() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full min-h-[48px] text-base sm:text-sm gap-2 bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 transition-all duration-300"
+              className="w-full min-h-[48px] text-base sm:text-sm gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300"
             >
               {isLoading ? (
                 <>

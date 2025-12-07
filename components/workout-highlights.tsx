@@ -40,7 +40,7 @@ export default function WorkoutHighlights() {
   return (
     <section id="workouts" className="space-y-6">
       <div className="space-y-3">
-        <Badge className="bg-white/10 text-white font-[family-name:var(--font-orbitron)]">Programación</Badge>
+        <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30">Programación</Badge>
         <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight font-[family-name:var(--font-orbitron)]">Entrenamientos hechos para progresar.</h2>
         <p className="text-base sm:text-lg text-zinc-300">
           Mezclamos fuerza, acondicionamiento y habilidad para que te muevas mejor, levantes más y dures más.

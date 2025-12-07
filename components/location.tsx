@@ -7,7 +7,7 @@ export default function Location() {
   return (
     <section id="location" className="space-y-6">
       <div className="space-y-3">
-        <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
+        <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30">
           Ubicación
         </Badge>
         <h2 className="text-3xl font-semibold tracking-tight font-[family-name:var(--font-orbitron)]">
@@ -21,7 +21,7 @@ export default function Location() {
         <Card className="group border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-6 sm:p-8 lg:p-10 shadow-2xl transition-all duration-500 sm:hover:border-red-500/40 sm:hover:shadow-red-500/20 sm:hover:scale-[1.02] overflow-hidden relative">
           <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="relative flex items-start gap-4 mb-6">
-            <div className="flex size-12 sm:size-14 items-center justify-center rounded-xl bg-red-500/20 text-red-400 flex-shrink-0 group-hover:bg-red-500/30 transition-colors shadow-lg shadow-red-500/20">
+            <div className="flex size-12 sm:size-14 items-center justify-center rounded-xl bg-gradient-to-br from-red-500/25 via-red-600/20 to-red-500/25 text-red-400 flex-shrink-0 group-hover:from-red-500/35 group-hover:via-red-600/30 group-hover:to-red-500/35 group-hover:shadow-xl group-hover:shadow-red-500/40 transition-all duration-300 shadow-lg shadow-red-500/25">
               <MapPin className="size-6 sm:size-7" />
             </div>
             <div className="min-w-0 flex-1">
@@ -46,7 +46,7 @@ export default function Location() {
           <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="relative space-y-6">
             <div className="flex items-start gap-4">
-              <div className="flex size-12 sm:size-14 items-center justify-center rounded-xl bg-red-500/20 text-red-400 flex-shrink-0 group-hover:bg-red-500/30 transition-colors shadow-lg shadow-red-500/20">
+              <div className="flex size-12 sm:size-14 items-center justify-center rounded-xl bg-gradient-to-br from-red-500/25 via-red-600/20 to-red-500/25 text-red-400 flex-shrink-0 group-hover:from-red-500/35 group-hover:via-red-600/30 group-hover:to-red-500/35 group-hover:shadow-xl group-hover:shadow-red-500/40 transition-all duration-300 shadow-lg shadow-red-500/25">
                 <Clock className="size-6 sm:size-7" />
               </div>
               <div className="min-w-0 flex-1">

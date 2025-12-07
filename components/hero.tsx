@@ -38,16 +38,17 @@ export default function Hero() {
       id="top"
       className="relative overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black px-4 py-16 shadow-2xl sm:px-6 sm:py-20 lg:px-10 lg:py-24"
     >
-      {/* Subtle background gradients */}
-      <div className="absolute inset-0 bg-gradient-to-br from-red-600/5 via-transparent to-red-500/3" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(239,68,68,0.04),transparent_60%)]" />
+      {/* Vibrant red gradients matching logo */}
+      <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-red-600/5 to-red-700/3" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(239,68,68,0.08),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(220,38,38,0.06),transparent_50%)]" />
       
       <div className="relative mx-auto max-w-7xl">
         {/* Top Section - Hero Content */}
         <div className="text-center space-y-6 sm:space-y-8 lg:space-y-10 mb-12 sm:mb-16 lg:mb-20">
           {/* Badge */}
           <div className="flex justify-center">
-            <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 text-xs sm:text-sm px-4 sm:px-5 py-2">
+            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 text-xs sm:text-sm px-4 sm:px-5 py-2 hover:shadow-red-500/50 transition-all duration-300">
               CrossFit | Fuerza | Motor
             </Badge>
           </div>
@@ -57,7 +58,7 @@ export default function Hero() {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] tracking-tight font-[family-name:var(--font-orbitron)] text-white break-words">
               Entrena como un
               <br />
-              <span className="bg-gradient-to-r from-red-500 via-red-400 to-red-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent animate-pulse">
                 Guerrero
               </span>
             </h1>
@@ -82,7 +83,7 @@ export default function Hero() {
                 
                 <div className="relative flex flex-col items-center text-center gap-4">
                   {/* Icon */}
-                  <div className="flex size-14 sm:size-16 items-center justify-center rounded-xl bg-red-500/20 text-red-400 group-hover:bg-red-500/30 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-red-500/20 flex-shrink-0">
+                  <div className="flex size-14 sm:size-16 items-center justify-center rounded-xl bg-gradient-to-br from-red-500/25 via-red-600/20 to-red-500/25 text-red-400 group-hover:from-red-500/35 group-hover:via-red-600/30 group-hover:to-red-500/35 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-red-500/40 transition-all duration-300 shadow-lg shadow-red-500/25 flex-shrink-0">
                     <Icon className="size-7 sm:size-8 flex-shrink-0" />
                   </div>
                   

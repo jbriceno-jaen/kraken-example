@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/toast";
+import { Logo } from "@/components/logo";
 import { Users, Calendar, Clock, UserPlus, X, RotateCw } from "lucide-react";
 import { cn, formatDateLocal, parseDateLocal } from "@/lib/utils";
 import {
@@ -555,9 +556,6 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mb-3">
-            Clases
-          </Badge>
           <h3 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-orbitron)] text-white mb-2">
             Gestión de Clases
           </h3>
@@ -1001,12 +999,9 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
         <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-                Kraken
-              </span>
-              <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
+              <Logo variant="compact" showLink={false} className="justify-center" />
             </div>
-            <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
               Agregar Cliente
             </Badge>
             <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">
@@ -1106,12 +1101,9 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
         <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
-              <span className="rounded-full bg-gradient-to-r from-red-500 to-red-600 px-3 py-1 text-xs font-bold uppercase tracking-tight font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/50">
-                Kraken
-              </span>
-              <span className="text-lg font-bold font-[family-name:var(--font-orbitron)]">Elite Fitness</span>
+              <Logo variant="compact" showLink={false} className="justify-center" />
             </div>
-            <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20 w-fit mx-auto">
+            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
               Confirmar Eliminación
             </Badge>
             <DialogTitle className="text-2xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">

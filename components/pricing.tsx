@@ -36,7 +36,7 @@ export default function Pricing() {
   return (
     <section id="pricing" className="space-y-6">
       <div className="space-y-3">
-        <Badge className="bg-white/10 text-white font-[family-name:var(--font-orbitron)]">Membresías</Badge>
+        <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30">Membresías</Badge>
         <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight font-[family-name:var(--font-orbitron)]">Elige el plan que va con tu ritmo.</h2>
         <p className="text-base sm:text-lg text-zinc-300">Precios claros. Sin cargos ocultos. Pausa o cambia cuando quieras.</p>
       </div>
@@ -72,14 +72,14 @@ export default function Pricing() {
                 <p className="text-xs sm:text-sm text-zinc-400 mt-1 break-words">{plan.cadence}</p>
               </div>
               {plan.highlighted && (
-                <Badge className="bg-gradient-to-r from-red-500 to-red-600 text-white border-0 shadow-lg shadow-red-500/50 font-[family-name:var(--font-orbitron)] flex-shrink-0 text-xs sm:text-sm">
+                <Badge className="bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white border-0 shadow-lg shadow-red-500/60 font-[family-name:var(--font-orbitron)] flex-shrink-0 text-xs sm:text-sm hover:shadow-red-500/80 transition-all duration-300">
                   Recomendado
                 </Badge>
               )}
             </div>
             <div className="relative overflow-hidden">
               <p className={`text-4xl sm:text-5xl font-bold font-[family-name:var(--font-orbitron)] break-words ${
-                plan.highlighted ? "bg-gradient-to-br from-white to-zinc-300 bg-clip-text text-transparent" : "text-white"
+                plan.highlighted ? "bg-gradient-to-br from-white via-red-50 to-zinc-300 bg-clip-text text-transparent" : "text-white"
               }`}>
                 {plan.price}
               </p>
@@ -89,7 +89,7 @@ export default function Pricing() {
               {plan.perks.map((perk) => (
                 <div key={perk} className="flex items-start gap-3 text-xs sm:text-sm text-zinc-300 group-hover:text-zinc-200 transition-colors min-w-0">
                   <div className={`mt-1.5 size-2 rounded-full flex-shrink-0 ${
-                    plan.highlighted ? "bg-red-400 shadow-lg shadow-red-400/50" : "bg-red-500"
+                    plan.highlighted ? "bg-gradient-to-br from-red-400 to-red-600 shadow-lg shadow-red-500/60" : "bg-gradient-to-br from-red-500 to-red-600"
                   }`} />
                   <span className="leading-relaxed break-words flex-1 min-w-0">{perk}</span>
                 </div>
