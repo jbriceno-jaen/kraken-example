@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import Navbar from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
@@ -11,9 +12,9 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white flex flex-col">
       <Navbar />
-      <main className="mx-auto flex max-w-4xl flex-col gap-8 px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
+      <main className="mx-auto flex max-w-4xl flex-col gap-8 px-4 py-12 sm:px-6 lg:px-8 sm:py-16 flex-1">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors mb-4"
@@ -147,6 +148,7 @@ export default function TermsPage() {
           </div>
         </Card>
       </main>
+      <Footer />
     </div>
   );
 }

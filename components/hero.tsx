@@ -1,15 +1,10 @@
 "use client";
 
-import { ArrowRight, Calendar, UserCheck, Trophy, BarChart3, Clock, Target, Zap } from "lucide-react";
-import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { Calendar, UserCheck, Trophy, BarChart3 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 export default function Hero() {
-  const { data: session } = useSession();
-
   const features = [
     {
       icon: Calendar,
@@ -36,63 +31,70 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden rounded-3xl border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black px-4 py-16 shadow-2xl sm:px-6 sm:py-20 lg:px-10 lg:py-24"
+      className="relative overflow-hidden rounded-3xl border border-black/50 bg-black px-4 py-20 shadow-2xl sm:px-6 sm:py-24 lg:px-10 lg:py-32"
     >
-      {/* Vibrant red gradients matching logo */}
-      <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 via-red-600/5 to-red-700/3" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(239,68,68,0.08),transparent_60%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(220,38,38,0.06),transparent_50%)]" />
+      {/* Minimalist black background with subtle red accents */}
+      <div className="absolute inset-0 bg-black" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(239,68,68,0.03),transparent_80%)]" />
+      
+      {/* Subtle geometric lines */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
+      
+      {/* Minimal red accent dots */}
+      <div className="absolute top-20 right-20 w-1 h-1 bg-red-500 rounded-full opacity-40" />
+      <div className="absolute bottom-32 left-16 w-1 h-1 bg-red-500 rounded-full opacity-40" />
       
       <div className="relative mx-auto max-w-7xl">
         {/* Top Section - Hero Content */}
-        <div className="text-center space-y-6 sm:space-y-8 lg:space-y-10 mb-12 sm:mb-16 lg:mb-20">
-          {/* Badge */}
-          <div className="flex justify-center">
-            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 text-xs sm:text-sm px-4 sm:px-5 py-2 hover:shadow-red-500/50 transition-all duration-300">
+        <div className="text-center space-y-8 sm:space-y-10 lg:space-y-12 mb-16 sm:mb-20 lg:mb-24">
+          {/* Minimalist Badge */}
+          <div className="flex justify-center animate-fade-in">
+            <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5 hover:border-red-500/50 transition-all duration-300">
               CrossFit | Fuerza | Motor
             </Badge>
           </div>
 
-          {/* Main Heading */}
-          <div className="space-y-4 sm:space-y-5 lg:space-y-6">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] tracking-tight font-[family-name:var(--font-orbitron)] text-white break-words">
-              Entrena como un
+          {/* Main Heading - Ultra Minimalist */}
+          <div className="space-y-6 sm:space-y-8 lg:space-y-10">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black leading-[0.95] tracking-tighter font-[family-name:var(--font-orbitron)] text-white break-words animate-fade-in-up">
+              ENTRENA
               <br />
-              <span className="bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent animate-pulse">
-                Guerrero
-              </span>
+              <span className="text-red-500">COMO UN</span>
+              <br />
+              <span className="text-white">GUERRERO</span>
             </h1>
-            <p className="text-lg sm:text-xl lg:text-2xl text-zinc-300 leading-relaxed max-w-3xl mx-auto font-medium break-words px-4">
+            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-zinc-500 leading-relaxed max-w-3xl mx-auto font-light break-words px-4 animate-fade-in-up delay-200">
               La plataforma que transforma tu entrenamiento. Reserva clases, rastrea PRs y alcanza tus objetivos con programación de élite y seguimiento en tiempo real.
             </p>
           </div>
-
         </div>
 
-        {/* Features Grid */}
+        {/* Minimalist Features Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <div
                 key={index}
-                className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 via-white/3 to-transparent p-6 sm:p-7 lg:p-8 hover:border-red-500/40 hover:bg-gradient-to-br hover:from-red-500/10 hover:via-red-500/5 hover:to-transparent transition-all duration-300 active:scale-[0.98] cursor-pointer overflow-hidden flex flex-col"
+                className="group relative rounded-xl border border-red-500/50 bg-black/30 p-6 sm:p-7 lg:p-8 hover:border-red-500/70 hover:bg-black/50 transition-all duration-500 cursor-pointer overflow-hidden flex flex-col"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                {/* Hover effect background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-red-500/0 to-red-500/0 group-hover:from-red-500/5 group-hover:to-transparent transition-all duration-300" />
+                {/* Subtle hover effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-500/0 to-red-500/0 group-hover:from-red-500/5 group-hover:to-transparent transition-all duration-500" />
                 
-                <div className="relative flex flex-col items-center text-center gap-4">
-                  {/* Icon */}
-                  <div className="flex size-14 sm:size-16 items-center justify-center rounded-xl bg-gradient-to-br from-red-500/25 via-red-600/20 to-red-500/25 text-red-400 group-hover:from-red-500/35 group-hover:via-red-600/30 group-hover:to-red-500/35 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-red-500/40 transition-all duration-300 shadow-lg shadow-red-500/25 flex-shrink-0">
-                    <Icon className="size-7 sm:size-8 flex-shrink-0" />
+                <div className="relative flex flex-col items-center text-center gap-5 z-10">
+                  {/* Minimalist Icon */}
+                  <div className="relative flex size-14 sm:size-16 lg:size-20 items-center justify-center rounded-lg bg-black border border-red-500/20 text-red-500/70 group-hover:border-red-500/40 group-hover:text-red-500 group-hover:scale-105 transition-all duration-500 flex-shrink-0">
+                    <Icon className="size-7 sm:size-8 lg:size-10 flex-shrink-0" />
                   </div>
                   
                   {/* Content */}
                   <div className="space-y-2 flex-1 min-w-0 w-full">
-                    <h3 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-orbitron)] text-white group-hover:text-red-400 transition-colors break-words">
+                    <h3 className="text-base sm:text-lg lg:text-xl font-bold font-[family-name:var(--font-orbitron)] text-white group-hover:text-red-500 transition-colors duration-300 break-words">
                       {feature.title}
                     </h3>
-                    <p className="text-sm sm:text-base text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors break-words">
+                    <p className="text-xs sm:text-sm lg:text-base text-zinc-600 leading-relaxed group-hover:text-zinc-400 transition-colors duration-300 break-words">
                       {feature.description}
                     </p>
                   </div>

@@ -189,23 +189,25 @@ export default function PRsPage() {
   }
 
   return (
-    <Card className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-4 sm:p-6 lg:p-8 shadow-2xl">
+    <Card className="bg-black p-4 sm:p-6 lg:p-8 xl:p-10 shadow-2xl">
       <div className="flex items-start justify-between">
         <div>
-          <Badge variant="secondary" className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
+          <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
             Mis PR's
           </Badge>
-          <h3 className="mt-4 text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
-            Récords Personales
+          <h3 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter text-white font-[family-name:var(--font-orbitron)]">
+            RÉCORDS
+            <br />
+            <span className="text-red-500">PERSONALES</span>
           </h3>
-          <p className="text-sm text-zinc-300 mt-2">
+          <p className="text-sm sm:text-base text-zinc-500 mt-2 font-light">
             Registra tus mejores levantamientos y benchmarks.
           </p>
         </div>
       </div>
 
-      <div className="mt-6 space-y-4">
-        <div className="rounded-xl border border-red-500/20 bg-white/5 p-4 sm:p-5">
+      <div className="mt-8 sm:mt-10 space-y-6 sm:space-y-8">
+        <div className="rounded-xl border border-red-500/50 bg-black/30 p-5 sm:p-6 lg:p-7">
           <h4 className="text-lg font-semibold text-white font-[family-name:var(--font-orbitron)] mb-4">
             Agregar Nuevo PR
           </h4>
@@ -218,7 +220,7 @@ export default function PRsPage() {
                 value={newExercise}
                 onChange={(e) => setNewExercise(e.target.value)}
                 placeholder="Ej: Back Squat"
-                className="min-h-[48px] sm:min-h-0 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                className="min-h-[48px] sm:min-h-0 text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
               />
             </div>
             <div className="grid gap-2">
@@ -229,29 +231,29 @@ export default function PRsPage() {
                 value={newWeight}
                 onChange={(e) => setNewWeight(e.target.value)}
                 placeholder="Ej: 225 lbs"
-                className="min-h-[48px] sm:min-h-0 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                className="min-h-[48px] sm:min-h-0 text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
               />
             </div>
           </div>
           <Button
             onClick={handleAddPR}
-            className="mt-4 w-full sm:w-auto min-h-[48px] sm:min-h-0 text-base sm:text-sm bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 active:scale-[0.98] shadow-lg shadow-red-500/50"
+            className="mt-4 w-full sm:w-auto min-h-[48px] sm:min-h-0 text-base sm:text-sm bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] shadow-lg shadow-red-500/50"
           >
             <Plus className="mr-2 size-4" />
             Agregar PR
           </Button>
         </div>
 
-        <div className="space-y-3">
-          <h4 className="text-lg font-semibold text-white font-[family-name:var(--font-orbitron)]">
+        <div className="space-y-4 sm:space-y-5">
+          <h4 className="text-xl sm:text-2xl font-semibold text-white font-[family-name:var(--font-orbitron)]">
             Tus Récords
           </h4>
           {prList.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-white/20 bg-white/5 px-4 py-8 text-center text-sm text-zinc-200">
+            <div className="rounded-xl border border-dashed border-red-500/30 bg-black/30 px-4 py-8 text-center text-sm text-zinc-600">
               Aún no tienes PR's registrados. Agrega tu primer récord personal.
             </div>
           ) : (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {prList.map((pr) => (
                 <div
                   key={pr.id}
@@ -260,8 +262,8 @@ export default function PRsPage() {
                     "px-5 py-4 sm:px-4 sm:py-3",
                     "min-h-[100px] sm:min-h-0",
                     editingId === pr.id
-                      ? "border-red-500/50 bg-red-500/10"
-                      : "border-white/10 bg-white/5 active:bg-white/10 active:border-red-500/30"
+                      ? "border-red-500/70 bg-red-500/10"
+                      : "border-red-500/50 bg-black/30 hover:border-red-500/70 hover:bg-black/50"
                   )}
                 >
                   {editingId === pr.id ? (
@@ -269,19 +271,19 @@ export default function PRsPage() {
                       <Input
                         value={editingPr.exercise}
                         onChange={(e) => setEditingPr({ ...editingPr, exercise: e.target.value })}
-                        className="min-h-[44px] sm:min-h-0 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                        className="min-h-[44px] sm:min-h-0 text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
                       />
                       <Input
                         value={editingPr.weight}
                         onChange={(e) => setEditingPr({ ...editingPr, weight: e.target.value })}
                         placeholder="Ej: 225 lbs"
-                        className="min-h-[44px] sm:min-h-0 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                        className="min-h-[44px] sm:min-h-0 text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
                       />
                       <div className="flex gap-2">
                         <Button
                           onClick={handleSaveEdit}
                           size="sm"
-                          className="flex-1 min-h-[40px] bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg shadow-red-500/50 active:scale-[0.98] transition-all duration-200"
+                          className="flex-1 min-h-[40px] bg-gradient-to-r from-red-500 via-red-600 to-red-500 hover:from-red-600 hover:via-red-700 hover:to-red-600 text-white shadow-lg shadow-red-500/50 active:scale-[0.98] transition-all duration-200"
                         >
                           <Check className="mr-2 size-4" />
                           Guardar
@@ -290,7 +292,7 @@ export default function PRsPage() {
                           onClick={handleCancelEdit}
                           size="sm"
                           variant="outline"
-                          className="min-h-[40px] border-red-500/30"
+                          className="min-h-[40px] border-red-500/50 bg-black/30 text-white hover:bg-black/50"
                         >
                           <X className="size-4" />
                         </Button>
@@ -302,7 +304,7 @@ export default function PRsPage() {
                         <p className="text-base sm:text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">
                           {pr.exercise}
                         </p>
-                        <p className="text-lg sm:text-base font-bold text-red-400 mt-1">
+                        <p className="text-lg sm:text-base font-bold text-red-500 mt-1">
                           {pr.weight}
                         </p>
                       </div>

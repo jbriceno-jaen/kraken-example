@@ -134,7 +134,7 @@ export function DatePicker({ value, onChange, minDate, maxDate, className }: Dat
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "w-full justify-between border border-red-500/20 bg-white/5 text-white hover:bg-white/10 hover:border-red-500/30 min-h-[48px] pr-3",
+          "w-full justify-between border border-red-500/20 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/30 min-h-[48px] pr-3",
           className
         )}
       >
@@ -212,7 +212,7 @@ export function DatePicker({ value, onChange, minDate, maxDate, className }: Dat
                       ? "bg-gradient-to-br from-red-500 to-red-600 text-white border-red-500 shadow-lg shadow-red-500/50 ring-2 ring-red-500/30"
                       : todayDate
                       ? "border-red-500/50 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:border-red-500"
-                      : "border-red-500/20 bg-white/5 text-zinc-300 hover:bg-red-500/10 hover:border-red-500/30 hover:text-white"
+                      : "border-red-500/20 bg-black/30 text-zinc-300 hover:bg-red-500/10 hover:border-red-500/30 hover:text-white"
                   )}
                 >
                   {date.getDate()}

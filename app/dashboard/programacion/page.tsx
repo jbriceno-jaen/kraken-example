@@ -59,15 +59,17 @@ export default function ProgramacionPage() {
 
   if (!userData?.wodEnabled) {
     return (
-      <Card className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-4 sm:p-6 lg:p-8 shadow-2xl">
+      <Card className="bg-black p-4 sm:p-6 lg:p-8 xl:p-10 shadow-2xl">
         <div className="text-center py-12">
-          <Badge variant="secondary" className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
+          <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
             Programación
           </Badge>
-          <h3 className="mt-4 text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
-            Workout del Día
+          <h3 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter text-white font-[family-name:var(--font-orbitron)]">
+            WORKOUT
+            <br />
+            <span className="text-red-500">DEL DÍA</span>
           </h3>
-          <p className="text-sm text-zinc-300 mt-4">
+          <p className="text-sm sm:text-base text-zinc-500 mt-4 font-light">
             La programación no está habilitada para tu cuenta.
           </p>
         </div>
@@ -77,15 +79,17 @@ export default function ProgramacionPage() {
 
   if (!wod) {
     return (
-      <Card className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-4 sm:p-6 lg:p-8 shadow-2xl">
+      <Card className="bg-black p-4 sm:p-6 lg:p-8 xl:p-10 shadow-2xl">
         <div className="text-center py-12">
-          <Badge variant="secondary" className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
+          <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
             Programación
           </Badge>
-          <h3 className="mt-4 text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
-            Workout del Día
+          <h3 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter text-white font-[family-name:var(--font-orbitron)]">
+            WORKOUT
+            <br />
+            <span className="text-red-500">DEL DÍA</span>
           </h3>
-          <p className="text-sm text-zinc-300 mt-4">
+          <p className="text-sm sm:text-base text-zinc-500 mt-4 font-light">
             No hay workout disponible para hoy.
           </p>
         </div>
@@ -98,27 +102,29 @@ export default function ProgramacionPage() {
   const isToday = wodDate.toDateString() === today.toDateString();
 
   return (
-    <Card className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-4 sm:p-6 lg:p-8 shadow-2xl">
+    <Card className="border border-red-500/50 bg-black p-4 sm:p-6 lg:p-8 shadow-2xl">
       <div className="flex items-start justify-between">
         <div>
-          <Badge variant="secondary" className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
+          <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
             Programación
           </Badge>
-          <h3 className="mt-4 text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
-            Workout del Día
+          <h3 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter text-white font-[family-name:var(--font-orbitron)]">
+            WORKOUT
+            <br />
+            <span className="text-red-500">DEL DÍA</span>
           </h3>
-          <p className="text-sm text-zinc-300 mt-2">
+          <p className="text-sm sm:text-base text-zinc-500 mt-2 font-light">
             {isToday ? "Workout de hoy" : `Workout del ${wodDate.toLocaleDateString("es-ES", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}`}
           </p>
         </div>
       </div>
 
-      <div className="mt-6 rounded-xl border border-red-500/20 bg-white/5 p-6 sm:p-8">
+      <div className="mt-8 sm:mt-10 rounded-xl border border-red-500/50 bg-black/30 p-6 sm:p-8 lg:p-10">
         <h4 className="text-xl sm:text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] mb-4">
           {wod.title}
         </h4>
         <div className="prose prose-invert max-w-none">
-          <p className="text-base sm:text-lg text-zinc-200 whitespace-pre-wrap leading-relaxed">
+          <p className="text-base sm:text-lg text-zinc-400 whitespace-pre-wrap leading-relaxed">
             {wod.description}
           </p>
         </div>

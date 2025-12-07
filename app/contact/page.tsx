@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Navbar from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import Link from "next/link";
 import { ArrowLeft, Mail, MapPin, Phone, Send, CheckCircle2 } from "lucide-react";
 import { useToast } from "@/components/ui/toast";
@@ -44,9 +45,9 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white flex flex-col">
       <Navbar />
-      <main className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 lg:px-8 sm:py-16">
+      <main className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 lg:px-8 sm:py-16 flex-1">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors mb-4"
@@ -245,6 +246,7 @@ export default function ContactPage() {
           </Card>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

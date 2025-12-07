@@ -119,16 +119,28 @@ export function WODModal({ open, onOpenChange, onSuccess, editingWOD, selectedDa
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="border border-red-500/50 bg-black text-white max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <Logo variant="compact" showLink={false} className="justify-center mb-2" />
-          <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
+          <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5 w-fit mx-auto">
             {editingWOD ? "Editar WOD" : "Crear WOD"}
           </Badge>
-          <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">
-            {editingWOD ? "Editar Workout del Día" : "Nuevo Workout del Día"}
+          <DialogTitle className="text-2xl sm:text-3xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white text-center pt-2">
+            {editingWOD ? (
+              <>
+                EDITAR
+                <br />
+                <span className="text-red-500">WORKOUT DEL DÍA</span>
+              </>
+            ) : (
+              <>
+                NUEVO
+                <br />
+                <span className="text-red-500">WORKOUT DEL DÍA</span>
+              </>
+            )}
           </DialogTitle>
-          <DialogDescription className="text-sm text-zinc-400 text-center">
+          <DialogDescription className="text-sm text-zinc-500 text-center font-light">
             {editingWOD ? "Modifica el workout del día" : "Crea un nuevo workout del día para una fecha específica"}
           </DialogDescription>
         </DialogHeader>
@@ -155,7 +167,7 @@ export function WODModal({ open, onOpenChange, onSuccess, editingWOD, selectedDa
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="Ej: Fran, Murph, Cindy, etc."
-              className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+              className="min-h-[48px] text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20"
             />
           </div>
 
@@ -170,7 +182,7 @@ export function WODModal({ open, onOpenChange, onSuccess, editingWOD, selectedDa
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               placeholder="Ej: 21-15-9 de Thrusters (95/65 lbs) y Pull-ups. Tiempo límite: 20 minutos."
               rows={8}
-              className="w-full text-base sm:text-sm border border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 rounded-md px-3 py-2 resize-none"
+              className="w-full text-base sm:text-sm border border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 rounded-md px-3 py-2 resize-none"
             />
             <p className="text-xs text-zinc-500">Incluye ejercicios, repeticiones, pesos y cualquier información relevante</p>
           </div>
@@ -180,7 +192,7 @@ export function WODModal({ open, onOpenChange, onSuccess, editingWOD, selectedDa
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1 border-zinc-500/40 bg-zinc-500/10 text-zinc-300 hover:bg-zinc-500/20 hover:border-zinc-500/50 active:scale-[0.98] transition-all duration-200"
+              className="flex-1 border-black/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200"
             >
               Cancelar
             </Button>

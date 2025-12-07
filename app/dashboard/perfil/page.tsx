@@ -376,15 +376,15 @@ export default function PerfilPage() {
   }
 
   return (
-    <Card className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-4 sm:p-6 lg:p-8 shadow-2xl">
+    <Card className="bg-black p-4 sm:p-6 lg:p-8 xl:p-10 shadow-2xl">
       <div className="flex items-start justify-between">
         <div>
           <Badge variant="secondary" className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
             Perfil
           </Badge>
           <div className="flex items-center gap-3 flex-wrap mt-4">
-            <h3 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
-              Actualiza tus datos
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter text-white font-[family-name:var(--font-orbitron)]">
+              ACTUALIZA TUS DATOS
             </h3>
             {subscriptionExpires && (() => {
               const expires = new Date(subscriptionExpires);
@@ -402,7 +402,7 @@ export default function PerfilPage() {
               return null;
             })()}
           </div>
-          <p className="text-sm text-zinc-300 mt-2">
+          <p className="text-sm sm:text-base text-zinc-500 mt-2 font-light">
             Mantén tu información y objetivos al día para tus coach.
           </p>
         </div>
@@ -414,7 +414,7 @@ export default function PerfilPage() {
         )}
       </div>
       
-      <div className="mt-6 mb-6 pb-6 border-b border-red-500/20">
+      <div className="mt-8 sm:mt-10 mb-8 sm:mb-10 pb-8 sm:pb-10 border-b border-red-500/30">
         <label className="text-base sm:text-sm font-medium text-white font-[family-name:var(--font-orbitron)] mb-3 block">
           Foto de Perfil
         </label>
@@ -440,14 +440,14 @@ export default function PerfilPage() {
               </button>
             )}
           </div>
-          <div className="flex-1 space-y-3">
+          <div className="flex-1 space-y-4 sm:space-y-5">
             <div className="space-y-2">
               <Input
                 type="text"
                 value={imageInputValue}
                 onChange={(e) => setImageInputValue(e.target.value)}
                 placeholder="Pega la URL de tu imagen aquí"
-                className="min-h-[48px] sm:min-h-0 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                className="min-h-[48px] sm:min-h-0 text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
               />
               <p className="text-xs text-zinc-500">
                 Ingresa una URL de imagen o usa el botón para subir desde tu dispositivo
@@ -488,8 +488,8 @@ export default function PerfilPage() {
         </div>
       </div>
 
-      <div className="mt-5 space-y-4">
-        <div className="grid gap-3 sm:gap-2">
+      <div className="mt-8 sm:mt-10 space-y-5 sm:space-y-6">
+        <div className="grid gap-4 sm:gap-3">
           <label className="text-base sm:text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">Nombre completo</label>
           <Input
             value={profile.name}
@@ -535,7 +535,7 @@ export default function PerfilPage() {
           />
         </div>
         
-        <div className="mt-6 flex flex-col sm:flex-row gap-3">
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4 sm:gap-5">
           <Button onClick={handleProfileSave} className="w-full sm:w-auto min-h-[48px] sm:min-h-0 text-base sm:text-sm bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 active:scale-[0.98] shadow-lg shadow-red-500/50 transition-all duration-300">
             Guardar cambios
           </Button>
@@ -545,11 +545,11 @@ export default function PerfilPage() {
         </div>
       </div>
             
-      <div className="mt-8 pt-8 border-t border-white/10">
+      <div className="mt-8 pt-8 border-t border-black/50">
         <h4 className="text-lg font-bold text-white font-[family-name:var(--font-orbitron)] mb-4">
           Cambiar Contraseña
         </h4>
-        <div className="space-y-4">
+        <div className="space-y-5 sm:space-y-6">
           <div className="grid gap-3 sm:gap-2">
             <label className="text-base sm:text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
               Contraseña Actual

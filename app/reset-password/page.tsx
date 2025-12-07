@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";
 import Navbar from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import { Logo } from "@/components/logo";
 import { Lock, Eye, EyeOff, CheckCircle2, XCircle, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -132,9 +133,9 @@ export default function ResetPasswordPage() {
 
   if (!isValid) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white">
+      <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white flex flex-col">
         <Navbar />
-        <div className="container mx-auto px-4 py-20 flex items-center justify-center">
+        <div className="container mx-auto px-4 py-20 flex items-center justify-center flex-1">
           <div className="max-w-md w-full space-y-6 text-center">
             <div className="flex justify-center">
               <div className="rounded-full bg-red-500/20 p-4">
@@ -154,15 +155,16 @@ export default function ResetPasswordPage() {
             </Link>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white">
+      <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white flex flex-col">
         <Navbar />
-        <div className="container mx-auto px-4 py-20 flex items-center justify-center">
+        <div className="container mx-auto px-4 py-20 flex items-center justify-center flex-1">
           <div className="max-w-md w-full space-y-6 text-center">
             <div className="flex justify-center">
               <div className="rounded-full bg-green-500/20 p-4">
@@ -182,14 +184,15 @@ export default function ResetPasswordPage() {
             </Link>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white flex flex-col">
       <Navbar />
-      <div className="container mx-auto px-4 py-20 flex items-center justify-center">
+      <div className="container mx-auto px-4 py-20 flex items-center justify-center flex-1">
         <div className="max-w-md w-full space-y-6">
           <div className="text-center space-y-4">
             <Logo variant="compact" showLink={false} className="justify-center mb-2" />
@@ -281,6 +284,7 @@ export default function ResetPasswordPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

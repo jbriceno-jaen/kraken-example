@@ -152,7 +152,7 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md max-h-[90vh] overflow-y-auto">
+      <DialogContent className="border border-red-500/50 bg-black text-white max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
             <Logo variant="compact" showLink={false} className="justify-center mb-2" />
           <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
@@ -178,7 +178,7 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="Juan Pérez"
-              className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+              className="min-h-[48px] text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20"
             />
           </div>
 
@@ -193,7 +193,7 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               placeholder="usuario@ejemplo.com"
-              className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+              className="min-h-[48px] text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20"
             />
           </div>
 
@@ -208,7 +208,7 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               placeholder={editingUser ? "Nueva contraseña (opcional)" : "Mínimo 6 caracteres"}
-              className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+              className="min-h-[48px] text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20"
             />
           </div>
 
@@ -220,7 +220,7 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
               id="role"
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-              className="w-full min-h-[48px] text-base sm:text-sm border border-red-500/20 bg-black text-white rounded-md px-3 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 [&>option]:bg-black [&>option]:text-white"
+              className="w-full min-h-[48px] text-base sm:text-sm border border-red-500/50 bg-black text-white rounded-md px-3 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 [&>option]:bg-black [&>option]:text-white"
             >
               <option value="client" className="bg-black text-white">Cliente</option>
               <option value="manager" className="bg-black text-white">Manager</option>
@@ -240,7 +240,7 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
                   value={formData.subscriptionDays}
                   onChange={(e) => setFormData({ ...formData, subscriptionDays: e.target.value })}
                   placeholder="30 (días)"
-                  className="min-h-[48px] text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
+                  className="min-h-[48px] text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20"
                 />
                 <p className="text-xs text-zinc-500">Dejar vacío para sin suscripción</p>
                 {calculatedEndDate && (() => {
@@ -317,7 +317,7 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
                   id="wodEnabled"
                   checked={formData.wodEnabled}
                   onChange={(e) => setFormData({ ...formData, wodEnabled: e.target.checked })}
-                  className="w-5 h-5 rounded border-red-500/20 bg-white/5 text-red-500 focus:ring-2 focus:ring-red-500/20"
+                  className="w-5 h-5 rounded border-red-500/50 bg-black/30 text-red-500 focus:ring-2 focus:ring-red-500/20"
                 />
                 <label htmlFor="wodEnabled" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
                   Habilitar PRO (Programación) para este cliente
@@ -331,7 +331,7 @@ export function AddUserModal({ open, onOpenChange, onSuccess, editingUser }: Add
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1 border-zinc-500/40 bg-zinc-500/10 text-zinc-300 hover:bg-zinc-500/20 hover:border-zinc-500/50 active:scale-[0.98] transition-all duration-200"
+              className="flex-1 border-red-500/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/70 active:scale-[0.98] transition-all duration-200"
             >
               Cancelar
             </Button>

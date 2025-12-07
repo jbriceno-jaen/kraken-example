@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Users } from "lucide-react";
 import Navbar from "@/components/navbar";
+import { Footer } from "@/components/footer";
 
 export default function ManagerLayout({
   children,
@@ -44,11 +45,12 @@ export default function ManagerLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
+    <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black flex flex-col">
       <Navbar />
-      <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+      <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8 flex-1">
         {children}
       </main>
+      <Footer />
     </div>
   );
 }

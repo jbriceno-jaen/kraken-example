@@ -298,7 +298,7 @@ export function SlotsManagement() {
       </div>
 
       {/* Day Selection Buttons */}
-      <Card className="border border-red-500/20 bg-gradient-to-br from-white/5 via-black/50 to-black p-3 sm:p-4">
+      <Card className="border border-red-500/50 bg-black/30 p-3 sm:p-4">
         <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-2">
           {days.map((day) => {
             const daySlots = slotsByDay[day] || [];
@@ -311,7 +311,7 @@ export function SlotsManagement() {
                   "min-h-[44px] w-full sm:w-auto sm:min-h-[40px] px-4 sm:px-6 transition-all duration-200 font-[family-name:var(--font-orbitron)] flex items-center justify-center gap-2",
                   isSelected
                     ? "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg shadow-red-500/30"
-                    : "border border-red-500/20 bg-white/5 text-zinc-300 hover:bg-red-500/10 hover:border-red-500/30"
+                    : "border border-red-500/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/70"
                 )}
               >
                 <span className="text-sm sm:text-sm font-semibold">{day}</span>
@@ -335,7 +335,7 @@ export function SlotsManagement() {
 
       {/* Selected Day Slots */}
       {selectedDay && (
-        <Card className="border border-red-500/20 bg-gradient-to-br from-white/5 via-black/50 to-black p-5 sm:p-6">
+        <Card className="border border-red-500/50 bg-black/30 p-5 sm:p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h3 className="text-2xl font-bold font-[family-name:var(--font-orbitron)] text-white mb-1">
@@ -359,7 +359,7 @@ export function SlotsManagement() {
                     "p-4 rounded-lg border transition-all duration-300 hover:scale-[1.02]",
                     slot.available
                       ? "border-green-500/20 bg-green-500/5 hover:bg-green-500/10 hover:border-green-500/30"
-                      : "border-red-500/20 bg-red-500/5 opacity-70"
+                      : "border-red-500/50 bg-black/30 opacity-70"
                   )}
                 >
                   <div className="flex items-center justify-between mb-3">
@@ -417,7 +417,7 @@ export function SlotsManagement() {
                         {slot.spotsRemaining}
                       </span>
                     </div>
-                    <div className="pt-2 border-t border-red-500/20">
+                    <div className="pt-2 border-t border-red-500/30">
                       <Badge
                         className={cn(
                           "w-full justify-center font-[family-name:var(--font-orbitron)]",
@@ -445,7 +445,7 @@ export function SlotsManagement() {
 
       {/* Add Slot Modal */}
       <Dialog open={showAddModal} onOpenChange={setShowAddModal}>
-        <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
+        <DialogContent className="border border-red-500/50 bg-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
               <Logo variant="compact" showLink={false} className="justify-center" />
@@ -476,7 +476,7 @@ export function SlotsManagement() {
                 value={formData.day}
                 onChange={(e) => setFormData({ ...formData, day: e.target.value })}
                 required
-                className="w-full min-h-[48px] text-base sm:text-sm border border-red-500/20 bg-black text-white rounded-md px-3 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 [&>option]:bg-black [&>option]:text-white"
+                className="w-full min-h-[48px] text-base sm:text-sm border border-red-500/50 bg-black text-white rounded-md px-3 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 [&>option]:bg-black [&>option]:text-white"
               >
                 <option value="">Seleccionar día</option>
                 {days.map((day) => (
@@ -554,7 +554,7 @@ export function SlotsManagement() {
                 type="button"
                 variant="outline"
                 onClick={() => setShowAddModal(false)}
-                className="flex-1 border-zinc-500/40 bg-zinc-500/10 text-zinc-300 hover:bg-zinc-500/20 hover:border-zinc-500/50"
+                className="flex-1 border-black/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/50"
               >
                 Cancelar
               </Button>
@@ -571,7 +571,7 @@ export function SlotsManagement() {
 
       {/* Edit Slot Modal */}
       <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
-        <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
+        <DialogContent className="border border-red-500/50 bg-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
               <Logo variant="compact" showLink={false} className="justify-center" />
@@ -602,7 +602,7 @@ export function SlotsManagement() {
                 value={formData.day}
                 onChange={(e) => setFormData({ ...formData, day: e.target.value })}
                 required
-                className="w-full min-h-[48px] text-base sm:text-sm border border-red-500/20 bg-black text-white rounded-md px-3 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 [&>option]:bg-black [&>option]:text-white"
+                className="w-full min-h-[48px] text-base sm:text-sm border border-red-500/50 bg-black text-white rounded-md px-3 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 [&>option]:bg-black [&>option]:text-white"
               >
                 {days.map((day) => (
                   <option key={day} value={day} className="bg-black text-white">
@@ -695,7 +695,7 @@ export function SlotsManagement() {
                   setShowEditModal(false);
                   setSelectedSlot(null);
                 }}
-                className="flex-1 border-zinc-500/40 bg-zinc-500/10 text-zinc-300 hover:bg-zinc-500/20 hover:border-zinc-500/50"
+                className="flex-1 border-black/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/50"
               >
                 Cancelar
               </Button>
@@ -717,7 +717,7 @@ export function SlotsManagement() {
           setSlotToDelete(null);
         }
       }}>
-        <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
+        <DialogContent className="border border-red-500/50 bg-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
               <Logo variant="compact" showLink={false} className="justify-center" />

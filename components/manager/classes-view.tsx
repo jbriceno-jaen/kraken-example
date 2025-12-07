@@ -566,7 +566,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
       </div>
 
       {/* Day Selector */}
-      <Card className="border border-red-500/20 bg-gradient-to-br from-white/5 via-black/50 to-black p-4 sm:p-6">
+      <Card className="border border-red-500/50 bg-black/30 p-4 sm:p-6">
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
           {days.map((day) => {
             const dayDate = getDateForDay(day);
@@ -579,7 +579,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
                   "flex flex-col items-center justify-center px-2 sm:px-4 py-3 rounded-lg border transition-all duration-300 w-full",
                   isSelected
                     ? "border-red-500 bg-gradient-to-br from-red-500/20 via-red-500/10 to-black shadow-lg shadow-red-500/30 ring-2 ring-red-500/20"
-                    : "border-red-500/20 hover:border-red-500/40 hover:bg-red-500/5 active:scale-[0.98]"
+                    : "border-red-500/50 hover:border-red-500/70 hover:bg-black/50 active:scale-[0.98]"
                 )}
               >
                 <span className={cn(
@@ -673,7 +673,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
                   return times.map((time) => (
                     <div
                       key={time}
-                      className="w-full text-left p-4 sm:p-5 rounded-lg border border-zinc-500/20 bg-zinc-500/5 opacity-50 cursor-not-allowed min-h-[60px] sm:min-h-[56px]"
+                      className="w-full text-left p-4 sm:p-5 rounded-lg border border-black/50 bg-black/30 opacity-50 cursor-not-allowed min-h-[60px] sm:min-h-[56px]"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -684,7 +684,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
                             </span>
                           </div>
                         </div>
-                        <Badge className="bg-zinc-500/20 border border-zinc-500/30 text-zinc-500 font-[family-name:var(--font-orbitron)]">
+                        <Badge className="bg-black/30 border border-black/50 text-zinc-500 font-[family-name:var(--font-orbitron)]">
                           No disponible
                         </Badge>
                       </div>
@@ -996,7 +996,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
 
       {/* Add Attendee Modal */}
       <Dialog open={showAddAttendee} onOpenChange={setShowAddAttendee}>
-        <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md max-h-[90vh] overflow-y-auto">
+        <DialogContent className="border border-red-500/50 bg-black text-white max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
               <Logo variant="compact" showLink={false} className="justify-center" />
@@ -1080,7 +1080,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
                 type="button"
                 variant="outline"
                 onClick={() => setShowAddAttendee(false)}
-                className="flex-1 border-zinc-500/40 bg-zinc-500/10 text-zinc-300 hover:bg-zinc-500/20 hover:border-zinc-500/50 active:scale-[0.98] transition-all duration-200"
+                className="flex-1 border-black/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200"
               >
                 Cancelar
               </Button>
@@ -1098,7 +1098,7 @@ export function ClassesView({ onAddAttendee }: ClassesViewProps) {
 
       {/* Delete Confirmation Modal */}
       <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
-        <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
+        <DialogContent className="border border-red-500/50 bg-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
               <Logo variant="compact" showLink={false} className="justify-center" />

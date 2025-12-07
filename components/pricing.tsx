@@ -34,69 +34,71 @@ const plans: Plan[] = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="space-y-6">
-      <div className="space-y-3">
-        <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30">Membresías</Badge>
-        <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight font-[family-name:var(--font-orbitron)]">Elige el plan que va con tu ritmo.</h2>
-        <p className="text-base sm:text-lg text-zinc-300">Precios claros. Sin cargos ocultos. Pausa o cambia cuando quieras.</p>
-      </div>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {plans.map((plan) => (
-          <Card
-            key={plan.name}
-            className={cn(
-              "group relative flex h-full flex-col border transition-all duration-500 overflow-hidden",
-              "gap-6 sm:gap-6",
-              "p-6 sm:p-8 lg:p-10", // More padding for premium feel
-              "active:scale-[0.98]", // Active feedback on mobile
-              "sm:hover:scale-[1.02] sm:hover:shadow-2xl", // Subtle hover effect
-              plan.highlighted
-                ? "border-red-500/50 bg-gradient-to-br from-red-500/10 via-black to-black shadow-2xl shadow-red-500/30 sm:scale-105 ring-2 ring-red-500/20"
-                : "border-white/10 bg-gradient-to-br from-white/5 via-black/50 to-black active:border-red-500/30 active:bg-gradient-to-br active:from-red-500/5 active:via-black/50 active:to-black sm:hover:border-red-500/30"
-            )}
-          >
-            {plan.highlighted && (
-              <>
-                <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full blur-3xl animate-pulse" />
-                <div className="absolute -top-2 -right-2 w-24 h-24 bg-red-500/20 rounded-full blur-2xl" />
-                <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-50" />
-              </>
-            )}
-            <div className="relative flex items-center justify-between gap-3 min-w-0">
-              <div className="min-w-0 flex-1">
-                <p className={`text-xl sm:text-2xl font-bold font-[family-name:var(--font-orbitron)] break-words ${
-                  plan.highlighted ? "text-white" : "text-white"
-                }`}>
-                  {plan.name}
-                </p>
-                <p className="text-xs sm:text-sm text-zinc-400 mt-1 break-words">{plan.cadence}</p>
-              </div>
-              {plan.highlighted && (
-                <Badge className="bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white border-0 shadow-lg shadow-red-500/60 font-[family-name:var(--font-orbitron)] flex-shrink-0 text-xs sm:text-sm hover:shadow-red-500/80 transition-all duration-300">
-                  Recomendado
-                </Badge>
+    <section id="pricing" className="relative overflow-hidden rounded-3xl border border-black/50 bg-black px-4 py-12 shadow-2xl sm:px-6 sm:py-16 lg:px-10 lg:py-20 space-y-6 sm:space-y-8">
+      {/* Minimalist black background */}
+      <div className="absolute inset-0 bg-black" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(239,68,68,0.03),transparent_80%)]" />
+      
+      {/* Subtle geometric lines */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
+      
+      <div className="relative space-y-5 sm:space-y-6">
+        <div className="space-y-3">
+          <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
+            Membresías
+          </Badge>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white break-words">
+            ELIGE EL PLAN
+            <br />
+            <span className="text-red-500">QUE VA CON TU RITMO</span>
+          </h2>
+          <p className="text-sm sm:text-base lg:text-lg text-zinc-500 leading-relaxed font-light break-words">
+            Precios claros. Sin cargos ocultos. Pausa o cambia cuando quieras.
+          </p>
+        </div>
+        <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {plans.map((plan) => (
+            <Card
+              key={plan.name}
+              className={cn(
+                "group relative flex h-full flex-col border bg-black/30 transition-all duration-500 overflow-hidden",
+                "p-5 sm:p-6 lg:p-7",
+                plan.highlighted ? "border-red-500/60" : "border-red-500/50",
+                "hover:border-red-500/70 hover:bg-black/50"
               )}
-            </div>
-            <div className="relative overflow-hidden">
-              <p className={`text-4xl sm:text-5xl font-bold font-[family-name:var(--font-orbitron)] break-words ${
-                plan.highlighted ? "bg-gradient-to-br from-white via-red-50 to-zinc-300 bg-clip-text text-transparent" : "text-white"
-              }`}>
-                {plan.price}
-              </p>
-              <span className="text-sm sm:text-base font-medium text-zinc-400 ml-2">/mes</span>
-            </div>
-            <div className="space-y-3 mt-2">
-              {plan.perks.map((perk) => (
-                <div key={perk} className="flex items-start gap-3 text-xs sm:text-sm text-zinc-300 group-hover:text-zinc-200 transition-colors min-w-0">
-                  <div className={`mt-1.5 size-2 rounded-full flex-shrink-0 ${
-                    plan.highlighted ? "bg-gradient-to-br from-red-400 to-red-600 shadow-lg shadow-red-500/60" : "bg-gradient-to-br from-red-500 to-red-600"
-                  }`} />
-                  <span className="leading-relaxed break-words flex-1 min-w-0">{perk}</span>
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500/0 to-red-500/0 group-hover:from-red-500/5 group-hover:to-transparent transition-all duration-500" />
+              <div className="relative flex items-center justify-between gap-3 min-w-0">
+                <div className="min-w-0 flex-1">
+                  <p className="text-lg sm:text-xl font-bold font-[family-name:var(--font-orbitron)] text-white break-words group-hover:text-red-500 transition-colors duration-300">
+                    {plan.name}
+                  </p>
+                  <p className="text-xs text-zinc-600 mt-1 break-words group-hover:text-zinc-400 transition-colors duration-300">{plan.cadence}</p>
                 </div>
-              ))}
-            </div>
-          </Card>
-        ))}
+                {plan.highlighted && (
+                  <Badge className="bg-black border border-red-500/40 text-red-500 font-[family-name:var(--font-orbitron)] flex-shrink-0 text-xs">
+                    Recomendado
+                  </Badge>
+                )}
+              </div>
+              <div className="relative overflow-hidden mt-3">
+                <p className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-orbitron)] text-white break-words group-hover:text-red-500 transition-colors duration-300">
+                  {plan.price}
+                </p>
+                <span className="text-xs sm:text-sm font-medium text-zinc-600 ml-2 group-hover:text-zinc-400 transition-colors duration-300">/mes</span>
+              </div>
+              <div className="space-y-2 mt-3">
+                {plan.perks.map((perk) => (
+                  <div key={perk} className="flex items-start gap-2 text-xs sm:text-sm text-zinc-600 group-hover:text-zinc-400 transition-colors duration-300 min-w-0">
+                    <div className="mt-1.5 size-2 rounded-full flex-shrink-0 bg-red-500/50 group-hover:bg-red-500 transition-colors duration-300" />
+                    <span className="leading-relaxed break-words flex-1 min-w-0">{perk}</span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          ))}
+        </div>
       </div>
     </section>
   );

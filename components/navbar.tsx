@@ -210,9 +210,9 @@ export default function Navbar() {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="relative size-10 rounded-full border border-white/15 text-white hover:bg-white/10 active:scale-95 transition-all p-0"
+                  className="relative size-10 rounded-full border border-black/50 text-white hover:bg-black/20 active:scale-95 transition-all p-0"
                 >
-                  <Avatar className="size-10 border border-white/15">
+                  <Avatar className="size-10 border border-black/50">
                     <AvatarImage src={userImage || undefined} alt={userData?.name || "User"} />
                     <AvatarFallback className="bg-red-500/20 text-white border-0">
                       <User className="size-5" />
@@ -220,7 +220,7 @@ export default function Navbar() {
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-64 border-white/10 bg-black/95 backdrop-blur-xl text-white" align="end">
+              <DropdownMenuContent className="w-64 border-black/50 bg-black/95 backdrop-blur-xl text-white" align="end">
                 <DropdownMenuLabel className="font-[family-name:var(--font-orbitron)]">
                   <div className="flex flex-col space-y-2">
                     <div className="flex items-center gap-3">
@@ -236,7 +236,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     {userData?.subscriptionExpires && (
-                      <div className="pt-2 border-t border-white/10">
+                      <div className="pt-2 border-t border-black/50">
                         <div className="flex items-center justify-between gap-2 mb-1">
                           <p className="text-xs text-zinc-400">Suscripción</p>
                           {(() => {
@@ -436,7 +436,7 @@ export default function Navbar() {
             <button
               aria-label="Toggle navigation"
               onClick={toggle}
-              className="flex size-11 items-center justify-center rounded-lg border border-white/15 text-white active:scale-95 active:bg-white/5 transition-all sm:hidden min-w-[44px] min-h-[44px]"
+              className="flex size-11 items-center justify-center rounded-lg border border-black/50 text-white active:scale-95 active:bg-black/20 transition-all sm:hidden min-w-[44px] min-h-[44px]"
             >
               {open ? <X className="size-5" /> : <Menu className="size-5" />}
             </button>
@@ -444,8 +444,8 @@ export default function Navbar() {
         </div>
       </div>
       {open && !session && (
-        <div className="sm:hidden border-t border-white/10 bg-black/95 backdrop-blur-xl">
-          <div className="mx-4 my-4 space-y-2 rounded-2xl border border-white/10 bg-black/80 p-4 text-sm text-zinc-200 shadow-lg">
+        <div className="sm:hidden border-t border-black/50 bg-black/95 backdrop-blur-xl">
+          <div className="mx-4 my-4 space-y-2 rounded-2xl border border-black/50 bg-black/80 p-4 text-sm text-zinc-200 shadow-lg">
             {links.map((link) => (
               <a
                 key={link.href}
@@ -481,7 +481,7 @@ export default function Navbar() {
                     setLoginOpen(true);
                     close();
                   }}
-                  className="w-full min-h-[48px] text-base border border-white/20 text-white active:bg-white/10 active:scale-[0.98]"
+                  className="w-full min-h-[48px] text-base border border-black/50 text-white active:bg-black/20 active:scale-[0.98]"
                 >
                   Iniciar sesión
                 </Button>

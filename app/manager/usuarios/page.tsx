@@ -136,13 +136,15 @@ export default function UsuariosPage() {
 
   return (
     <>
-      <Card className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-4 sm:p-6 lg:p-8 shadow-2xl">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+      <Card className="bg-black p-4 sm:p-6 lg:p-8 xl:p-10 shadow-2xl">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 mb-8 sm:mb-10">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-orbitron)] text-white">
-              Gestión de Usuarios
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white">
+              GESTIÓN DE
+              <br />
+              <span className="text-red-500">USUARIOS</span>
             </h2>
-            <p className="text-sm text-zinc-300 mt-2">
+            <p className="text-sm sm:text-base text-zinc-500 mt-2 font-light">
               Gestiona clientes y managers del sistema.
             </p>
           </div>
@@ -176,7 +178,7 @@ export default function UsuariosPage() {
                 .map((user) => (
                   <Card
                     key={user.id}
-                    className="group border border-yellow-500/30 bg-gradient-to-br from-yellow-500/10 via-black/50 to-black transition-all duration-300 sm:hover:shadow-xl sm:hover:border-yellow-500/40 active:scale-[0.98] p-4 sm:p-5"
+                    className="group border border-yellow-500/30 bg-gradient-to-br from-yellow-500/10 via-black/50 to-black transition-all duration-300 sm:hover:shadow-xl sm:hover:border-yellow-500/40 active:scale-[0.98] p-5 sm:p-6 lg:p-7"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                       <div className="flex-1 min-w-0">
@@ -228,7 +230,7 @@ export default function UsuariosPage() {
         )}
 
         {/* Approved Users Section */}
-        <div className="space-y-3">
+        <div className="space-y-4 sm:space-y-5">
           {users.filter(u => u.role === "manager" || u.approved).length > 0 ? (
             users
               .filter(u => u.role === "manager" || u.approved)
@@ -237,7 +239,7 @@ export default function UsuariosPage() {
               return (
                 <Card
                   key={user.id}
-                  className="group border border-red-500/20 bg-gradient-to-br from-white/5 via-black/50 to-black transition-all duration-300 sm:hover:shadow-xl sm:hover:border-red-500/30 active:scale-[0.98] p-4 sm:p-5"
+                  className="group border border-red-500/50 bg-black/30 transition-all duration-300 hover:border-red-500/70 hover:bg-black/50 active:scale-[0.98] p-5 sm:p-6 lg:p-7"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                     <div className="flex-1 min-w-0">
@@ -331,7 +333,7 @@ export default function UsuariosPage() {
               );
             })
           ) : (
-            <Card className="border border-white/10 bg-white/5 p-12 text-center">
+            <Card className="border border-red-500/30 bg-black/30 p-12 text-center">
               <Users className="size-12 mx-auto mb-4 text-zinc-500" />
               <p className="text-zinc-400 text-lg mb-2">No hay usuarios aprobados</p>
               <p className="text-zinc-500 text-sm">
@@ -362,29 +364,31 @@ export default function UsuariosPage() {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
-        <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
+        <DialogContent className="border border-red-500/50 bg-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
               <Logo variant="compact" showLink={false} className="justify-center" />
             </div>
-            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
+            <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5 w-fit mx-auto">
               Confirmar Eliminación
             </Badge>
-            <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">
-              ¿Estás seguro?
+            <DialogTitle className="text-2xl sm:text-3xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white text-center pt-2">
+              ¿ESTÁS
+              <br />
+              <span className="text-red-500">SEGURO?</span>
             </DialogTitle>
-            <DialogDescription className="text-sm text-zinc-400 text-center">
+            <DialogDescription className="text-sm text-zinc-500 text-center font-light">
               Esta acción no se puede deshacer. Todas las reservas del usuario serán canceladas.
             </DialogDescription>
           </DialogHeader>
-          <div className="mt-6 p-4 rounded-lg border border-red-500/20 bg-red-500/10">
+          <div className="mt-6 p-4 rounded-lg border border-red-500/50 bg-black/30">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="size-5 text-red-400 flex-shrink-0 mt-0.5" />
+              <AlertTriangle className="size-5 text-red-500 flex-shrink-0 mt-0.5" />
               <div className="flex-1">
-                <p className="text-sm text-red-300 font-[family-name:var(--font-orbitron)] font-semibold mb-1">
+                <p className="text-sm text-red-500 font-[family-name:var(--font-orbitron)] font-semibold mb-1">
                   Advertencia
                 </p>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-zinc-600 font-light">
                   Al eliminar este usuario, se cancelarán todas sus reservas y se perderá acceso al sistema.
                 </p>
               </div>
@@ -398,7 +402,7 @@ export default function UsuariosPage() {
                 setShowDeleteConfirm(false);
                 setUserToDelete(null);
               }}
-              className="flex-1 border-zinc-500/40 bg-zinc-500/10 text-zinc-300 hover:bg-zinc-500/20 hover:border-zinc-500/50 active:scale-[0.98] transition-all duration-200"
+              className="flex-1 border-red-500/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/70 active:scale-[0.98] transition-all duration-200"
             >
               Cancelar
             </Button>
@@ -415,29 +419,31 @@ export default function UsuariosPage() {
 
       {/* Reject Confirmation Dialog */}
       <Dialog open={showRejectConfirm} onOpenChange={setShowRejectConfirm}>
-        <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
+        <DialogContent className="border border-red-500/50 bg-black text-white max-w-md">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-2">
               <Logo variant="compact" showLink={false} className="justify-center" />
             </div>
-            <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
+            <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5 w-fit mx-auto">
               Confirmar Rechazo
             </Badge>
-            <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">
-              ¿Rechazar usuario?
+            <DialogTitle className="text-2xl sm:text-3xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white text-center pt-2">
+              ¿RECHAZAR
+              <br />
+              <span className="text-red-500">USUARIO?</span>
             </DialogTitle>
-            <DialogDescription className="text-sm text-zinc-400 text-center">
+            <DialogDescription className="text-sm text-zinc-500 text-center font-light">
               Al rechazar este usuario, se cancelarán todas sus reservas y no podrá acceder al sistema.
             </DialogDescription>
           </DialogHeader>
-          <div className="mt-6 p-4 rounded-lg border border-red-500/20 bg-red-500/10">
+          <div className="mt-6 p-4 rounded-lg border border-red-500/50 bg-black/30">
             <div className="flex items-start gap-3">
-              <AlertTriangle className="size-5 text-red-400 flex-shrink-0 mt-0.5" />
+              <AlertTriangle className="size-5 text-red-500 flex-shrink-0 mt-0.5" />
               <div className="flex-1">
-                <p className="text-sm text-red-300 font-[family-name:var(--font-orbitron)] font-semibold mb-1">
+                <p className="text-sm text-red-500 font-[family-name:var(--font-orbitron)] font-semibold mb-1">
                   Advertencia
                 </p>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-zinc-600 font-light">
                   Esta acción cancelará todas las reservas del usuario y le impedirá iniciar sesión.
                 </p>
               </div>
@@ -451,7 +457,7 @@ export default function UsuariosPage() {
                 setShowRejectConfirm(false);
                 setUserToReject(null);
               }}
-              className="flex-1 border-zinc-500/40 bg-zinc-500/10 text-zinc-300 hover:bg-zinc-500/20 hover:border-zinc-500/50 active:scale-[0.98] transition-all duration-200"
+              className="flex-1 border-red-500/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/70 active:scale-[0.98] transition-all duration-200"
             >
               Cancelar
             </Button>

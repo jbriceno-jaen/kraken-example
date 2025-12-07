@@ -63,7 +63,7 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black text-white max-w-md">
+      <DialogContent className="border border-red-500/50 bg-black text-white max-w-md">
         {isSuccess ? (
           <div className="text-center space-y-6 py-4">
             <div className="flex justify-center">
@@ -71,10 +71,12 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
                 <CheckCircle2 className="size-12 text-green-400" />
               </div>
             </div>
-            <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">
-              Correo enviado
+            <h2 className="text-2xl font-black tracking-tighter text-white font-[family-name:var(--font-orbitron)]">
+              CORREO
+              <br />
+              <span className="text-red-500">ENVIADO</span>
             </h2>
-            <p className="text-zinc-400">
+            <p className="text-zinc-500 font-light">
               Si el correo existe en nuestro sistema, recibirás instrucciones para restablecer tu contraseña.
             </p>
           </div>
@@ -82,13 +84,15 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
           <>
             <DialogHeader>
               <Logo variant="compact" showLink={false} className="justify-center mb-2" />
-              <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
+              <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5 w-fit mx-auto">
                 Recuperar Contraseña
               </Badge>
-              <DialogTitle className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent text-center pt-2">
-                ¿Olvidaste tu contraseña?
+              <DialogTitle className="text-2xl sm:text-3xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white text-center pt-2">
+                ¿OLVIDASTE TU
+                <br />
+                <span className="text-red-500">CONTRASEÑA?</span>
               </DialogTitle>
-              <DialogDescription className="text-sm text-zinc-400 text-center">
+              <DialogDescription className="text-sm text-zinc-500 text-center font-light">
                 Ingresa tu correo electrónico y te enviaremos instrucciones para restablecer tu contraseña
               </DialogDescription>
             </DialogHeader>
@@ -99,7 +103,7 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
                   Correo electrónico
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-600" />
                   <Input
                     id="reset-email"
                     type="email"
@@ -107,7 +111,7 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="tucorreo@ejemplo.com"
-                    className="min-h-[48px] pl-10 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    className="min-h-[48px] pl-10 text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
                   />
                 </div>
               </div>
@@ -115,7 +119,7 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full min-h-[48px] text-base sm:text-sm gap-2 bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 transition-all duration-300"
+                className="w-full min-h-[48px] text-base sm:text-sm gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 transition-all duration-300"
               >
                 {isLoading ? (
                   <>

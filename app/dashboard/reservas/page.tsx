@@ -240,21 +240,23 @@ export default function ReservasPage() {
   }
 
   return (
-    <Card className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-4 sm:p-6 lg:p-8 shadow-2xl">
+    <Card className="bg-black p-4 sm:p-6 lg:p-8 xl:p-10 shadow-2xl">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <Badge variant="secondary" className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
+          <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
             Reservas
           </Badge>
-          <h2 className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight text-white font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
-            Aparta tus sesiones de esta semana
+          <h2 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter text-white font-[family-name:var(--font-orbitron)]">
+            APARTA TUS SESIONES
+            <br />
+            <span className="text-red-500">DE ESTA SEMANA</span>
           </h2>
-          <p className="text-sm text-zinc-300 mt-2">
+          <p className="text-sm sm:text-base text-zinc-500 mt-2 font-light">
             Lunes a Sábado. Sesiones de 60 minutos por la mañana (5:00-8:00 AM) y tarde (4:00-7:00 PM).
           </p>
-          <div className="mt-4 sm:mt-6 rounded-xl border border-yellow-500/40 bg-gradient-to-br from-yellow-500/10 to-yellow-500/5 p-3 sm:p-4 shadow-lg shadow-yellow-500/20">
-            <p className="text-xs font-semibold text-yellow-200 mb-2 font-[family-name:var(--font-orbitron)]">Reglas de reserva:</p>
-            <ul className="text-xs text-yellow-100/80 space-y-1 list-disc list-inside">
+          <div className="mt-4 sm:mt-6 rounded-xl border border-red-500/30 bg-black/50 p-3 sm:p-4">
+            <p className="text-xs font-semibold text-red-500/80 mb-2 font-[family-name:var(--font-orbitron)]">Reglas de reserva:</p>
+            <ul className="text-xs text-zinc-600 space-y-1 list-disc list-inside">
               <li>Solo puedes reservar un horario por día</li>
               <li>Solo puedes reservar para hoy o mañana</li>
               <li>No puedes cancelar con menos de 1 hora de anticipación</li>
@@ -263,8 +265,8 @@ export default function ReservasPage() {
           </div>
         </div>
       </div>
-      <div className="mt-6 grid gap-4 md:grid-cols-[0.9fr,1.1fr]">
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
+      <div className="mt-8 sm:mt-10 grid gap-6 sm:gap-8 md:grid-cols-[0.9fr,1.1fr]">
+        <div className="rounded-xl border border-red-500/50 bg-black/30 p-5 sm:p-6 lg:p-7">
           <p className="text-sm font-semibold text-white font-[family-name:var(--font-orbitron)] mb-4">Días</p>
           <div className="flex flex-wrap gap-2.5 sm:gap-2">
             {days.map((day) => {
@@ -290,13 +292,13 @@ export default function ReservasPage() {
               );
             })}
           </div>
-          <p className="mt-4 text-xs uppercase tracking-[0.08em] text-zinc-400">Selección actual</p>
-          <div className="mt-2 rounded-xl border border-dashed border-red-500/50 bg-black/40 px-3 py-2 text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">
+          <p className="mt-4 text-xs uppercase tracking-[0.08em] text-zinc-600">Selección actual</p>
+          <div className="mt-2 rounded-xl border border-red-500/50 bg-black/50 px-3 py-2 text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">
             {selectedDay} | {selectedTime}
           </div>
         </div>
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
-          <div className="mb-4">
+        <div className="rounded-xl border border-red-500/50 bg-black/30 p-5 sm:p-6 lg:p-7">
+          <div className="mb-5 sm:mb-6">
             <div className="flex items-center justify-between mb-1">
               <p className="text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">Horarios</p>
               <div className="flex items-center gap-2">
@@ -322,7 +324,7 @@ export default function ReservasPage() {
                 </div>
               </div>
             </div>
-            <p className="text-xs text-zinc-400 flex items-center gap-1.5">
+            <p className="text-xs text-zinc-600 flex items-center gap-1.5">
               <Clock className="size-3" />
               Sesiones de 1 hora (60 minutos)
             </p>
@@ -331,10 +333,10 @@ export default function ReservasPage() {
             {loadingSlots ? (
               <div className="col-span-2 flex flex-col items-center justify-center py-12">
                 <div className="relative size-16">
-                  <div className="absolute inset-0 rounded-full border-4 border-red-500/20"></div>
+                  <div className="absolute inset-0 rounded-full border-4 border-red-500/30"></div>
                   <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-red-500 animate-spin"></div>
                 </div>
-                <p className="mt-4 text-sm text-zinc-400 font-[family-name:var(--font-orbitron)]">Cargando horarios...</p>
+                <p className="mt-4 text-sm text-zinc-600 font-[family-name:var(--font-orbitron)]">Cargando horarios...</p>
               </div>
             ) : (
               times
@@ -376,10 +378,10 @@ export default function ReservasPage() {
                             "text-base sm:text-sm",
                             "active:scale-[0.98]",
                             time === selectedTime && !isDisabled
-                              ? "border-red-400 bg-red-500/10 shadow-md shadow-red-500/20"
+                              ? "border-red-500/70 bg-red-500/10"
                               : !isDisabled
-                              ? "border-white/20 active:border-red-200/60 active:bg-white/5"
-                              : "border-white/10 bg-white/5 opacity-40 cursor-not-allowed"
+                              ? "border-red-500/50 bg-black/30 hover:border-red-500/70 hover:bg-black/50"
+                              : "border-red-500/30 bg-black/30 opacity-40 cursor-not-allowed"
                           )}
                         >
                   <div className="flex flex-col items-start">
@@ -387,22 +389,22 @@ export default function ReservasPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     {!slotInfo.available ? (
-                      <Badge className="bg-orange-500/20 border border-orange-500/30 text-orange-400 font-[family-name:var(--font-orbitron)] text-xs">
+                      <Badge className="bg-black border border-orange-500/50 text-orange-500/80 font-[family-name:var(--font-orbitron)] text-xs">
                         Clase Cancelada
                       </Badge>
                     ) : isFull ? (
-                      <Badge className="bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)] text-xs">
+                      <Badge className="bg-black border border-red-500/50 text-red-500 font-[family-name:var(--font-orbitron)] text-xs">
                         LLENO
                       </Badge>
                     ) : (
-                      <span className="text-xs text-green-400 font-semibold">
+                      <span className="text-xs text-red-500/80 font-semibold">
                         {spotsRemaining} disponibles
                       </span>
                     )}
                     {slotInfo.available && (
                       <div className="flex items-center gap-1">
                         <Timer className="size-4" />
-                        <span className="text-xs text-zinc-400">1h</span>
+                        <span className="text-xs text-zinc-600">1h</span>
                       </div>
                     )}
                   </div>
@@ -431,12 +433,12 @@ export default function ReservasPage() {
                   return !slotInfo.available || isFull;
                 })()
               }
-              className="w-full sm:w-auto min-h-[48px] sm:min-h-0 text-base sm:text-sm bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50"
+              className="w-full sm:w-auto min-h-[48px] sm:min-h-0 text-base sm:text-sm bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50"
             >
               Reservar este horario
             </Button>
             <div className="flex flex-col gap-1">
-              <p className="text-xs text-zinc-400">
+              <p className="text-xs text-zinc-600">
                 Toca un día y hora para añadirlos a tus reservas de la semana.
               </p>
               {(() => {
@@ -468,10 +470,10 @@ export default function ReservasPage() {
           </div>
         </div>
       </div>
-      <div className="mt-6 space-y-3">
-        <p className="text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">Tus reservas</p>
+      <div className="mt-8 sm:mt-10 space-y-4 sm:space-y-5">
+        <p className="text-base sm:text-lg font-semibold text-white font-[family-name:var(--font-orbitron)]">Tus reservas</p>
         {bookings.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-white/20 bg-white/5 px-4 py-3 text-sm text-zinc-200">
+          <div className="rounded-xl border border-dashed border-red-500/30 bg-black/30 px-4 py-3 text-sm text-zinc-600">
             Aún no tienes reservas. Elige un día y hora para agendar.
           </div>
         ) : (
@@ -489,24 +491,24 @@ export default function ReservasPage() {
                     "text-base sm:text-sm font-medium",
                     "active:scale-[0.98]",
                     isPassed
-                      ? "border-white/5 bg-white/5 opacity-50"
-                      : "border-white/10 bg-white/5 active:bg-white/10 active:border-red-500/30"
+                      ? "border-red-500/30 bg-black/30 opacity-50"
+                      : "border-red-500/50 bg-black/30 hover:border-red-500/70 hover:bg-black/50"
                   )}
                 >
                   <div className="flex flex-col">
                     <span className={cn("text-white", isPassed && "line-through")}>
                       {booking.day}
                     </span>
-                    <span className={cn("text-red-300 text-xs", isPassed && "line-through")}>
+                    <span className={cn("text-red-500/80 text-xs", isPassed && "line-through")}>
                       {booking.time}
                     </span>
                     {!canCancel && !isPassed && (
-                      <span className="text-xs text-yellow-400 mt-1">
+                      <span className="text-xs text-red-500/70 mt-1">
                         No se puede cancelar (menos de 1 hora)
                       </span>
                     )}
                     {isPassed && (
-                      <span className="text-xs text-zinc-500 mt-1">Ya pasó</span>
+                      <span className="text-xs text-zinc-600 mt-1">Ya pasó</span>
                     )}
                   </div>
                   <Tooltip>
@@ -542,7 +544,7 @@ export default function ReservasPage() {
             })}
           </div>
         )}
-        {reservationSummary && <p className="text-xs text-zinc-300">Próximas: {reservationSummary}</p>}
+        {reservationSummary && <p className="text-xs text-zinc-600">Próximas: {reservationSummary}</p>}
       </div>
     </Card>
   );

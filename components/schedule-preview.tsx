@@ -44,16 +44,16 @@ export default function SchedulePreview() {
         <p className="text-lg text-zinc-300">Cambia entre hoy, la semana o benchmarks del leaderboard.</p>
       </div>
 
-      <Card className="border border-white/10 bg-black/50 p-4 sm:p-6 transition-all duration-300 hover:border-red-500/20">
+      <Card className="border border-black/50 bg-black/50 p-4 sm:p-6 transition-all duration-300 hover:border-red-500/20">
         <div className="flex flex-wrap gap-2.5 sm:gap-2">
           {tabs.map((tab) => (
             <Button
               key={tab}
               variant={tab === active ? "default" : "outline"}
-              className={`min-h-[44px] sm:min-h-0 h-10 sm:h-9 rounded-full border-white/20 text-sm sm:text-xs transition-all duration-200 active:scale-95 ${
+              className={`min-h-[44px] sm:min-h-0 h-10 sm:h-9 rounded-full border-black/50 text-sm sm:text-xs transition-all duration-200 active:scale-95 ${
                 tab === active
                   ? "bg-red-500 text-white shadow-lg shadow-red-500/30"
-                  : "text-white active:bg-white/10 active:border-red-500/30"
+                  : "text-white active:bg-black/20 active:border-red-500/30"
               }`}
               onClick={() => setActive(tab)}
             >
@@ -63,7 +63,7 @@ export default function SchedulePreview() {
         </div>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          <Card className="border border-white/10 bg-white/5 p-4 transition-all duration-200 hover:bg-white/10 hover:border-red-500/20">
+          <Card className="border border-black/50 bg-black/30 p-4 transition-all duration-200 hover:bg-black/50 hover:border-red-500/20">
             <p className="text-sm font-semibold text-white">Calentamiento</p>
             <ul className="mt-2 space-y-1 text-sm text-zinc-200">
               {wod.warmup.map((item) => (
@@ -71,13 +71,13 @@ export default function SchedulePreview() {
               ))}
             </ul>
           </Card>
-          <Card className="border border-white/10 bg-white/5 p-4 transition-all duration-200 hover:bg-white/10 hover:border-red-500/20">
+          <Card className="border border-black/50 bg-black/30 p-4 transition-all duration-200 hover:bg-black/50 hover:border-red-500/20">
             <p className="text-sm font-semibold text-white">Fuerza</p>
             <p className="mt-2 text-sm text-zinc-200">{wod.strength}</p>
           </Card>
         </div>
 
-        <Card className="mt-4 border border-white/10 bg-gradient-to-r from-red-500/20 to-rose-500/10 p-4 transition-all duration-200 hover:from-red-500/30 hover:to-rose-500/20 hover:border-red-500/30">
+        <Card className="mt-4 border border-black/50 bg-gradient-to-r from-red-500/20 to-rose-500/10 p-4 transition-all duration-200 hover:from-red-500/30 hover:to-rose-500/20 hover:border-red-500/30">
           <p className="text-sm font-semibold text-white">MetCon</p>
           <p className="mt-2 text-sm text-zinc-100">{wod.metcon}</p>
         </Card>
