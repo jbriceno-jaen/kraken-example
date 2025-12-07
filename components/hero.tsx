@@ -72,11 +72,11 @@ export default function Hero() {
               <br />
               <span className="text-white">FUERTES</span>
             </h1>
-            <div className="space-y-4 animate-fade-in-up delay-200">
-              <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-zinc-400 leading-relaxed max-w-3xl mx-auto font-light break-words px-4">
+            <div className="space-y-4">
+              <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-zinc-400 leading-relaxed max-w-3xl mx-auto font-light break-words px-4 animate-fade-in-up delay-200">
                 Más que un box, una comunidad unida que crece junta.
               </p>
-              <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-zinc-500 leading-relaxed max-w-2xl mx-auto font-light break-words px-4">
+              <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-zinc-500 leading-relaxed max-w-2xl mx-auto font-light break-words px-4 animate-fade-in-up delay-300">
                 Donde cada entrenamiento es un paso más hacia tus objetivos y cada compañero es parte de tu éxito.
               </p>
             </div>

@@ -93,10 +93,11 @@ export default function PhysicalChanges() {
               clearInterval(interval);
             }
             const key = change.name.toLowerCase().includes("grasa") ? "grasa" :
-                       change.name.toLowerCase().includes("muscular") ? "musculo" :
+                       change.name.toLowerCase().includes("masa muscular") ? "musculo" :
+                       change.name.toLowerCase().includes("resistencia") ? "resistencia" :
                        change.name.toLowerCase().includes("fuerza") ? "fuerza" :
                        change.name.toLowerCase().includes("cardiovascular") ? "cardio" :
-                       change.name.toLowerCase().includes("flexibilidad") ? "flexibilidad" : "resistencia";
+                       change.name.toLowerCase().includes("flexibilidad") ? "flexibilidad" : "musculo";
             setAnimatedValues((prev) => ({
               ...prev,
               [key]: current,
@@ -138,17 +139,15 @@ export default function PhysicalChanges() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {physicalChanges.map((change, index) => {
             const key = change.name.toLowerCase().includes("grasa") ? "grasa" :
-                       change.name.toLowerCase().includes("muscular") ? "musculo" :
+                       change.name.toLowerCase().includes("masa muscular") ? "musculo" :
+                       change.name.toLowerCase().includes("resistencia") ? "resistencia" :
                        change.name.toLowerCase().includes("fuerza") ? "fuerza" :
                        change.name.toLowerCase().includes("cardiovascular") ? "cardio" :
-                       change.name.toLowerCase().includes("flexibilidad") ? "flexibilidad" : "resistencia";
+                       change.name.toLowerCase().includes("flexibilidad") ? "flexibilidad" : "musculo";
             const currentValue = animatedValues[key] || 0;
             
-            const maxValue = change.name.includes("grasa") ? 30 : 
-                            change.name.includes("muscular") ? 5 :
-                            change.name.includes("fuerza") ? 30 : 
-                            change.name.includes("cardiovascular") ? 20 :
-                            change.name.includes("flexibilidad") ? 30 : 35;
+            // Use change.after as maxValue to match animation logic
+            const maxValue = change.after;
             const percentage = (currentValue / maxValue) * 100;
             const isHovered = hoveredIndex === index;
             const Icon = change.icon;
