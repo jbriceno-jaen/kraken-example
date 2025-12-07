@@ -215,6 +215,19 @@
   animation-delay: 1000ms;
 }
 
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
 /* Custom select arrow positioning - move arrow more to the left */
 select {
   appearance: none;

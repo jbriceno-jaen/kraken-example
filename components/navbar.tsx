@@ -25,6 +25,7 @@ import { Logo } from "@/components/logo";
 const links = [
   { href: "#workouts", label: "Workouts" },
   { href: "#coaches", label: "Comunidad" },
+  { href: "#physical-changes", label: "Resultados" },
   { href: "#pricing", label: "Pricing" },
 ];
 

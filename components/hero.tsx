@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, UserCheck, Trophy, BarChart3 } from "lucide-react";
+import { Calendar, UserCheck, Trophy, BarChart3, Activity } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 
@@ -41,32 +41,45 @@ export default function Hero() {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
       
-      {/* Minimal red accent dots */}
-      <div className="absolute top-20 right-20 w-1 h-1 bg-red-500 rounded-full opacity-40" />
-      <div className="absolute bottom-32 left-16 w-1 h-1 bg-red-500 rounded-full opacity-40" />
       
       <div className="relative mx-auto max-w-7xl">
         {/* Top Section - Hero Content */}
         <div className="text-center space-y-8 sm:space-y-10 lg:space-y-12 mb-16 sm:mb-20 lg:mb-24">
-          {/* Minimalist Badge */}
+          {/* Professional CrossFit Badge */}
           <div className="flex justify-center animate-fade-in">
-            <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5 hover:border-red-500/50 transition-all duration-300">
-              CrossFit | Fuerza | Motor
-            </Badge>
+            <div className="inline-flex items-center gap-3 sm:gap-4 px-5 sm:px-7 py-2.5 sm:py-3 rounded-lg border border-red-500/30 bg-black/50 backdrop-blur-sm hover:border-red-500/50 hover:bg-black/70 transition-all duration-300 group">
+              <div className="flex items-center gap-2">
+                <Activity className="size-4 sm:size-5 text-red-500/80 group-hover:text-red-500 transition-colors duration-300" />
+                <span className="text-xs sm:text-sm font-semibold text-zinc-400 font-[family-name:var(--font-orbitron)] tracking-wide uppercase">
+                  Metodología
+                </span>
+              </div>
+              <div className="h-4 w-px bg-red-500/30 group-hover:bg-red-500/50 transition-colors duration-300" />
+              <div className="flex items-center gap-2">
+                <span className="text-xs sm:text-sm font-bold text-white font-[family-name:var(--font-orbitron)] tracking-tight">
+                  Resiliente
+                </span>
+              </div>
+            </div>
           </div>
 
           {/* Main Heading - Ultra Minimalist */}
           <div className="space-y-6 sm:space-y-8 lg:space-y-10">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black leading-[0.95] tracking-tighter font-[family-name:var(--font-orbitron)] text-white break-words animate-fade-in-up">
-              ENTRENA
+              JUNTOS
               <br />
-              <span className="text-red-500">COMO UN</span>
+              <span className="text-red-500">SOMOS MÁS</span>
               <br />
-              <span className="text-white">GUERRERO</span>
+              <span className="text-white">FUERTES</span>
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-zinc-500 leading-relaxed max-w-3xl mx-auto font-light break-words px-4 animate-fade-in-up delay-200">
-              La plataforma que transforma tu entrenamiento. Reserva clases, rastrea PRs y alcanza tus objetivos con programación de élite y seguimiento en tiempo real.
-            </p>
+            <div className="space-y-4 animate-fade-in-up delay-200">
+              <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-zinc-400 leading-relaxed max-w-3xl mx-auto font-light break-words px-4">
+                Más que un box, una comunidad unida que crece junta.
+              </p>
+              <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-zinc-500 leading-relaxed max-w-2xl mx-auto font-light break-words px-4">
+                Donde cada entrenamiento es un paso más hacia tus objetivos y cada compañero es parte de tu éxito.
+              </p>
+            </div>
           </div>
         </div>
 

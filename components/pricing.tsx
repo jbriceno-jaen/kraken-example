@@ -83,7 +83,7 @@ export default function Pricing() {
                 )}
               </div>
               <div className="relative overflow-hidden mt-3">
-                <p className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-orbitron)] text-white break-words group-hover:text-red-500 transition-colors duration-300">
+                <p className="text-2xl sm:text-3xl lg:text-4xl font-bold font-[family-name:var(--font-orbitron)] text-white break-words group-hover:text-red-500 transition-colors duration-300">
                   {plan.price}
                 </p>
                 <span className="text-xs sm:text-sm font-medium text-zinc-600 ml-2 group-hover:text-zinc-400 transition-colors duration-300">/mes</span>

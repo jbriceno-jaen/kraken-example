@@ -25,6 +25,11 @@ A modern CrossFit gym management platform built with Next.js, featuring class re
 - 🔄 **Real-time Updates**: Loading screens and refresh functionality for class schedules and attendance
 - 🎯 **Smart Date Handling**: Timezone-safe date pickers and local date parsing throughout the application
 - 📱 **Responsive Design**: Mobile-first design with optimized spacing and touch targets
+- 📈 **Interactive Results Section**: Showcase real physical changes with interactive progress graphs based on scientific studies
+- 📚 **CrossFit Education**: Dedicated page explaining CrossFit methodology and benefits with scientific sources
+- 🎯 **Marketing-Optimized Homepage**: Sections ordered using AIDA principles (Hero → Testimonials → Results → Workouts → Pricing → Location)
+- 🔗 **Enhanced Navigation**: Homepage navbar includes "Resultados" section linking to physical changes data
+- 📱 **Social Media Integration**: Footer includes Instagram and Facebook links with minimalist styling
 
 ## Tech Stack
 
@@ -133,12 +138,21 @@ kraken-example/
 │   │   ├── clases/        # Class attendance
 │   │   └── horarios/      # Class slots management
 │   ├── reset-password/    # Password reset page
+│   ├── que-es-crossfit/   # CrossFit education page
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Home page
 ├── components/            # React components
 │   ├── ui/               # Reusable UI components
 │   ├── manager/          # Manager-specific components
-│   └── auth/             # Authentication modals (login, register, forgot-password)
+│   ├── auth/             # Authentication modals (login, register, forgot-password)
+│   ├── hero.tsx          # Homepage hero section
+│   ├── testimonials.tsx  # Testimonials section
+│   ├── physical-changes.tsx  # Interactive results section
+│   ├── workout-highlights.tsx  # Workout highlights section
+│   ├── pricing.tsx       # Pricing/memberships section
+│   ├── location.tsx      # Location and contact section
+│   ├── footer.tsx         # Reusable footer component
+│   └── logo.tsx           # Logo component
 ├── src/
 │   └── db/               # Database configuration
 │       ├── client.ts      # Database client

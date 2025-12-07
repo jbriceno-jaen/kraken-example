@@ -29,7 +29,7 @@ const highlights: Highlight[] = [
     tone: "from-blue-500/30 to-cyan-400/20",
   },
   {
-    title: "Movilidad y Recuperación",
+    title: "Movilidad",
     description: "Posiciones, activaciones y enfriamientos para mantenerte durable.",
     intensities: ["Recuperación", "Preparación"],
     tone: "from-emerald-500/30 to-lime-400/20",
@@ -72,8 +72,8 @@ export default function WorkoutHighlights() {
               )}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-red-500/0 to-red-500/0 group-hover:from-red-500/5 group-hover:to-transparent transition-all duration-500" />
-              <div className="relative space-y-4 min-w-0">
-                <h3 className="text-xl sm:text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] break-words group-hover:text-red-500 transition-colors duration-300">
+              <div className="relative space-y-4 min-w-0 w-full">
+                <h3 className={`font-bold text-white font-[family-name:var(--font-orbitron)] break-words group-hover:text-red-500 transition-colors duration-300 ${item.title.length > 15 ? 'text-lg sm:text-xl lg:text-2xl leading-tight' : 'text-xl sm:text-2xl'}`}>
                   {item.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed break-words group-hover:text-zinc-400 transition-colors duration-300">{item.description}</p>

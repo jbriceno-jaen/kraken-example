@@ -462,6 +462,54 @@ import { Logo } from "@/components/logo";
 <Logo showLink={false} />
 ```
 
+## 🏠 Homepage Sections
+
+### Estructura del Homepage
+El homepage está organizado siguiendo principios de marketing (AIDA) para maximizar la conversión:
+
+1. **Hero**: Sección principal con mensaje motivacional y badge de metodología
+2. **Testimonials**: Testimonios de la comunidad
+3. **Physical Changes (Resultados)**: Gráficos interactivos de cambios físicos reales basados en estudios científicos
+4. **Workout Highlights**: Destacados de la programación de entrenamientos
+5. **Pricing**: Planes de membresía
+6. **Location**: Información de ubicación, horarios y contacto
+
+### Navegación del Homepage
+El navbar del homepage incluye los siguientes enlaces:
+- **Workouts**: Enlace a la sección de destacados de entrenamientos
+- **Comunidad**: Enlace a la sección de testimonios
+- **Resultados**: Enlace a la sección de cambios físicos reales (nuevo)
+- **Pricing**: Enlace a la sección de membresías
+
+### Componente Physical Changes
+El componente `PhysicalChanges` (`components/physical-changes.tsx`) muestra:
+- 6 gráficos interactivos de progreso (Reducción de grasa, Aumento de masa muscular, Aumento de fuerza máxima, Capacidad cardiovascular, Flexibilidad y movilidad, Resistencia muscular)
+- Efectos hover con animaciones
+- Iconos únicos por métrica
+- Indicador de porcentaje al hacer hover
+- Grid responsive
+- Cita motivacional relacionada con CrossFit
+
+### Footer
+El componente `Footer` (`components/footer.tsx`) incluye:
+- Logo y descripción
+- Enlaces de navegación (Privacidad, Términos, Contacto)
+- Sección "Sobre CrossFit" con enlace a `/que-es-crossfit`
+- Iconos de redes sociales (Instagram, Facebook) con efectos hover
+- Copyright con branding consistente
+- Diseño responsive optimizado para mobile
+
+### Página "Que es CrossFit"
+La página `/que-es-crossfit` (`app/que-es-crossfit/page.tsx`) incluye:
+- Definición de CrossFit
+- Explicación del WOD
+- 6 beneficios principales con iconos
+- Resultados de estudios científicos
+- Sección "¿Es para mí?"
+- Fuentes científicas
+- Call-to-action
+- Diseño minimalista consistente con el resto de la aplicación
+
 ## 📐 Mejoras de UX Recientes
 
 ### Diseño Minimalista y Profesional
@@ -497,7 +545,15 @@ import { Logo } from "@/components/logo";
 ---
 
 **Última actualización**: Enero 2025
-**Versión**: 2.0.0
+**Versión**: 2.1.0
+
+### Cambios en Versión 2.1.0
+- 📈 Nueva sección "Resultados" en el navbar del homepage
+- 📚 Nueva página "Que es CrossFit" con información educativa y fuentes científicas
+- 📊 Componente PhysicalChanges con gráficos interactivos de cambios físicos reales
+- 🔗 Footer actualizado con sección "Sobre CrossFit" e iconos de redes sociales
+- 🎯 Reordenamiento de secciones del homepage basado en principios de marketing (AIDA)
+- 🎨 Mejoras en interactividad de sección Location con cards mejoradas
 
 ### Cambios en Versión 2.0.0
 - ✨ Rediseño completo con estilo minimalista y profesional

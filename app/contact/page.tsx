@@ -45,25 +45,25 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white flex flex-col">
+    <div className="min-h-screen bg-black text-white flex flex-col">
       <Navbar />
       <main className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 lg:px-8 sm:py-16 flex-1">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors mb-4"
+          className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-red-500 transition-colors mb-4"
         >
           <ArrowLeft className="size-4" />
           Volver al inicio
         </Link>
 
         <div className="space-y-4">
-          <Badge className="bg-red-500/20 border border-red-500/30 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/20">
+          <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
             Contacto
           </Badge>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
-            Contáctanos
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white">
+            CONTÁCTANOS
           </h1>
-          <p className="text-lg text-zinc-300">
+          <p className="text-base sm:text-lg text-zinc-500 font-light">
             ¿Tienes preguntas? Estamos aquí para ayudarte. Envíanos un mensaje y te responderemos lo antes posible.
           </p>
         </div>
@@ -71,27 +71,29 @@ export default function ContactPage() {
         <div className="grid gap-8 lg:grid-cols-[1fr,1.2fr]">
           {/* Contact Information */}
           <div className="space-y-6">
-            <Card className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-6 sm:p-8 shadow-2xl">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] mb-6">
-                Información de Contacto
+            <Card className="bg-black p-6 sm:p-8 lg:p-10 shadow-2xl">
+              <h2 className="text-2xl sm:text-3xl font-black tracking-tighter text-white font-[family-name:var(--font-orbitron)] mb-6">
+                INFORMACIÓN DE
+                <br />
+                <span className="text-red-500">CONTACTO</span>
               </h2>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="flex size-12 items-center justify-center rounded-xl bg-red-500/20 text-red-400 flex-shrink-0">
+                  <div className="flex size-12 items-center justify-center rounded-xl bg-black border border-red-500/20 text-red-500/80 flex-shrink-0">
                     <MapPin className="size-6" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-white font-[family-name:var(--font-orbitron)] mb-1">
                       Ubicación
                     </h3>
-                    <p className="text-zinc-300 leading-relaxed">
+                    <p className="text-zinc-500 leading-relaxed font-light">
                       Aguas Zarcas, Costa Rica
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="flex size-12 items-center justify-center rounded-xl bg-red-500/20 text-red-400 flex-shrink-0">
+                  <div className="flex size-12 items-center justify-center rounded-xl bg-black border border-red-500/20 text-red-500/80 flex-shrink-0">
                     <Mail className="size-6" />
                   </div>
                   <div>
@@ -100,7 +102,7 @@ export default function ContactPage() {
                     </h3>
                     <a
                       href="mailto:info@krakenelitefitness.com"
-                      className="text-red-400 hover:text-red-300 transition-colors"
+                      className="text-red-500 hover:text-red-400 transition-colors font-medium"
                     >
                       info@krakenelitefitness.com
                     </a>
@@ -108,7 +110,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="flex size-12 items-center justify-center rounded-xl bg-red-500/20 text-red-400 flex-shrink-0">
+                  <div className="flex size-12 items-center justify-center rounded-xl bg-black border border-red-500/20 text-red-500/80 flex-shrink-0">
                     <Phone className="size-6" />
                   </div>
                   <div>
@@ -117,7 +119,7 @@ export default function ContactPage() {
                     </h3>
                     <a
                       href="tel:+50600000000"
-                      className="text-red-400 hover:text-red-300 transition-colors"
+                      className="text-red-500 hover:text-red-400 transition-colors font-medium"
                     >
                       +506 0000-0000
                     </a>
@@ -125,11 +127,11 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="mt-8 rounded-xl border border-red-500/20 bg-gradient-to-br from-red-500/10 to-transparent p-6">
+              <div className="mt-8 rounded-xl border border-red-500/50 bg-black/30 p-6">
                 <h3 className="text-lg font-semibold text-white font-[family-name:var(--font-orbitron)] mb-2">
                   Horarios de Atención
                 </h3>
-                <div className="space-y-2 text-zinc-300">
+                <div className="space-y-2 text-zinc-500 font-light">
                   <p>Lunes - Sábado: 5:00 AM - 8:00 PM</p>
                   <p>Domingo: Cerrado</p>
                 </div>
@@ -138,9 +140,11 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <Card className="border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-6 sm:p-8 shadow-2xl">
-            <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] mb-6">
-              Envíanos un Mensaje
+          <Card className="bg-black p-6 sm:p-8 lg:p-10 shadow-2xl">
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tighter text-white font-[family-name:var(--font-orbitron)] mb-6">
+              ENVÍANOS UN
+              <br />
+              <span className="text-red-500">MENSAJE</span>
             </h2>
             {isSubmitted && (
               <div className="mb-6 flex items-center gap-3 rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-3 text-green-400">
@@ -162,7 +166,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Tu nombre"
-                    className="min-h-[48px] sm:min-h-0 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    className="min-h-[48px] sm:min-h-0 text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -177,7 +181,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="tucorreo@ejemplo.com"
-                    className="min-h-[48px] sm:min-h-0 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    className="min-h-[48px] sm:min-h-0 text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
                   />
                 </div>
               </div>
@@ -222,7 +226,7 @@ export default function ContactPage() {
                   onChange={handleChange}
                   placeholder="Escribe tu mensaje aquí..."
                   rows={6}
-                  className="min-h-[150px] sm:min-h-0 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                  className="min-h-[150px] sm:min-h-0 text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
                 />
               </div>
               <Button
