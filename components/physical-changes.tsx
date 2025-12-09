@@ -7,75 +7,75 @@ import { useEffect, useState } from "react";
 
 export default function PhysicalChanges() {
   const [animatedValues, setAnimatedValues] = useState({
-    grasa: 0,
-    musculo: 0,
-    fuerza: 0,
+    fat: 0,
+    muscle: 0,
+    strength: 0,
     cardio: 0,
-    flexibilidad: 0,
-    resistencia: 0,
+    flexibility: 0,
+    endurance: 0,
   });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  // Datos basados en estudios reales de CrossFit (primeros 3-6 meses)
+  // Data based on real CrossFit studies (first 3-6 months)
   const physicalChanges = [
     { 
-      name: "Reducción de grasa corporal", 
+      name: "Body fat reduction", 
       before: 25, 
       after: 20, 
       unit: "%",
       improvement: 20,
       color: "from-red-500 to-red-600",
-      description: "Promedio en 3-6 meses",
+      description: "Average in 3-6 months",
       icon: Target,
     },
     { 
-      name: "Aumento de masa muscular", 
+      name: "Muscle mass increase", 
       before: 0, 
       after: 3, 
       unit: "kg",
       improvement: 100,
       color: "from-red-500/90 to-red-600/90",
-      description: "Ganancia típica",
+      description: "Typical gain",
       icon: Dumbbell,
     },
     { 
-      name: "Aumento de fuerza máxima", 
+      name: "Maximum strength increase", 
       before: 0, 
       after: 25, 
       unit: "%",
       improvement: 100,
       color: "from-red-500/80 to-red-600/80",
-      description: "Mejora promedio",
+      description: "Average improvement",
       icon: TrendingUp,
     },
     { 
-      name: "Capacidad cardiovascular", 
+      name: "Cardiovascular capacity", 
       before: 0, 
       after: 15, 
       unit: "%",
       improvement: 100,
       color: "from-red-500/85 to-red-600/85",
-      description: "Mejora en VO2 max",
+      description: "VO2 max improvement",
       icon: Heart,
     },
     { 
-      name: "Flexibilidad y movilidad", 
+      name: "Flexibility and mobility", 
       before: 0, 
       after: 22, 
       unit: "%",
       improvement: 100,
       color: "from-red-500/75 to-red-600/75",
-      description: "Rango de movimiento",
+      description: "Range of motion",
       icon: Activity,
     },
     { 
-      name: "Resistencia muscular", 
+      name: "Muscular endurance", 
       before: 0, 
       after: 30, 
       unit: "%",
       improvement: 100,
       color: "from-red-500/70 to-red-600/70",
-      description: "Capacidad de trabajo",
+      description: "Work capacity",
       icon: Zap,
     },
   ];
@@ -92,12 +92,12 @@ export default function PhysicalChanges() {
               current = maxValue;
               clearInterval(interval);
             }
-            const key = change.name.toLowerCase().includes("grasa") ? "grasa" :
-                       change.name.toLowerCase().includes("masa muscular") ? "musculo" :
-                       change.name.toLowerCase().includes("resistencia") ? "resistencia" :
-                       change.name.toLowerCase().includes("fuerza") ? "fuerza" :
+            const key = change.name.toLowerCase().includes("fat") ? "fat" :
+                       change.name.toLowerCase().includes("muscle mass") ? "muscle" :
+                       change.name.toLowerCase().includes("endurance") ? "endurance" :
+                       change.name.toLowerCase().includes("strength") ? "strength" :
                        change.name.toLowerCase().includes("cardiovascular") ? "cardio" :
-                       change.name.toLowerCase().includes("flexibilidad") ? "flexibilidad" : "musculo";
+                       change.name.toLowerCase().includes("flexibility") ? "flexibility" : "muscle";
             setAnimatedValues((prev) => ({
               ...prev,
               [key]: current,
@@ -124,35 +124,35 @@ export default function PhysicalChanges() {
       <div className="relative space-y-6 sm:space-y-8">
         <div className="space-y-4">
           <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
-            Resultados
+            Results
           </Badge>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white break-words">
-            CAMBIOS FÍSICOS
+            REAL PHYSICAL
             <br />
-            <span className="text-red-500">REALES</span>
+            <span className="text-red-500">CHANGES</span>
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-zinc-500 leading-relaxed font-light break-words">
-            Basado en estudios científicos. Resultados medibles en los primeros 3-6 meses de entrenamiento constante.
+            Based on scientific studies. Measurable results in the first 3-6 months of consistent training.
           </p>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
           {physicalChanges.map((change, index) => {
-            const key = change.name.toLowerCase().includes("grasa") ? "grasa" :
-                       change.name.toLowerCase().includes("masa muscular") ? "musculo" :
-                       change.name.toLowerCase().includes("resistencia") ? "resistencia" :
-                       change.name.toLowerCase().includes("fuerza") ? "fuerza" :
+            const key = change.name.toLowerCase().includes("fat") ? "fat" :
+                       change.name.toLowerCase().includes("muscle mass") ? "muscle" :
+                       change.name.toLowerCase().includes("endurance") ? "endurance" :
+                       change.name.toLowerCase().includes("strength") ? "strength" :
                        change.name.toLowerCase().includes("cardiovascular") ? "cardio" :
-                       change.name.toLowerCase().includes("flexibilidad") ? "flexibilidad" : "musculo";
+                       change.name.toLowerCase().includes("flexibility") ? "flexibility" : "muscle";
             const currentValue = animatedValues[key] || 0;
             
             // Use a higher maxValue to show progress without filling completely
-            const maxValue = change.name.toLowerCase().includes("grasa") ? 30 : 
-                            change.name.toLowerCase().includes("masa muscular") ? 5 :
-                            change.name.toLowerCase().includes("resistencia") ? 35 :
-                            change.name.toLowerCase().includes("fuerza") ? 30 : 
+            const maxValue = change.name.toLowerCase().includes("fat") ? 30 : 
+                            change.name.toLowerCase().includes("muscle mass") ? 5 :
+                            change.name.toLowerCase().includes("endurance") ? 35 :
+                            change.name.toLowerCase().includes("strength") ? 30 : 
                             change.name.toLowerCase().includes("cardiovascular") ? 20 :
-                            change.name.toLowerCase().includes("flexibilidad") ? 30 : 5;
+                            change.name.toLowerCase().includes("flexibility") ? 30 : 5;
             const percentage = (currentValue / maxValue) * 100;
             const isHovered = hoveredIndex === index;
             const Icon = change.icon;
@@ -225,17 +225,17 @@ export default function PhysicalChanges() {
         <div className="pt-6 border-t border-black/50">
           <div className="p-5 sm:p-6 rounded-xl border border-red-500/30 bg-black/30 group/quote hover:border-red-500/50 hover:bg-black/50 transition-all duration-300">
             <p className="text-sm sm:text-base text-zinc-400 leading-relaxed italic text-center font-light">
-              "Aquí no solo entrenas tu cuerpo, transformas tu alma. Cada gota de sudor es una promesa a ti mismo. Cada repetición, un paso más cerca de quien siempre supiste que podías ser."
+              "Here you don't just train your body, you transform your soul. Every drop of sweat is a promise to yourself. Every repetition, one step closer to who you always knew you could be."
             </p>
             <p className="text-xs text-zinc-600 text-center mt-3 font-[family-name:var(--font-orbitron)]">
-              — Filosofía Kraken Elite Fitness
+              — Venom Elite Fitness Philosophy
             </p>
           </div>
         </div>
 
         <div className="pt-4">
           <p className="text-xs sm:text-sm text-zinc-500 italic leading-relaxed text-center">
-            *Datos basados en estudios de Journal of Strength and Conditioning Research
+            *Data based on studies from Journal of Strength and Conditioning Research
           </p>
         </div>
       </div>

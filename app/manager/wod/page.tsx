@@ -76,16 +76,16 @@ export default function WODPage() {
       });
 
       if (res.ok) {
-        showToast("WOD eliminado exitosamente", "success");
+        showToast("WOD deleted successfully", "success");
         fetchWODs();
         setShowDeleteWodConfirm(false);
         setWodToDelete(null);
       } else {
         const { error } = await res.json();
-        showToast(error || "Error al eliminar WOD", "error");
+        showToast(error || "Error deleting WOD", "error");
       }
     } catch (error) {
-      showToast("Error al eliminar WOD", "error");
+      showToast("Error deleting WOD", "error");
     } finally {
       setIsDeletingWod(false);
     }
@@ -95,28 +95,28 @@ export default function WODPage() {
     return (
       <div className="flex flex-col items-center justify-center py-12">
         <div className="relative size-16">
-          <div className="size-full animate-spin rounded-full border-4 border-red-500/30 border-t-red-500" />
+          <div className="size-full animate-spin rounded-full border-4 border-red-500/20 border-t-red-500" />
           <Dumbbell className="absolute left-1/2 top-1/2 size-8 -translate-x-1/2 -translate-y-1/2 text-red-400 animate-pulse" />
         </div>
         <p className="mt-4 text-sm font-semibold text-zinc-400 font-[family-name:var(--font-orbitron)]">
-          Cargando WOD's...
+          Loading WOD's...
         </p>
       </div>
     );
   }
 
   return (
-    <>
-      <Card className="bg-black p-4 sm:p-6 lg:p-8 xl:p-10 shadow-2xl">
+    <div className="w-full overflow-x-hidden">
+      <Card className="bg-black p-4 sm:p-6 lg:p-8 shadow-2xl border border-red-500/50 w-full max-w-[1069px] mx-auto overflow-x-hidden">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 mb-8 sm:mb-10">
           <div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white">
               WORKOUT
               <br />
-              <span className="text-red-500">DEL DÍA</span>
+              <span className="text-red-500">OF THE DAY</span>
             </h2>
             <p className="text-sm sm:text-base text-zinc-500 mt-2 font-light">
-              Crea y edita workouts del día.
+              Create and edit daily workouts.
             </p>
           </div>
           <Button
@@ -128,7 +128,7 @@ export default function WODPage() {
             className="w-full sm:w-auto min-h-[48px] sm:min-h-0 text-base sm:text-sm bg-gradient-to-r from-red-500 via-red-600 to-red-500 hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] transition-all duration-200"
           >
             <Plus className="mr-2 size-4" />
-            Crear WOD
+            Create WOD
           </Button>
         </div>
 
@@ -150,12 +150,12 @@ export default function WODPage() {
                         </h3>
                         {isToday && (
                           <Badge className="bg-green-500/20 border border-green-500/30 text-green-400 font-[family-name:var(--font-orbitron)] text-xs flex-shrink-0">
-                            Hoy
+                            Today
                           </Badge>
                         )}
                       </div>
                       <p className="text-zinc-400 text-sm mb-2">
-                        {wodDate.toLocaleDateString("es-ES", {
+                        {wodDate.toLocaleDateString("en-US", {
                           weekday: "long",
                           year: "numeric",
                           month: "long",
@@ -178,7 +178,7 @@ export default function WODPage() {
                         className="flex-1 sm:flex-initial min-h-[44px] sm:min-h-[36px] border-blue-500/40 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 hover:border-blue-500/50 active:scale-[0.98] transition-all duration-200"
                       >
                         <Edit className="size-4 sm:size-3.5 mr-2" />
-                        <span className="text-sm sm:text-xs">Editar</span>
+                        <span className="text-sm sm:text-xs">Edit</span>
                       </Button>
                       <Button
                         variant="outline"
@@ -196,8 +196,8 @@ export default function WODPage() {
           ) : (
             <Card className="border border-red-500/30 bg-black/30 p-12 text-center">
               <Dumbbell className="size-12 mx-auto mb-4 text-zinc-500" />
-              <p className="text-zinc-400 text-lg mb-2">No hay WOD's creados</p>
-              <p className="text-zinc-500 text-sm">Crea un WOD para comenzar</p>
+              <p className="text-zinc-400 text-lg mb-2">No WOD's created</p>
+              <p className="text-zinc-500 text-sm">Create a WOD to get started</p>
             </Card>
           )}
         </div>
@@ -225,15 +225,15 @@ export default function WODPage() {
       <Dialog open={showDeleteWodConfirm} onOpenChange={setShowDeleteWodConfirm}>
         <DialogContent className="border border-red-500/50 bg-black text-white">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-red-500 font-black tracking-tighter font-[family-name:var(--font-orbitron)]">
-              <AlertTriangle className="size-5" />
-              CONFIRMAR ELIMINACIÓN
+            <DialogTitle className="text-lg sm:text-xl font-bold tracking-tight text-red-500 font-[family-name:var(--font-orbitron)] flex items-center gap-2">
+              <AlertTriangle className="size-4" />
+              Confirm Deletion
             </DialogTitle>
-            <DialogDescription className="text-zinc-500 font-light">
-              ¿Estás seguro de que quieres eliminar el WOD "{wodToDelete?.title}"? Esta acción no se puede deshacer.
+            <DialogDescription className="text-xs sm:text-sm text-zinc-500 font-light">
+              Are you sure you want to delete the WOD "{wodToDelete?.title}"? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex gap-3 mt-4">
+          <div className="flex gap-2 sm:gap-3 mt-4">
             <Button
               type="button"
               variant="outline"
@@ -241,22 +241,22 @@ export default function WODPage() {
                 setShowDeleteWodConfirm(false);
                 setWodToDelete(null);
               }}
-              className="flex-1 border-red-500/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/70 active:scale-[0.98] transition-all duration-200 min-h-[48px]"
+              className="flex-1 border-red-500/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/70"
             >
-              Cancelar
+              Cancel
             </Button>
             <Button
               type="button"
               onClick={handleConfirmDeleteWOD}
               disabled={isDeletingWod}
-              className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 active:scale-[0.98] transition-all duration-200 min-h-[48px] disabled:opacity-50"
+              className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:opacity-50"
             >
-              {isDeletingWod ? "Eliminando..." : "Eliminar"}
+              {isDeletingWod ? "Deleting..." : "Delete"}
             </Button>
           </div>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 }
 

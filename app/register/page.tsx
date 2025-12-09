@@ -29,12 +29,12 @@ export default function RegisterPage() {
     e.preventDefault();
     
     if (formData.password !== formData.confirmPassword) {
-      showToast("Las contraseñas no coinciden", "error");
+      showToast("Passwords do not match", "error");
       return;
     }
 
     if (formData.password.length < 6) {
-      showToast("La contraseña debe tener al menos 6 caracteres", "error");
+      showToast("Password must be at least 6 characters", "error");
       return;
     }
 
@@ -55,16 +55,16 @@ export default function RegisterPage() {
 
       if (res.ok) {
         setIsSuccess(true);
-        showToast("¡Cuenta creada exitosamente! Redirigiendo...", "success");
+        showToast("Account created successfully! Redirecting...", "success");
         setTimeout(() => {
           router.push("/login");
         }, 2000);
       } else {
-        showToast(data.error || "Error al crear la cuenta", "error");
+        showToast(data.error || "Error creating account", "error");
       }
     } catch (error) {
       console.error("Registration error:", error);
-      showToast("Error al crear la cuenta. Por favor intenta de nuevo.", "error");
+      showToast("Error creating account. Please try again.", "error");
     } finally {
       setIsLoading(false);
     }
@@ -83,10 +83,10 @@ export default function RegisterPage() {
                 </div>
               </div>
               <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">
-                ¡Cuenta creada exitosamente!
+                Account created successfully!
               </h2>
               <p className="text-zinc-400">
-                Redirigiendo al inicio de sesión...
+                Redirecting to sign in...
               </p>
             </div>
           </Card>
@@ -105,20 +105,20 @@ export default function RegisterPage() {
             <div className="text-center space-y-4">
               <Logo variant="compact" showLink={false} className="justify-center" />
               <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
-                Crear Cuenta
+                Create Account
               </Badge>
               <h1 className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
-                Únete a Kraken
+                Join Venom
               </h1>
               <p className="text-sm text-zinc-400">
-                Crea tu cuenta para comenzar tu entrenamiento
+                Create your account to start your training
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <label htmlFor="name" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Nombre completo
+                  Full name
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
@@ -128,15 +128,15 @@ export default function RegisterPage() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Tu nombre completo"
-                    className="min-h-[48px] pl-10 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    placeholder="Your full name"
+                    className="pl-10 border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label htmlFor="email" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Correo electrónico
+                  Email
                 </label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
@@ -146,15 +146,15 @@ export default function RegisterPage() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="tucorreo@ejemplo.com"
-                    className="min-h-[48px] pl-10 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    placeholder="your.email@example.com"
+                    className="pl-10 border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label htmlFor="password" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Contraseña
+                  Password
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
@@ -164,16 +164,16 @@ export default function RegisterPage() {
                     required
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    placeholder="Mínimo 6 caracteres"
-                    className="min-h-[48px] pl-10 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    placeholder="Minimum 6 characters"
+                    className="pl-10 border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                   />
                 </div>
-                <p className="text-xs text-zinc-500">La contraseña debe tener al menos 6 caracteres</p>
+                <p className="text-xs text-zinc-500">Password must be at least 6 characters</p>
               </div>
 
               <div className="space-y-2">
                 <label htmlFor="confirmPassword" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Confirmar contraseña
+                  Confirm password
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
@@ -183,8 +183,8 @@ export default function RegisterPage() {
                     required
                     value={formData.confirmPassword}
                     onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                    placeholder="Confirma tu contraseña"
-                    className="min-h-[48px] pl-10 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    placeholder="Confirm your password"
+                    className="pl-10 border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                   />
                 </div>
               </div>
@@ -192,16 +192,16 @@ export default function RegisterPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full min-h-[48px] text-base sm:text-sm gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300"
+                className="w-full gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 hover:shadow-red-500/70"
               >
                 {isLoading ? (
                   <>
                     <span className="animate-spin">⏳</span>
-                    Creando cuenta...
+                    Creating account...
                   </>
                 ) : (
                   <>
-                    Crear cuenta
+                    Create account
                     <ArrowRight className="size-5 sm:size-4" />
                   </>
                 )}
@@ -210,14 +210,14 @@ export default function RegisterPage() {
 
             <div className="text-center space-y-3">
               <p className="text-sm text-zinc-400">
-                ¿Ya tienes una cuenta?{" "}
+                Already have an account?{" "}
                 <Link href="/login" className="text-red-400 hover:text-red-300 font-semibold transition-colors">
-                  Inicia sesión aquí
+                  Sign in here
                 </Link>
               </p>
               <Link href="/" className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-400 transition-colors">
                 <ArrowRight className="size-4 rotate-180" />
-                Volver al inicio
+                Back to home
               </Link>
             </div>
           </div>

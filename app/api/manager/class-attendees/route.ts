@@ -44,7 +44,18 @@ export async function POST(request: NextRequest) {
 
     const targetUserId = parseInt(userId);
     const managerId = parseInt(session.user.id);
-    const classDate = new Date(date);
+    
+    // Parse date properly - handle YYYY-MM-DD format
+    let classDate: Date;
+    if (date.includes('T')) {
+      classDate = new Date(date);
+    } else {
+      // For YYYY-MM-DD format, create date in local timezone
+      const [year, month, day] = date.split('-').map(Number);
+      classDate = new Date(year, month - 1, day, 0, 0, 0, 0);
+    }
+
+    console.log("[API] Adding attendee:", { userId: targetUserId, day, time, date, classDate: classDate.toISOString() });
 
     // Check if user exists
     const user = await db

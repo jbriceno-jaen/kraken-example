@@ -11,27 +11,27 @@ type Highlight = {
 
 const highlights: Highlight[] = [
   {
-    title: "Fuerza",
-    description: "Ciclos pesados de barra, trabajo posicional y sobrecarga progresiva.",
-    intensities: ["Pesado", "Técnica"],
+    title: "Strength",
+    description: "Heavy barbell cycles, positional work, and progressive overload.",
+    intensities: ["Heavy", "Technique"],
     tone: "from-red-500/30 to-rose-500/20",
   },
   {
     title: "MetCon",
-    description: "Motores rápidos con modalidades mixtas y objetivos de ritmo inteligentes.",
+    description: "Fast engines with mixed modalities and smart pace objectives.",
     intensities: ["Motor", "Umbral"],
     tone: "from-orange-500/30 to-amber-400/20",
   },
   {
-    title: "Gimnasia",
-    description: "Progresiones de tirón y empuje con bases estrictas.",
-    intensities: ["Habilidad", "Estricto"],
+    title: "Gymnastics",
+    description: "Pull and push progressions with strict foundations.",
+    intensities: ["Skill", "Strict"],
     tone: "from-blue-500/30 to-cyan-400/20",
   },
   {
-    title: "Movilidad",
-    description: "Posiciones, activaciones y enfriamientos para mantenerte durable.",
-    intensities: ["Recuperación", "Preparación"],
+    title: "Mobility",
+    description: "Positions, activations, and cool-downs to keep you durable.",
+    intensities: ["Recovery", "Preparation"],
     tone: "from-emerald-500/30 to-lime-400/20",
   },
 ];
@@ -50,15 +50,15 @@ export default function WorkoutHighlights() {
       <div className="relative space-y-6 sm:space-y-8">
         <div className="space-y-4">
           <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
-            Programación
+            Programming
           </Badge>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white break-words">
-            ENTRENAMIENTOS
+            WORKOUTS
             <br />
-            <span className="text-red-500">PARA PROGRESAR</span>
+            <span className="text-red-500">TO PROGRESS</span>
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-zinc-500 leading-relaxed max-w-3xl font-light break-words">
-            Mezclamos fuerza, acondicionamiento y habilidad para que te muevas mejor, levantes más y dures más.
+            We combine strength, conditioning, and skill so you move better, lift more, and last longer.
           </p>
         </div>
         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">

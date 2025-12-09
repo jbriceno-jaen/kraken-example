@@ -1,8 +1,8 @@
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/src/db";
-import { reservations, classSlots } from "@/src/db/schema";
-import { eq, and, sql } from "drizzle-orm";
+import { reservations, schedules, classSlots, classAttendees } from "@/src/db/schema";
+import { eq, and, sql, gte } from "drizzle-orm";
 import { getOrCreateUser } from "@/src/lib/server/user";
 import { authOptions } from "@/src/lib/auth";
 
@@ -32,10 +32,23 @@ export async function GET() {
       .where(eq(reservations.userId, user.id))
       .orderBy(reservations.date);
 
+    // Get all class attendees (manager-added) for the user
+    const allClassAttendees = await db
+      .select()
+      .from(classAttendees)
+      .where(eq(classAttendees.userId, user.id))
+      .orderBy(classAttendees.date);
+
     // Filter out past reservations (only keep current week and future)
     const activeReservations = allReservations.filter((reservation) => {
       const reservationDate = new Date(reservation.date);
       return reservationDate >= startOfWeek;
+    });
+
+    // Filter out past class attendees (only keep current week and future)
+    const activeClassAttendees = allClassAttendees.filter((attendee) => {
+      const attendeeDate = new Date(attendee.date);
+      return attendeeDate >= startOfWeek;
     });
 
     // Delete old reservations (past week) in the background
@@ -55,7 +68,51 @@ export async function GET() {
       });
     }
 
-    return NextResponse.json({ reservations: activeReservations });
+    // Format class attendees to match reservation structure
+    const formattedClassAttendees = activeClassAttendees.map((attendee) => ({
+      id: attendee.id,
+      userId: attendee.userId,
+      day: attendee.day,
+      time: attendee.time,
+      date: attendee.date instanceof Date ? attendee.date.toISOString() : attendee.date,
+      createdAt: attendee.createdAt instanceof Date ? attendee.createdAt.toISOString() : attendee.createdAt,
+      source: 'manager', // Mark as manager-added
+    }));
+
+    // Format reservations to include source
+    const formattedReservations = activeReservations.map((reservation) => ({
+      ...reservation,
+      date: reservation.date instanceof Date ? reservation.date.toISOString() : reservation.date,
+      createdAt: reservation.createdAt instanceof Date ? reservation.createdAt.toISOString() : reservation.createdAt,
+      source: 'reservation', // Mark as client-made reservation
+    }));
+
+    // Combine both lists - manager-added attendees take precedence if there's a duplicate
+    // (If user has both a reservation and was added by manager for the same slot, show manager-added)
+    const attendeeMap = new Map();
+    
+    // First add all manager-added attendees
+    formattedClassAttendees.forEach((attendee) => {
+      const key = `${attendee.day}-${attendee.time}-${attendee.date}`;
+      attendeeMap.set(key, attendee);
+    });
+    
+    // Then add reservations that don't conflict with manager-added
+    formattedReservations.forEach((reservation) => {
+      const key = `${reservation.day}-${reservation.time}-${reservation.date}`;
+      if (!attendeeMap.has(key)) {
+        attendeeMap.set(key, reservation);
+      }
+    });
+
+    // Convert map back to array and sort by date
+    const allBookings = Array.from(attendeeMap.values()).sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateA - dateB;
+    });
+
+    return NextResponse.json({ reservations: allBookings });
   } catch (error) {
     console.error("Error fetching reservations:", error);
     return NextResponse.json(
@@ -79,7 +136,7 @@ export async function POST(request: NextRequest) {
     // Check if user is approved (managers are always approved)
     if (user.role === "client" && !user.approved) {
       return NextResponse.json(
-        { error: "Tu cuenta está pendiente de aprobación. Por favor espera a que el administrador apruebe tu cuenta." },
+        { error: "Your account is pending approval. Please wait for the administrator to approve your account." },
         { status: 403 }
       );
     }
@@ -114,14 +171,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if slot exists and get capacity
+    // Check if slot exists and get capacity from schedules table
     const slot = await db
       .select()
-      .from(classSlots)
+      .from(schedules)
       .where(
         and(
-          eq(classSlots.day, day),
-          eq(classSlots.time, time)
+          eq(schedules.day, day),
+          eq(schedules.time, time)
         )
       )
       .limit(1);
@@ -137,8 +194,8 @@ export async function POST(request: NextRequest) {
         );
       }
     } else {
-      // Create the slot if it doesn't exist
-      await db.insert(classSlots).values({
+      // Create the slot if it doesn't exist in schedules table
+      await db.insert(schedules).values({
         day,
         time,
         capacity: 14,

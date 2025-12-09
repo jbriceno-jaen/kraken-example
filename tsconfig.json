@@ -15,6 +15,8 @@
     "incremental": true,
     // Faster compilation
     "assumeChangesOnlyAffectDirectDependencies": true,
+    // Reduce worker usage for TypeScript compilation
+    "maxNodeModuleJsDepth": 1,
     "plugins": [
       {
         "name": "next"

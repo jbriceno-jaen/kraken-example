@@ -24,8 +24,8 @@ import { Logo } from "@/components/logo";
 
 const links = [
   { href: "#workouts", label: "Workouts" },
-  { href: "#coaches", label: "Comunidad" },
-  { href: "#physical-changes", label: "Resultados" },
+  { href: "#coaches", label: "Community" },
+  { href: "#physical-changes", label: "Results" },
   { href: "#pricing", label: "Pricing" },
 ];
 
@@ -59,8 +59,16 @@ export default function Navbar() {
       const res = await fetch("/api/user-data");
       if (res.ok) {
         const data = await res.json();
-        setUserImage(data.image || null);
-        setUserData(data);
+        // Handle both string and null image values
+        const imageUrl = data.image && typeof data.image === 'string' ? data.image : null;
+        setUserImage(imageUrl);
+        setUserData({
+          name: data.name,
+          email: data.email,
+          subscriptionExpires: data.subscriptionExpires,
+          wodEnabled: data.wodEnabled,
+          image: imageUrl,
+        });
       }
     } catch (error) {
       console.error("Error fetching user image:", error);
@@ -73,6 +81,7 @@ export default function Navbar() {
       fetchUserImage();
     } else {
       setUserImage(null);
+      setUserData(null);
     }
   }, [status, session]);
 
@@ -83,10 +92,18 @@ export default function Navbar() {
     };
 
     window.addEventListener("profileImageUpdated", handleImageUpdate);
+    // Also refresh periodically to catch updates
+    const interval = setInterval(() => {
+      if (status === "authenticated" && session?.user?.id) {
+        fetchUserImage();
+      }
+    }, 5000); // Refresh every 5 seconds
+
     return () => {
       window.removeEventListener("profileImageUpdated", handleImageUpdate);
+      clearInterval(interval);
     };
-  }, []);
+  }, [status, session]);
 
   return (
     <header className="sticky top-0 z-30 border-b border-red-500/20 bg-black/80 backdrop-blur-xl transition-all duration-300 shadow-lg shadow-black/50">
@@ -98,14 +115,14 @@ export default function Navbar() {
               {session.user?.role === "manager" ? (
                 <>
                   <Link 
-                    href="/manager/usuarios" 
+                    href="/manager/users" 
                     className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
-                      pathname === "/manager/usuarios" 
+                      pathname === "/manager/users"
                         ? "text-red-400 font-semibold after:w-full animate-pulse" 
                         : "hover:text-white after:w-0 hover:after:w-full"
                     }`}
                   >
-                    Usuarios
+                    Users
                   </Link>
                   <Link 
                     href="/manager/wod" 
@@ -118,58 +135,58 @@ export default function Navbar() {
                     WOD
                   </Link>
                   <Link 
-                    href="/manager/clases" 
+                    href="/manager/classes" 
                     className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
-                      pathname === "/manager/clases" 
+                      pathname === "/manager/classes"
                         ? "text-red-400 font-semibold after:w-full animate-pulse" 
                         : "hover:text-white after:w-0 hover:after:w-full"
                     }`}
                   >
-                    Clases
+                    Classes
                   </Link>
                   <Link 
-                    href="/manager/horarios" 
+                    href="/manager/schedules" 
                     className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
-                      pathname === "/manager/horarios" 
+                      pathname === "/manager/schedules"
                         ? "text-red-400 font-semibold after:w-full animate-pulse" 
                         : "hover:text-white after:w-0 hover:after:w-full"
                     }`}
                   >
-                    Horarios
+                    Schedules
                   </Link>
                 </>
               ) : (
                 <>
                   <Link 
-                    href="/dashboard/reservas" 
+                    href="/dashboard/reservations" 
                     className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
-                      pathname === "/dashboard/reservas" 
+                      pathname === "/dashboard/reservations"
                         ? "text-red-400 font-semibold after:w-full animate-pulse" 
                         : "hover:text-white after:w-0 hover:after:w-full"
                     }`}
                   >
-                    Reservas
+                    Reservations
                   </Link>
                   <Link 
-                    href="/dashboard/prs" 
+                    href="/dashboard/personal-records" 
                     className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
-                      pathname === "/dashboard/prs" 
+                      pathname === "/dashboard/personal-records"
                         ? "text-red-400 font-semibold after:w-full animate-pulse" 
                         : "hover:text-white after:w-0 hover:after:w-full"
                     }`}
                   >
-                    Mis PR's
+                    My PR's
                   </Link>
                   {userData?.wodEnabled && (
                     <Link 
-                      href="/dashboard/programacion" 
+                      href="/dashboard/schedule" 
                       className={`py-2 transition-all duration-300 active:scale-95 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-gradient-to-r after:from-red-500 after:to-red-600 after:transition-all after:duration-300 font-[family-name:var(--font-orbitron)] ${
-                        pathname === "/dashboard/programacion" 
+                        pathname === "/dashboard/schedule"
                           ? "text-red-400 font-semibold after:w-full animate-pulse" 
                           : "hover:text-white after:w-0 hover:after:w-full"
                       }`}
                     >
-                      Programación
+                      Programming
                     </Link>
                   )}
                 </>
@@ -194,52 +211,64 @@ export default function Navbar() {
             <div className="hidden items-center gap-2 sm:flex">
               <Button 
                 onClick={() => setRegisterOpen(true)}
-                className="min-h-[40px] bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300"
+                className="bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 shadow-lg shadow-red-500/50 hover:shadow-red-500/70"
               >
-                Registrarse
+                Sign Up
               </Button>
               <Button 
                 onClick={() => setLoginOpen(true)}
-                className="min-h-[40px] border border-red-500/30 text-white active:bg-red-500/10 active:border-red-500/50 active:scale-[0.98] transition-all duration-300"
+                className="border border-red-500/30 text-white"
               >
-                Iniciar sesión
+                Sign In
               </Button>
             </div>
           )}
           {session && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="relative size-10 rounded-full border border-black/50 text-white hover:bg-black/20 active:scale-95 transition-all p-0"
+                <button
+                  type="button"
+                  className="relative size-10 rounded-full border border-red-500/30 text-white hover:bg-black/20 active:scale-95 transition-all p-0 focus:outline-none focus:ring-2 focus:ring-red-500/50 overflow-hidden"
                 >
-                  <Avatar className="size-10 border border-black/50">
-                    <AvatarImage src={userImage || undefined} alt={userData?.name || "User"} />
+                  <Avatar className="size-10 border-0">
+                    {userImage ? (
+                      <AvatarImage 
+                        src={userImage} 
+                        alt={userData?.name || "User"}
+                        className="object-cover"
+                      />
+                    ) : null}
                     <AvatarFallback className="bg-red-500/20 text-white border-0">
                       <User className="size-5" />
                     </AvatarFallback>
                   </Avatar>
-                </Button>
+                </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-64 border-black/50 bg-black/95 backdrop-blur-xl text-white" align="end">
                 <DropdownMenuLabel className="font-[family-name:var(--font-orbitron)]">
                   <div className="flex flex-col space-y-2">
                     <div className="flex items-center gap-3">
                       <Avatar className="size-10 border border-red-500/30">
-                        <AvatarImage src={userImage || undefined} alt={userData?.name || "User"} />
+                        {userImage ? (
+                          <AvatarImage 
+                            src={userImage} 
+                            alt={userData?.name || "User"}
+                            className="object-cover"
+                          />
+                        ) : null}
                         <AvatarFallback className="bg-red-500/20 text-white border-0">
                           <User className="size-5" />
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate">{userData?.name || "Usuario"}</p>
+                        <p className="text-sm font-medium truncate">{userData?.name || "User"}</p>
                         <p className="text-xs text-zinc-400 truncate">{userData?.email}</p>
                       </div>
                     </div>
                     {userData?.subscriptionExpires && (
                       <div className="pt-2 border-t border-black/50">
                         <div className="flex items-center justify-between gap-2 mb-1">
-                          <p className="text-xs text-zinc-400">Suscripción</p>
+                          <p className="text-xs text-zinc-400">Subscription</p>
                           {(() => {
                             const expires = new Date(userData.subscriptionExpires);
                             const now = new Date();
@@ -249,7 +278,7 @@ export default function Navbar() {
                             if (diffDays < 0) {
                               return (
                                 <Badge className="bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)] text-xs px-2 py-0.5">
-                                  Vencido
+                                  Expired
                                 </Badge>
                               );
                             }
@@ -264,11 +293,11 @@ export default function Navbar() {
                             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                             
                             if (diffDays < 0) {
-                              return "Expirada";
+                              return "Expired";
                             } else if (diffDays <= 7) {
-                              return `Expira en ${diffDays} días`;
+                              return `Expires in ${diffDays} days`;
                             } else {
-                              return `Expira: ${expires.toLocaleDateString("es-ES", { month: "short", day: "numeric" })}`;
+                              return `Expires: ${expires.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
                             }
                           })()}
                         </p>
@@ -281,14 +310,14 @@ export default function Navbar() {
                   <>
                     <DropdownMenuItem asChild>
                       <Link
-                        href="/manager/usuarios"
+                        href="/manager/users"
                         className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
-                          pathname === "/manager/usuarios" ? "bg-red-500/20 text-red-400" : ""
+                          pathname === "/manager/users" ? "bg-red-500/20 text-red-400" : ""
                         }`}
                       >
                         <Users className="mr-2 size-4" />
-                        Usuarios
-                        {pathname === "/manager/usuarios" && (
+                        Users
+                        {(pathname === "/manager/users" || pathname === "/manager/usuarios") && (
                           <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
                         )}
                       </Link>
@@ -301,7 +330,7 @@ export default function Navbar() {
                         }`}
                       >
                         <Dumbbell className="mr-2 size-4" />
-                        WOD del Día
+                        Daily WOD
                         {pathname === "/manager/wod" && (
                           <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
                         )}
@@ -309,42 +338,42 @@ export default function Navbar() {
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link
-                        href="/manager/clases"
+                        href="/manager/classes"
                         className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
-                          pathname === "/manager/clases" ? "bg-red-500/20 text-red-400" : ""
+                          pathname === "/manager/classes" ? "bg-red-500/20 text-red-400" : ""
                         }`}
                       >
                         <CalendarClock className="mr-2 size-4" />
-                        Clases
-                        {pathname === "/manager/clases" && (
+                        Classes
+                        {pathname === "/manager/classes" && (
                           <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
                         )}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link
-                        href="/manager/horarios"
+                        href="/manager/schedules"
                         className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
-                          pathname === "/manager/horarios" ? "bg-red-500/20 text-red-400" : ""
+                          pathname === "/manager/schedules" ? "bg-red-500/20 text-red-400" : ""
                         }`}
                       >
                         <Clock className="mr-2 size-4" />
-                        Horarios
-                        {pathname === "/manager/horarios" && (
+                        Schedules
+                        {pathname === "/manager/schedules" && (
                           <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
                         )}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link
-                        href="/dashboard/perfil"
+                        href="/dashboard/profile"
                         className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
-                          pathname === "/dashboard/perfil" ? "bg-red-500/20 text-red-400" : ""
+                          pathname === "/dashboard/profile" ? "bg-red-500/20 text-red-400" : ""
                         }`}
                       >
-                        <Settings className="mr-2 size-4" />
-                        Editar Perfil
-                        {pathname === "/dashboard/perfil" && (
+                        <User className="mr-2 size-4" />
+                        Profile
+                        {pathname === "/dashboard/profile" && (
                           <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
                         )}
                       </Link>
@@ -354,42 +383,42 @@ export default function Navbar() {
                   <>
                     <DropdownMenuItem asChild>
                       <Link
-                        href="/dashboard/reservas"
+                        href="/dashboard/reservations"
                         className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
-                          pathname === "/dashboard/reservas" ? "bg-red-500/20 text-red-400" : ""
+                          pathname === "/dashboard/reservations" ? "bg-red-500/20 text-red-400" : ""
                         }`}
                       >
                         <CalendarClock className="mr-2 size-4" />
-                        Reservas
-                        {pathname === "/dashboard/reservas" && (
+                        Reservations
+                        {pathname === "/dashboard/reservations" && (
                           <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
                         )}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link
-                        href="/dashboard/perfil"
+                        href="/dashboard/profile"
                         className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
-                          pathname === "/dashboard/perfil" ? "bg-red-500/20 text-red-400" : ""
+                          pathname === "/dashboard/profile" ? "bg-red-500/20 text-red-400" : ""
                         }`}
                       >
-                        <Settings className="mr-2 size-4" />
-                        Editar Perfil
-                        {pathname === "/dashboard/perfil" && (
+                        <User className="mr-2 size-4" />
+                        Profile
+                        {pathname === "/dashboard/profile" && (
                           <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
                         )}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link
-                        href="/dashboard/prs"
+                        href="/dashboard/personal-records"
                         className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
-                          pathname === "/dashboard/prs" ? "bg-red-500/20 text-red-400" : ""
+                          pathname === "/dashboard/personal-records" ? "bg-red-500/20 text-red-400" : ""
                         }`}
                       >
                         <Trophy className="mr-2 size-4" />
-                        Mis PR's
-                        {pathname === "/dashboard/prs" && (
+                        My PR's
+                        {pathname === "/dashboard/personal-records" && (
                           <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
                         )}
                       </Link>
@@ -397,14 +426,14 @@ export default function Navbar() {
                     {userData?.wodEnabled && (
                       <DropdownMenuItem asChild>
                         <Link
-                          href="/dashboard/programacion"
+                          href="/dashboard/schedule"
                           className={`flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10 ${
-                            pathname === "/dashboard/programacion" ? "bg-red-500/20 text-red-400" : ""
+                            pathname === "/dashboard/schedule" ? "bg-red-500/20 text-red-400" : ""
                           }`}
                         >
                           <Dumbbell className="mr-2 size-4" />
-                          Programación
-                          {pathname === "/dashboard/programacion" && (
+                          Programming
+                          {pathname === "/dashboard/schedule" && (
                             <span className="ml-auto size-2 rounded-full bg-red-500 animate-pulse" />
                           )}
                         </Link>
@@ -419,7 +448,7 @@ export default function Navbar() {
                     className="flex items-center cursor-pointer font-[family-name:var(--font-orbitron)] hover:bg-white/10"
                   >
                     <Home className="mr-2 size-4" />
-                    Volver al Inicio
+                    Back to Home
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-white/10" />
@@ -428,7 +457,7 @@ export default function Navbar() {
                   className="text-red-400 hover:text-red-300 hover:bg-red-500/10 cursor-pointer font-[family-name:var(--font-orbitron)]"
                 >
                   <LogOut className="mr-2 size-4" />
-                  Cerrar sesión
+                  Sign Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -475,7 +504,7 @@ export default function Navbar() {
                   }}
                   className="w-full min-h-[48px] text-base bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300"
                 >
-                  Registrarse
+                  Sign Up
                 </Button>
                 <Button 
                   onClick={() => {
@@ -484,7 +513,7 @@ export default function Navbar() {
                   }}
                   className="w-full min-h-[48px] text-base border border-black/50 text-white active:bg-black/20 active:scale-[0.98]"
                 >
-                  Iniciar sesión
+                  Sign In
                 </Button>
               </div>
             )}

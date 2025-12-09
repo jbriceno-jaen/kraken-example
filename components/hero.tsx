@@ -8,23 +8,23 @@ export default function Hero() {
   const features = [
     {
       icon: Calendar,
-      title: "Reservas Inteligentes",
-      description: "Reserva tus clases con un día de anticipación. Sistema automático de gestión de horarios.",
+      title: "Smart Reservations",
+      description: "Book your classes one day in advance. Automatic schedule management system.",
     },
     {
       icon: Trophy,
-      title: "Récords Personales",
-      description: "Registra y rastrea todos tus PRs. Observa tu progreso en tiempo real.",
+      title: "Personal Records",
+      description: "Record and track all your PRs. Watch your progress in real time.",
     },
     {
       icon: UserCheck,
-      title: "Perfil Completo",
-      description: "Mantén tus datos actualizados y objetivos alineados con tus coaches.",
+      title: "Complete Profile",
+      description: "Keep your data updated and goals aligned with your coaches.",
     },
     {
       icon: BarChart3,
-      title: "Seguimiento de Progreso",
-      description: "Visualiza tu evolución con métricas detalladas y análisis de rendimiento.",
+      title: "Progress Tracking",
+      description: "Visualize your evolution with detailed metrics and performance analysis.",
     },
   ];
 
@@ -51,13 +51,13 @@ export default function Hero() {
               <div className="flex items-center gap-2">
                 <Activity className="size-4 sm:size-5 text-red-500/80 group-hover:text-red-500 transition-colors duration-300" />
                 <span className="text-xs sm:text-sm font-semibold text-zinc-400 font-[family-name:var(--font-orbitron)] tracking-wide uppercase">
-                  Metodología
+                  Methodology
                 </span>
               </div>
               <div className="h-4 w-px bg-red-500/30 group-hover:bg-red-500/50 transition-colors duration-300" />
               <div className="flex items-center gap-2">
                 <span className="text-xs sm:text-sm font-bold text-white font-[family-name:var(--font-orbitron)] tracking-tight">
-                  Resiliente
+                  Resilient
                 </span>
               </div>
             </div>
@@ -66,18 +66,18 @@ export default function Hero() {
           {/* Main Heading - Ultra Minimalist */}
           <div className="space-y-6 sm:space-y-8 lg:space-y-10">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black leading-[0.95] tracking-tighter font-[family-name:var(--font-orbitron)] text-white break-words animate-fade-in-up">
-              JUNTOS
+              TOGETHER
               <br />
-              <span className="text-red-500">SOMOS MÁS</span>
+              <span className="text-red-500">WE ARE</span>
               <br />
-              <span className="text-white">FUERTES</span>
+              <span className="text-white">STRONGER</span>
             </h1>
             <div className="space-y-4">
               <p className="text-base sm:text-lg lg:text-xl xl:text-2xl text-zinc-400 leading-relaxed max-w-3xl mx-auto font-light break-words px-4 animate-fade-in-up delay-200">
-                Más que un box, una comunidad unida que crece junta.
+                More than a box, a united community that grows together.
               </p>
               <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-zinc-500 leading-relaxed max-w-2xl mx-auto font-light break-words px-4 animate-fade-in-up delay-300">
-                Donde cada entrenamiento es un paso más hacia tus objetivos y cada compañero es parte de tu éxito.
+                Where every workout is another step toward your goals and every teammate is part of your success.
               </p>
             </div>
           </div>

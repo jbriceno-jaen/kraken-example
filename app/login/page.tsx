@@ -28,7 +28,7 @@ export default function LoginPage() {
   useEffect(() => {
     if (searchParams.get("subscriptionExpired") === "true") {
       showToast(
-        "Tu suscripción ha expirado. Por favor contacta al administrador para renovar tu suscripción.",
+        "Your subscription has expired. Please contact the administrator to renew your subscription.",
         "error"
       );
       // Remove the query parameter from URL
@@ -57,7 +57,7 @@ export default function LoginPage() {
           
           // Check approval status
           if (approvalData.role === "client" && !approvalData.approved) {
-            showToast("Tu cuenta está pendiente de aprobación. Por favor espera a que el administrador apruebe tu cuenta.", "warning");
+            showToast("Your account is pending approval. Please wait for the administrator to approve your account.", "warning");
             setIsLoading(false);
             return;
           }
@@ -65,14 +65,14 @@ export default function LoginPage() {
           // Check subscription expiration
           if (approvalData.role === "client" && approvalData.subscriptionExpired) {
             const expirationDate = approvalData.subscriptionExpires 
-              ? new Date(approvalData.subscriptionExpires).toLocaleDateString("es-ES", {
+              ? new Date(approvalData.subscriptionExpires).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
                 })
-              : "fecha desconocida";
+              : "unknown date";
             showToast(
-              `Tu suscripción ha expirado (expiró el ${expirationDate}). Por favor contacta al administrador para renovar tu suscripción.`,
+              `Your subscription has expired (expired on ${expirationDate}). Please contact the administrator to renew your subscription.`,
               "error"
             );
             setIsLoading(false);
@@ -113,7 +113,7 @@ export default function LoginPage() {
             
             // If user is not approved, show specific message
             if (approvalData.role === "client" && !approvalData.approved) {
-              showToast("Tu cuenta está pendiente de aprobación. Por favor espera a que el administrador apruebe tu cuenta.", "warning");
+              showToast("Your account is pending approval. Please wait for the administrator to approve your account.", "warning");
               setIsLoading(false);
               return;
             }
@@ -126,9 +126,9 @@ export default function LoginPage() {
                     month: "long",
                     day: "numeric",
                   })
-                : "fecha desconocida";
+                : "unknown date";
               showToast(
-                `Tu suscripción ha expirado (expiró el ${expirationDate}). Por favor contacta al administrador para renovar tu suscripción.`,
+                `Your subscription has expired (expired on ${expirationDate}). Please contact the administrator to renew your subscription.`,
                 "error"
               );
               setIsLoading(false);
@@ -141,15 +141,15 @@ export default function LoginPage() {
 
         // Handle generic error messages
         if (result.error.includes("CredentialsSignin")) {
-          showToast("Credenciales incorrectas. Por favor verifica tu email y contraseña.", "error");
+          showToast("Incorrect credentials. Please verify your email and password.", "error");
         } else {
-          showToast("Error al iniciar sesión. Por favor intenta de nuevo.", "error");
+          showToast("Error signing in. Please try again.", "error");
         }
         return;
       }
 
       if (result?.ok) {
-        showToast("¡Bienvenido de vuelta!", "success");
+        showToast("Welcome back!", "success");
         
         // Wait for cookie to be set, then redirect
         // Using a longer delay to ensure cookie is available to middleware
@@ -160,21 +160,21 @@ export default function LoginPage() {
         }, 1000);
       } else {
         console.error("Unexpected result:", result);
-        showToast("Error al iniciar sesión. Por favor intenta de nuevo.", "error");
+        showToast("Error signing in. Please try again.", "error");
       }
     } catch (error) {
       console.error("Login error:", error);
-      let errorMessage = "Error desconocido";
+      let errorMessage = "Unknown error";
       
       if (error instanceof Error) {
         errorMessage = error.message;
         // Handle JSON parsing errors specifically
         if (error.message.includes("JSON") || error.message.includes("Unexpected end")) {
-          errorMessage = "Error de comunicación con el servidor. Por favor intenta de nuevo.";
+          errorMessage = "Server communication error. Please try again.";
         }
       }
       
-      showToast(`Error al iniciar sesión: ${errorMessage}`, "error");
+      showToast(`Error al iniciar sesi?n: ${errorMessage}`, "error");
     } finally {
       setIsLoading(false);
     }
@@ -189,13 +189,13 @@ export default function LoginPage() {
             <div className="text-center space-y-4">
               <Logo variant="compact" showLink={false} className="justify-center" />
               <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
-                Iniciar Sesión
+                Sign In
               </Badge>
               <h1 className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
-                Bienvenido de vuelta
+                Welcome back
               </h1>
               <p className="text-sm text-zinc-400">
-                Ingresa tus credenciales para acceder a tu cuenta
+                Enter your credentials to access your account
               </p>
               {searchParams.get("subscriptionExpired") === "true" && (
                 <div className="mt-4 p-4 border border-red-500/30 bg-red-500/10 rounded-lg">
@@ -203,10 +203,10 @@ export default function LoginPage() {
                     <AlertCircle className="size-5 text-red-400 flex-shrink-0 mt-0.5" />
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-red-400 mb-1">
-                        Suscripción Expirada
+                        Subscription Expired
                       </p>
                       <p className="text-xs text-zinc-300">
-                        Tu suscripción ha expirado. Por favor contacta al administrador para renovar tu suscripción y poder acceder nuevamente a tu cuenta.
+                        Your subscription has expired. Please contact the administrator to renew your subscription and access your account again.
                       </p>
                     </div>
                   </div>
@@ -217,7 +217,7 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <label htmlFor="email" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Correo electrónico
+                  Email
                 </label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
@@ -227,15 +227,15 @@ export default function LoginPage() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="tucorreo@ejemplo.com"
-                    className="min-h-[48px] pl-10 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    placeholder="your.email@example.com"
+                    className="pl-10 border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label htmlFor="password" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Contraseña
+                  Password
                 </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
@@ -245,8 +245,8 @@ export default function LoginPage() {
                     required
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    placeholder="Tu contraseña"
-                    className="min-h-[48px] pl-10 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    placeholder="Your password"
+                    className="pl-10 border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                   />
                 </div>
               </div>
@@ -254,16 +254,16 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full min-h-[48px] text-base sm:text-sm gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300"
+                className="w-full gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 hover:shadow-red-500/70"
               >
                 {isLoading ? (
                   <>
-                    <span className="animate-spin">⏳</span>
-                    Iniciando sesión...
+                    <span className="animate-spin">?</span>
+                    Signing in...
                   </>
                 ) : (
                   <>
-                    Iniciar sesión
+                    Sign In
                     <ArrowRight className="size-5 sm:size-4" />
                   </>
                 )}
@@ -272,14 +272,14 @@ export default function LoginPage() {
 
             <div className="text-center space-y-3">
               <p className="text-sm text-zinc-400">
-                ¿No tienes una cuenta?{" "}
+                Don't have an account?{" "}
                 <Link href="/register" className="text-red-400 hover:text-red-300 font-semibold transition-colors">
-                  Regístrate aquí
+                  Sign up here
                 </Link>
               </p>
               <Link href="/" className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-400 transition-colors">
                 <ArrowRight className="size-4 rotate-180" />
-                Volver al inicio
+                Back to home
               </Link>
             </div>
           </div>

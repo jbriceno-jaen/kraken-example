@@ -23,7 +23,7 @@ export function Logo({ variant = "default", className, showLink = true }: LogoPr
         variant === "footer" && "text-xl sm:text-2xl",
         variant === "compact" && "text-lg sm:text-xl"
       )}>
-        KRAKEN
+        VENOM
       </span>
       <span className={cn(
         "font-bold uppercase font-[family-name:var(--font-orbitron)] text-red-500",

@@ -87,9 +87,9 @@ export function DatePicker({ value, onChange, minDate, maxDate, className }: Dat
   };
 
   const formatDisplayDate = (dateStr: string) => {
-    if (!dateStr) return "Seleccionar fecha";
+    if (!dateStr) return "Select date";
     const date = parseDateLocal(dateStr);
-    return date.toLocaleDateString("es-ES", {
+    return date.toLocaleDateString("en-US", {
       weekday: "short",
       day: "numeric",
       month: "short",
@@ -123,10 +123,10 @@ export function DatePicker({ value, onChange, minDate, maxDate, className }: Dat
 
   const days = getDaysInMonth(currentMonth);
   const monthNames = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
   ];
-  const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
     <div className="relative" ref={containerRef}>
@@ -234,7 +234,7 @@ export function DatePicker({ value, onChange, minDate, maxDate, className }: Dat
               }}
               className="flex-1 border-red-500/40 bg-red-500/10 text-red-300 hover:bg-red-500/20 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200 text-xs font-[family-name:var(--font-orbitron)]"
             >
-              Hoy
+              Today
             </Button>
             <Button
               type="button"
@@ -249,7 +249,7 @@ export function DatePicker({ value, onChange, minDate, maxDate, className }: Dat
               }}
               className="flex-1 border-red-500/40 bg-red-500/10 text-red-300 hover:bg-red-500/20 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200 text-xs font-[family-name:var(--font-orbitron)]"
             >
-              Mañana
+              Tomorrow
             </Button>
           </div>
         </Card>

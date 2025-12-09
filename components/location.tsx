@@ -23,19 +23,19 @@ export default function Location() {
       <div className="relative space-y-6 sm:space-y-8">
         <div className="space-y-4">
           <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
-            Ubicación
+            Location
           </Badge>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white break-words">
-            ENCUÉNTRANOS
+            FIND US
             <br />
-            <span className="text-red-500">EN AGUAS ZARCAS</span>
+            <span className="text-red-500">IN AGUAS ZARCAS</span>
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-zinc-500 leading-relaxed font-light break-words">
-            Visítanos en nuestro box de CrossFit en el corazón de Aguas Zarcas, Costa Rica.
+            Visit us at our CrossFit box in the heart of Aguas Zarcas, Costa Rica.
           </p>
         </div>
         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Card de Dirección */}
+          {/* Address Card */}
           <Card 
             className="group border border-red-500/50 bg-black/30 p-5 sm:p-6 lg:p-8 transition-all duration-500 hover:border-red-500/70 hover:bg-black/50 overflow-hidden relative cursor-pointer active:scale-[0.98]"
             onMouseEnter={() => setHoveredCard("direccion")}
@@ -53,7 +53,7 @@ export default function Location() {
                 </div>
                 <div className="min-w-0 flex-1 pt-1">
                   <h3 className={`text-lg sm:text-xl lg:text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] mb-2 break-words transition-colors duration-300 ${hoveredCard === "direccion" ? 'text-red-500' : ''}`}>
-                    DIRECCIÓN
+                    ADDRESS
                   </h3>
                   <div className="space-y-0.5 sm:space-y-1">
                     <p className="text-sm sm:text-base lg:text-lg text-zinc-600 leading-relaxed font-medium break-words group-hover:text-zinc-400 transition-colors duration-300">
@@ -67,12 +67,12 @@ export default function Location() {
               </div>
               <div className="relative rounded-xl border border-red-500/30 bg-black/50 p-3 sm:p-4 lg:p-5 group-hover:border-red-500/50 group-hover:bg-black/70 transition-all duration-300">
                 <p className="text-xs sm:text-sm lg:text-base text-zinc-500 leading-relaxed break-words group-hover:text-zinc-400 transition-colors duration-300">
-                  Nuestro box está ubicado en Aguas Zarcas, un lugar perfecto para entrenar rodeado de naturaleza y con el ambiente ideal para alcanzar tus objetivos de fitness.
+                  Our box is located in Aguas Zarcas, a perfect place to train surrounded by nature and with the ideal environment to achieve your fitness goals.
                 </p>
               </div>
               <div className="flex items-center gap-2 text-xs sm:text-sm text-zinc-500 group-hover:text-red-500 transition-colors duration-300">
                 <Navigation className={`size-3 sm:size-4 transition-transform duration-300 ${hoveredCard === "direccion" ? 'translate-x-1' : ''}`} />
-                <span className="break-words">Fácil acceso desde cualquier punto</span>
+                <span className="break-words">Easy access from anywhere</span>
               </div>
             </div>
           </Card>
@@ -95,7 +95,7 @@ export default function Location() {
                 </div>
                 <div className="min-w-0 flex-1 pt-1">
                   <h3 className={`text-lg sm:text-xl lg:text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] mb-2 break-words transition-colors duration-300 ${hoveredCard === "horarios" ? 'text-red-500' : ''}`}>
-                    HORARIOS
+                    HOURS
                   </h3>
                 </div>
               </div>
@@ -104,7 +104,7 @@ export default function Location() {
                   <div className="flex items-center gap-2 mb-1">
                     <Calendar className="size-4 text-red-500/70" />
                     <p className="text-xs sm:text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">
-                      Lunes - Sábado
+                      Monday - Saturday
                     </p>
                   </div>
                   <p className="text-sm sm:text-base lg:text-lg text-red-500 font-bold">
@@ -115,22 +115,22 @@ export default function Location() {
                   <div className="flex items-center gap-2 mb-1">
                     <Calendar className="size-4 text-zinc-500" />
                     <p className="text-xs sm:text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">
-                      Domingo
+                      Sunday
                     </p>
                   </div>
                   <p className="text-xs sm:text-sm text-zinc-500">
-                    Cerrado
+                    Closed
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-2 text-xs sm:text-sm text-zinc-500 group-hover:text-red-500 transition-colors duration-300">
                 <Clock className={`size-3 sm:size-4 transition-transform duration-300 ${hoveredCard === "horarios" ? 'rotate-12' : ''}`} />
-                <span className="break-words">Múltiples horarios disponibles</span>
+                <span className="break-words">Multiple schedules available</span>
               </div>
             </div>
           </Card>
 
-          {/* Card de Contacto */}
+          {/* Contact Card */}
           <Card 
             className="group border border-red-500/50 bg-black/30 p-5 sm:p-6 lg:p-8 transition-all duration-500 hover:border-red-500/70 hover:bg-black/50 overflow-hidden relative cursor-pointer sm:col-span-2 lg:col-span-1 active:scale-[0.98]"
             onMouseEnter={() => setHoveredCard("contacto")}
@@ -148,7 +148,7 @@ export default function Location() {
                 </div>
                 <div className="min-w-0 flex-1 pt-1">
                   <h3 className={`text-lg sm:text-xl lg:text-2xl font-bold text-white font-[family-name:var(--font-orbitron)] mb-2 break-words transition-colors duration-300 ${hoveredCard === "contacto" ? 'text-red-500' : ''}`}>
-                    CONTACTO
+                    CONTACT
                   </h3>
                 </div>
               </div>
@@ -161,7 +161,7 @@ export default function Location() {
                     <Phone className="size-4 sm:size-5" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs text-zinc-500 mb-0.5">Teléfono</p>
+                    <p className="text-xs text-zinc-500 mb-0.5">Phone</p>
                     <p className="text-sm sm:text-base text-white font-medium group-hover/link:text-red-500 transition-colors duration-300 break-words">
                       +506 0000-0000
                     </p>
@@ -177,14 +177,14 @@ export default function Location() {
                   <div className="min-w-0 flex-1">
                     <p className="text-xs text-zinc-500 mb-0.5">Email</p>
                     <p className="text-sm sm:text-base text-white font-medium group-hover/link:text-red-500 transition-colors duration-300 break-words">
-                      Contáctanos
+                      Contact us
                     </p>
                   </div>
                 </Link>
               </div>
               <div className="flex items-center gap-2 text-xs sm:text-sm text-zinc-500 group-hover:text-red-500 transition-colors duration-300">
                 <Globe className={`size-3 sm:size-4 transition-transform duration-300 ${hoveredCard === "contacto" ? 'rotate-12' : ''}`} />
-                <span className="break-words">Estamos aquí para ayudarte</span>
+                <span className="break-words">We're here to help you</span>
               </div>
             </div>
           </Card>

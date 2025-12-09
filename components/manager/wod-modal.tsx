@@ -101,17 +101,17 @@ export function WODModal({ open, onOpenChange, onSuccess, editingWOD, selectedDa
 
       if (res.ok) {
         showToast(
-          editingWOD ? "WOD actualizado exitosamente" : "WOD creado exitosamente",
+          editingWOD ? "WOD updated successfully" : "WOD created successfully",
           "success"
         );
         onSuccess();
         onOpenChange(false);
       } else {
-        showToast(data.error || "Error al guardar WOD", "error");
+        showToast(data.error || "Error saving WOD", "error");
       }
     } catch (error) {
       console.error("Error saving WOD:", error);
-      showToast("Error al guardar WOD", "error");
+      showToast("Error saving WOD", "error");
     } finally {
       setIsLoading(false);
     }
@@ -119,36 +119,24 @@ export function WODModal({ open, onOpenChange, onSuccess, editingWOD, selectedDa
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border border-red-500/50 bg-black text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="border border-red-500/50 bg-black text-white max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <Logo variant="compact" showLink={false} className="justify-center mb-2" />
-          <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5 w-fit mx-auto">
-            {editingWOD ? "Editar WOD" : "Crear WOD"}
+          <Logo variant="compact" showLink={false} className="justify-center mb-1" />
+          <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs px-3 py-1 w-fit mx-auto">
+            {editingWOD ? "Edit WOD" : "Create WOD"}
           </Badge>
-          <DialogTitle className="text-2xl sm:text-3xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white text-center pt-2">
-            {editingWOD ? (
-              <>
-                EDITAR
-                <br />
-                <span className="text-red-500">WORKOUT DEL DÍA</span>
-              </>
-            ) : (
-              <>
-                NUEVO
-                <br />
-                <span className="text-red-500">WORKOUT DEL DÍA</span>
-              </>
-            )}
+          <DialogTitle className="text-lg sm:text-xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] text-white text-center pt-1">
+            {editingWOD ? "Edit Workout" : "New Workout"}
           </DialogTitle>
-          <DialogDescription className="text-sm text-zinc-500 text-center font-light">
-            {editingWOD ? "Modifica el workout del día" : "Crea un nuevo workout del día para una fecha específica"}
+          <DialogDescription className="text-xs sm:text-sm text-zinc-500 text-center font-light">
+            {editingWOD ? "Modify the workout of the day" : "Create a new workout for a specific date"}
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-5 mt-6">
-          <div className="space-y-2">
-            <label htmlFor="date" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-              Fecha *
+        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+          <div className="space-y-1.5">
+            <label htmlFor="date" className="text-xs sm:text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
+              Date *
             </label>
             <DatePicker
               value={formData.date}
@@ -156,9 +144,9 @@ export function WODModal({ open, onOpenChange, onSuccess, editingWOD, selectedDa
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="title" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-              Título del WOD *
+          <div className="space-y-1.5">
+            <label htmlFor="title" className="text-xs sm:text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
+              WOD Title *
             </label>
             <Input
               id="title"
@@ -166,42 +154,42 @@ export function WODModal({ open, onOpenChange, onSuccess, editingWOD, selectedDa
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              placeholder="Ej: Fran, Murph, Cindy, etc."
-              className="min-h-[48px] text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20"
+              placeholder="Ex: Fran, Murph, Cindy, etc."
+              className="border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20"
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="description" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-              Descripción del WOD *
+          <div className="space-y-1.5">
+            <label htmlFor="description" className="text-xs sm:text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
+              WOD Description *
             </label>
             <textarea
               id="description"
               required
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Ej: 21-15-9 de Thrusters (95/65 lbs) y Pull-ups. Tiempo límite: 20 minutos."
-              rows={8}
-              className="w-full text-base sm:text-sm border border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 rounded-md px-3 py-2 resize-none"
+              placeholder="Ex: 21-15-9 Thrusters (95/65 lbs) and Pull-ups. Time limit: 20 minutes."
+              rows={6}
+              className="w-full min-h-[100px] text-sm border border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 rounded-md px-4 py-3 resize-none"
             />
-            <p className="text-xs text-zinc-500">Incluye ejercicios, repeticiones, pesos y cualquier información relevante</p>
+            <p className="text-xs text-zinc-500">Include exercises, repetitions, weights, and any relevant information</p>
           </div>
 
-          <div className="flex gap-3 pt-4">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-3">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1 border-black/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/50 active:scale-[0.98] transition-all duration-200"
+              className="flex-1 border-black/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/50"
             >
-              Cancelar
+              Cancel
             </Button>
             <Button
               type="submit"
               disabled={isLoading}
               className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 disabled:opacity-50"
             >
-              {isLoading ? "Guardando..." : editingWOD ? "Actualizar" : "Crear"}
+              {isLoading ? "Saving..." : editingWOD ? "Update" : "Create"}
             </Button>
           </div>
         </form>

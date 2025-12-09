@@ -1,4 +1,4 @@
-# Guía de Estilos - Kraken Elite Fitness
+# Style Guide - Venom Elite Fitness
 
 Esta guía documenta los estilos y patrones de diseño utilizados en toda la aplicación para mantener la consistencia visual y de experiencia de usuario.
 
@@ -383,12 +383,12 @@ hover:from-red-600 hover:via-red-700 hover:to-red-600
 ```css
 --font-orbitron: 'Orbitron', sans-serif;
 --font-geist-sans: 'Geist Sans', sans-serif;
---kraken-red: oklch(0.577 0.245 27.325);
---kraken-red-dark: oklch(0.488 0.243 22.216);
---kraken-red-light: oklch(0.704 0.191 22.216);
---kraken-red-vibrant: oklch(0.577 0.245 27.325);
---kraken-red-gradient-start: oklch(0.577 0.245 27.325);
---kraken-red-gradient-end: oklch(0.488 0.243 22.216);
+--venom-red: oklch(0.577 0.245 27.325);
+--venom-red-dark: oklch(0.488 0.243 22.216);
+--venom-red-light: oklch(0.704 0.191 22.216);
+--venom-red-vibrant: oklch(0.577 0.245 27.325);
+--venom-red-gradient-start: oklch(0.577 0.245 27.325);
+--venom-red-gradient-end: oklch(0.488 0.243 22.216);
 ```
 
 ### Estilos Globales para Selects
@@ -425,7 +425,7 @@ select:not([class*="pr-"]) {
 El componente `Logo` está disponible en `components/logo.tsx` con las siguientes características:
 - **Sin animación hover**: El logo no tiene efectos hover para mantener consistencia visual en todas las áreas (modals, páginas, etc.)
 - **Variantes**: `default`, `footer`, `compact`
-- **Estilo**: "KRAKEN" en blanco + "ELITE FITNESS" en rojo con fuente Orbitron
+- **Estilo**: "VENOM" en blanco + "ELITE FITNESS" en rojo con fuente Orbitron
 - **Uso en modals**: Se recomienda usar `variant="compact"` para modals junto con un badge de sección
 
 ## 📚 Referencias
@@ -437,12 +437,12 @@ El componente `Logo` está disponible en `components/logo.tsx` con las siguiente
 
 ## 🎨 Componente Logo
 
-El logo de Kraken Elite Fitness es un componente reutilizable disponible en `components/logo.tsx`.
+The Venom Elite Fitness logo is a reusable component available in `components/logo.tsx`.
 
 ### Características
 - **Sin animación hover**: Mantiene consistencia visual sin efectos hover
 - **Fuente**: Orbitron para ambos textos
-- **Colores**: "KRAKEN" en blanco, "ELITE FITNESS" en rojo (`red-500`)
+- **Colores**: "VENOM" en blanco, "ELITE FITNESS" en rojo (`red-500`)
 - **Variantes**: `default`, `footer`, `compact`
 
 ### Uso
@@ -494,13 +494,13 @@ El componente `PhysicalChanges` (`components/physical-changes.tsx`) muestra:
 El componente `Footer` (`components/footer.tsx`) incluye:
 - Logo y descripción
 - Enlaces de navegación (Privacidad, Términos, Contacto)
-- Sección "Sobre CrossFit" con enlace a `/que-es-crossfit`
+- Sección "Sobre CrossFit" con enlace a `/what-is-crossfit`
 - Iconos de redes sociales (Instagram, Facebook) con efectos hover
 - Copyright con branding consistente
 - Diseño responsive optimizado para mobile
 
-### Página "Que es CrossFit"
-La página `/que-es-crossfit` (`app/que-es-crossfit/page.tsx`) incluye:
+### Página "What is CrossFit"
+La página `/what-is-crossfit` (`app/what-is-crossfit/page.tsx`) incluye:
 - Definición de CrossFit
 - Explicación del WOD
 - 6 beneficios principales con iconos

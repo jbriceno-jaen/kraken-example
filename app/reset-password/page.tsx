@@ -53,12 +53,12 @@ export default function ResetPasswordPage() {
         setIsValid(true);
       } else {
         setIsValid(false);
-        showToast(data.error || "Token inválido o expirado", "error");
+        showToast(data.error || "Invalid or expired token", "error");
       }
     } catch (error) {
       console.error("Error verifying token:", error);
       setIsValid(false);
-      showToast("Error al verificar el token", "error");
+      showToast("Error verifying token", "error");
     } finally {
       setIsValidating(false);
     }
@@ -68,22 +68,22 @@ export default function ResetPasswordPage() {
     e.preventDefault();
 
     if (!password || !confirmPassword) {
-      showToast("Por favor completa todos los campos", "error");
+      showToast("Please complete all fields", "error");
       return;
     }
 
     if (password.length < 6) {
-      showToast("La contraseña debe tener al menos 6 caracteres", "error");
+      showToast("Password must be at least 6 characters", "error");
       return;
     }
 
     if (password !== confirmPassword) {
-      showToast("Las contraseñas no coinciden", "error");
+      showToast("Passwords do not match", "error");
       return;
     }
 
     if (!token) {
-      showToast("Token no válido", "error");
+      showToast("Invalid token", "error");
       return;
     }
 
@@ -105,16 +105,16 @@ export default function ResetPasswordPage() {
 
       if (response.ok) {
         setIsSuccess(true);
-        showToast("Contraseña restablecida exitosamente", "success");
+        showToast("Password reset successfully", "success");
         setTimeout(() => {
           router.push("/login");
         }, 3000);
       } else {
-        showToast(data.error || "Error al restablecer la contraseña", "error");
+        showToast(data.error || "Error resetting password", "error");
       }
     } catch (error) {
       console.error("Reset password error:", error);
-      showToast("Error al restablecer la contraseña", "error");
+      showToast("Error resetting password", "error");
     } finally {
       setIsLoading(false);
     }
@@ -125,7 +125,7 @@ export default function ResetPasswordPage() {
       <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin text-red-500 text-4xl">⏳</div>
-          <p className="text-zinc-400">Verificando token...</p>
+          <p className="text-zinc-400">Verifying token...</p>
         </div>
       </div>
     );
@@ -143,14 +143,14 @@ export default function ResetPasswordPage() {
               </div>
             </div>
             <h1 className="text-3xl font-bold font-[family-name:var(--font-orbitron)]">
-              Token Inválido o Expirado
+              Invalid or Expired Token
             </h1>
             <p className="text-zinc-400">
-              El enlace de restablecimiento de contraseña no es válido o ha expirado. Por favor, solicita un nuevo enlace.
+              The password reset link is invalid or has expired. Please request a new link.
             </p>
             <Link href="/login">
-              <Button className="w-full min-h-[48px] bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300">
-                Volver al Login
+              <Button className="w-full bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 shadow-lg shadow-red-500/50 hover:shadow-red-500/70">
+                Back to Login
               </Button>
             </Link>
           </div>
@@ -172,14 +172,14 @@ export default function ResetPasswordPage() {
               </div>
             </div>
             <h1 className="text-3xl font-bold font-[family-name:var(--font-orbitron)]">
-              Contraseña Restablecida
+              Password Reset
             </h1>
             <p className="text-zinc-400">
-              Tu contraseña ha sido restablecida exitosamente. Serás redirigido al login en unos segundos.
+              Your password has been reset successfully. You will be redirected to login in a few seconds.
             </p>
             <Link href="/login">
-              <Button className="w-full min-h-[48px] bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300">
-                Ir al Login
+              <Button className="w-full bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 shadow-lg shadow-red-500/50 hover:shadow-red-500/70">
+                Go to Login
               </Button>
             </Link>
           </div>
@@ -197,20 +197,20 @@ export default function ResetPasswordPage() {
           <div className="text-center space-y-4">
             <Logo variant="compact" showLink={false} className="justify-center mb-2" />
             <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] shadow-lg shadow-red-500/30 w-fit mx-auto">
-              Restablecer Contraseña
+              Reset Password
             </Badge>
             <h1 className="text-3xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] bg-gradient-to-br from-white via-white to-zinc-300 bg-clip-text text-transparent">
-              Nueva Contraseña
+              New Password
             </h1>
             <p className="text-sm text-zinc-400">
-              Ingresa tu nueva contraseña. Debe tener al menos 6 caracteres.
+              Enter your new password. It must be at least 6 characters.
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                Nueva Contraseña
+                New Password
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
@@ -220,8 +220,8 @@ export default function ResetPasswordPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Mínimo 6 caracteres"
-                  className="min-h-[48px] pl-10 pr-10 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                  placeholder="Minimum 6 characters"
+                  className="pl-10 pr-10 border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                 />
                 <button
                   type="button"
@@ -235,7 +235,7 @@ export default function ResetPasswordPage() {
 
             <div className="space-y-2">
               <label htmlFor="confirm-password" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                Confirmar Contraseña
+                Confirm Password
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
@@ -245,8 +245,8 @@ export default function ResetPasswordPage() {
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Confirma tu contraseña"
-                  className="min-h-[48px] pl-10 pr-10 text-base sm:text-sm border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20 transition-all"
+                  placeholder="Confirm your password"
+                  className="pl-10 pr-10 border-red-500/20 bg-white/5 text-white placeholder:text-zinc-500 focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                 />
                 <button
                   type="button"
@@ -261,16 +261,16 @@ export default function ResetPasswordPage() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full min-h-[48px] text-base sm:text-sm gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300"
+              className="w-full gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 hover:shadow-red-500/70"
             >
               {isLoading ? (
                 <>
                   <span className="animate-spin">⏳</span>
-                  Restableciendo...
+                  Resetting...
                 </>
               ) : (
                 <>
-                  Restablecer Contraseña
+                  Reset Password
                   <ArrowRight className="size-5 sm:size-4" />
                 </>
               )}
@@ -279,7 +279,7 @@ export default function ResetPasswordPage() {
 
           <div className="text-center">
             <Link href="/login" className="text-sm text-zinc-400 hover:text-white transition-colors">
-              Volver al Login
+              Back to Login
             </Link>
           </div>
         </div>

@@ -1,11 +1,11 @@
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/src/db";
-import { classSlots, reservations } from "@/src/db/schema";
+import { schedules, classSlots, reservations } from "@/src/db/schema";
 import { eq, and, sql, ne } from "drizzle-orm";
 import { authOptions } from "@/src/lib/auth";
 
-const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 // Helper to check if user is manager
 async function isManager(session: { user?: { id?: string } } | null): Promise<boolean> {
@@ -50,13 +50,13 @@ export async function PATCH(
     // Check if slot exists
     const existing = await db
       .select()
-      .from(classSlots)
-      .where(eq(classSlots.id, slotId))
+      .from(schedules)
+      .where(eq(schedules.id, slotId))
       .limit(1);
 
     if (existing.length === 0) {
       return NextResponse.json(
-        { error: "Class slot not found" },
+        { error: "Schedule slot not found" },
         { status: 404 }
       );
     }
@@ -109,6 +109,13 @@ export async function PATCH(
     // Update available status if provided
     if (available !== undefined) {
       updateData.available = Boolean(available);
+      // Debug: Log the update
+      console.log('[API] Updating slot available status:', {
+        slotId,
+        availableValue: available,
+        availableType: typeof available,
+        convertedToBoolean: Boolean(available)
+      });
     }
 
     // Check if updating day/time would create a duplicate
@@ -118,29 +125,38 @@ export async function PATCH(
 
       const duplicate = await db
         .select()
-        .from(classSlots)
+        .from(schedules)
         .where(
           and(
-            eq(classSlots.day, newDay),
-            eq(classSlots.time, newTime),
-            ne(classSlots.id, slotId)
+            eq(schedules.day, newDay),
+            eq(schedules.time, newTime),
+            ne(schedules.id, slotId)
           )
         )
         .limit(1);
 
       if (duplicate.length > 0) {
         return NextResponse.json(
-          { error: "A class slot already exists for this day and time" },
+          { error: "A schedule slot already exists for this day and time" },
           { status: 409 }
         );
       }
     }
 
     const updated = await db
-      .update(classSlots)
+      .update(schedules)
       .set(updateData)
-      .where(eq(classSlots.id, slotId))
+      .where(eq(schedules.id, slotId))
       .returning();
+
+    // Debug: Log what was saved to database
+    console.log('[API] Slot updated in database:', {
+      slotId: updated[0].id,
+      day: updated[0].day,
+      time: updated[0].time,
+      available: updated[0].available,
+      availableType: typeof updated[0].available
+    });
 
     return NextResponse.json({ slot: updated[0] });
   } catch (error) {
@@ -177,13 +193,13 @@ export async function DELETE(
     // Check if slot exists
     const existing = await db
       .select()
-      .from(classSlots)
-      .where(eq(classSlots.id, slotId))
+      .from(schedules)
+      .where(eq(schedules.id, slotId))
       .limit(1);
 
     if (existing.length === 0) {
       return NextResponse.json(
-        { error: "Class slot not found" },
+        { error: "Schedule slot not found" },
         { status: 404 }
       );
     }
@@ -203,13 +219,13 @@ export async function DELETE(
 
     if (hasReservations) {
       return NextResponse.json(
-        { error: "Cannot delete class slot with existing reservations. Set it as unavailable instead." },
+        { error: "Cannot delete schedule slot with existing reservations. Set it as unavailable instead." },
         { status: 400 }
       );
     }
 
     // Delete the slot
-    await db.delete(classSlots).where(eq(classSlots.id, slotId));
+    await db.delete(schedules).where(eq(schedules.id, slotId));
 
     return NextResponse.json({ success: true });
   } catch (error) {

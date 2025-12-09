@@ -13,16 +13,16 @@ export async function sendPasswordResetEmail(email: string, name: string, resetT
 
   try {
     const { data, error } = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "Kraken Elite Fitness <noreply@krakenfitness.com>",
+      from: process.env.RESEND_FROM_EMAIL || "Venom Elite Fitness <noreply@venomfitness.com>",
       to: email,
-      subject: "Restablecer tu contraseña - Kraken Elite Fitness",
+      subject: "Reset Your Password - Venom Elite Fitness",
       html: `
         <!DOCTYPE html>
         <html>
           <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Restablecer Contraseña</title>
+            <title>Reset Password</title>
           </head>
           <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #0a0a0a; color: #ffffff;">
             <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #0a0a0a; padding: 40px 20px;">
@@ -32,40 +32,40 @@ export async function sendPasswordResetEmail(email: string, name: string, resetT
                     <!-- Header -->
                     <tr>
                       <td style="padding: 30px; text-align: center; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);">
-                        <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">Kraken Elite Fitness</h1>
-                        <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 14px; opacity: 0.9;">Restablecer Contraseña</p>
+                        <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: bold;">Venom Elite Fitness</h1>
+                        <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 14px; opacity: 0.9;">Reset Password</p>
                       </td>
                     </tr>
                     <!-- Content -->
                     <tr>
                       <td style="padding: 40px 30px;">
-                        <h2 style="margin: 0 0 20px 0; color: #ffffff; font-size: 24px;">Hola ${name},</h2>
+                        <h2 style="margin: 0 0 20px 0; color: #ffffff; font-size: 24px;">Hello ${name},</h2>
                         <p style="margin: 0 0 20px 0; color: #d1d5db; font-size: 16px; line-height: 1.6;">
-                          Recibimos una solicitud para restablecer la contraseña de tu cuenta en Kraken Elite Fitness.
+                          We received a request to reset the password for your account at Venom Elite Fitness.
                         </p>
                         <p style="margin: 0 0 30px 0; color: #d1d5db; font-size: 16px; line-height: 1.6;">
-                          Haz clic en el botón de abajo para crear una nueva contraseña. Este enlace expirará en 1 hora.
+                          Click the button below to create a new password. This link will expire in 1 hour.
                         </p>
                         <!-- Button -->
                         <table width="100%" cellpadding="0" cellspacing="0">
                           <tr>
                             <td align="center" style="padding: 20px 0;">
                               <a href="${resetUrl}" style="display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);">
-                                Restablecer Contraseña
+                                Reset Password
                               </a>
                             </td>
                           </tr>
                         </table>
                         <!-- Alternative Link -->
                         <p style="margin: 30px 0 0 0; color: #9ca3af; font-size: 14px; line-height: 1.6;">
-                          Si el botón no funciona, copia y pega este enlace en tu navegador:
+                          If the button doesn't work, copy and paste this link into your browser:
                         </p>
                         <p style="margin: 10px 0 0 0; color: #dc2626; font-size: 12px; word-break: break-all;">
                           ${resetUrl}
                         </p>
                         <!-- Warning -->
                         <p style="margin: 30px 0 0 0; color: #ef4444; font-size: 14px; line-height: 1.6; padding: 15px; background-color: rgba(220, 38, 38, 0.1); border-left: 3px solid #dc2626; border-radius: 4px;">
-                          <strong>⚠️ Importante:</strong> Si no solicitaste este cambio, ignora este correo. Tu contraseña permanecerá sin cambios.
+                          <strong>⚠️ Important:</strong> If you didn't request this change, please ignore this email. Your password will remain unchanged.
                         </p>
                       </td>
                     </tr>
@@ -73,7 +73,7 @@ export async function sendPasswordResetEmail(email: string, name: string, resetT
                     <tr>
                       <td style="padding: 20px 30px; text-align: center; background-color: #0a0a0a; border-top: 1px solid #1f1f1f;">
                         <p style="margin: 0; color: #6b7280; font-size: 12px;">
-                          © ${new Date().getFullYear()} Kraken Elite Fitness. Todos los derechos reservados.
+                          © ${new Date().getFullYear()} Venom Elite Fitness. All rights reserved.
                         </p>
                       </td>
                     </tr>

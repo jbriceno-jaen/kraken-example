@@ -28,7 +28,7 @@ export default function Home() {
         {/* 5. Pricing - Después de mostrar valor, presenta precios (CTA principal) */}
         <Pricing />
         
-        {/* 6. Location - Información de contacto al final (último paso) */}
+        {/* 6. Location - Contact information at the end (last step) */}
         <Location />
       </main>
       <Footer />

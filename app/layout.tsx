@@ -21,7 +21,7 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
-  title: "Kraken Elite Fitness",
+  title: "Venom Elite Fitness",
   description: "CrossFit training with expert coaching and community energy.",
 };
 
@@ -31,9 +31,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} antialiased bg-black text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} antialiased bg-black text-white overflow-x-hidden`}
       >
         <SessionProvider>
           <ToastProvider>

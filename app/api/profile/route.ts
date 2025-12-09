@@ -26,20 +26,34 @@ export async function GET() {
       .where(eq(profiles.userId, userId))
       .limit(1);
 
+    // Get user image from users table
+    const userData = await db
+      .select({
+        image: users.image,
+      })
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1);
+
+    const userImage = userData.length > 0 ? userData[0].image : null;
+
     if (profile.length === 0) {
       return NextResponse.json({ 
         profile: null,
-        userEmail: userEmail 
+        userEmail: userEmail,
+        image: userImage // Include image from users table
       });
     }
 
-    // Return profile with user email from users table (read-only)
+    // Return profile with user email and image from users table (read-only)
     return NextResponse.json({ 
       profile: {
         ...profile[0],
-        userEmail: userEmail // Email from login, read-only
+        userEmail: userEmail, // Email from login, read-only
+        image: userImage // Image from users table
       },
-      userEmail: userEmail
+      userEmail: userEmail,
+      image: userImage // Also include at top level for consistency
     });
   } catch (error) {
     console.error("Error fetching profile:", error);

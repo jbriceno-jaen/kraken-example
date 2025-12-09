@@ -61,10 +61,10 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  /* Kraken Brand Colors - Red from logo */
-  --kraken-red: oklch(0.577 0.245 27.325); /* #ef4444 red-500 */
-  --kraken-red-dark: oklch(0.488 0.243 22.216); /* #dc2626 red-600 */
-  --kraken-red-light: oklch(0.704 0.191 22.216); /* #f87171 red-400 */
+  /* Venom Brand Colors - Red from logo */
+  --venom-red: oklch(0.577 0.245 27.325); /* #ef4444 red-500 */
+  --venom-red-dark: oklch(0.488 0.243 22.216); /* #dc2626 red-600 */
+  --venom-red-light: oklch(0.704 0.191 22.216); /* #f87171 red-400 */
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -99,10 +99,10 @@
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  /* Kraken Brand Colors - Red from logo */
-  --kraken-red: oklch(0.577 0.245 27.325); /* #ef4444 red-500 */
-  --kraken-red-dark: oklch(0.488 0.243 22.216); /* #dc2626 red-600 */
-  --kraken-red-light: oklch(0.704 0.191 22.216); /* #f87171 red-400 */
+  /* Venom Brand Colors - Red from logo */
+  --venom-red: oklch(0.577 0.245 27.325); /* #ef4444 red-500 */
+  --venom-red-dark: oklch(0.488 0.243 22.216); /* #dc2626 red-600 */
+  --venom-red-light: oklch(0.704 0.191 22.216); /* #f87171 red-400 */
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);

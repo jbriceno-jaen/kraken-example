@@ -9,58 +9,58 @@ export function Footer() {
           <div className="space-y-3 min-w-0 col-span-2 sm:col-span-1">
             <div className="flex flex-col gap-0.5">
               <span className="font-black uppercase tracking-tight font-[family-name:var(--font-orbitron)] text-sm sm:text-base text-white">
-                KRAKEN
+                VENOM
               </span>
               <span className="font-bold uppercase font-[family-name:var(--font-orbitron)] text-xs sm:text-sm text-red-500">
                 ELITE FITNESS
               </span>
             </div>
             <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed break-words">
-              Donde los límites se rompen y los sueños se construyen. Cada entrenamiento es una historia de superación escrita con sudor y determinación.
+              Where limits are broken and dreams are built. Every workout is a story of overcoming written with sweat and determination.
             </p>
           </div>
           <div className="space-y-3">
-            <h3 className="text-xs sm:text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">Enlaces</h3>
+            <h3 className="text-xs sm:text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">Links</h3>
             <nav className="flex flex-col gap-2 sm:gap-1.5">
               <Link href="/privacy" className="text-sm sm:text-sm text-zinc-600 hover:text-red-500 active:text-red-500 transition-colors min-h-[32px] sm:min-h-[28px] flex items-center font-medium hover:underline">
-                Privacidad
+                Privacy
               </Link>
               <Link href="/terms" className="text-sm sm:text-sm text-zinc-600 hover:text-red-500 active:text-red-500 transition-colors min-h-[32px] sm:min-h-[28px] flex items-center font-medium hover:underline">
-                Términos
+                Terms
               </Link>
               <Link href="/contact" className="text-sm sm:text-sm text-zinc-600 hover:text-red-500 active:text-red-500 transition-colors min-h-[32px] sm:min-h-[28px] flex items-center font-medium hover:underline">
-                Contacto
+                Contact
               </Link>
             </nav>
           </div>
           <div className="space-y-3">
-            <h3 className="text-xs sm:text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">Sobre CrossFit</h3>
+            <h3 className="text-xs sm:text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">About CrossFit</h3>
             <nav className="flex flex-col gap-2 sm:gap-1.5">
-              <Link href="/que-es-crossfit" className="text-sm sm:text-sm text-zinc-600 hover:text-red-500 active:text-red-500 transition-colors min-h-[32px] sm:min-h-[28px] flex items-center font-medium hover:underline">
-                ¿Qué es CrossFit?
+              <Link href="/what-is-crossfit" className="text-sm sm:text-sm text-zinc-600 hover:text-red-500 active:text-red-500 transition-colors min-h-[32px] sm:min-h-[28px] flex items-center font-medium hover:underline">
+                What is CrossFit?
               </Link>
             </nav>
           </div>
           <div className="space-y-3">
-            <h3 className="text-xs sm:text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">Ubicación</h3>
+            <h3 className="text-xs sm:text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">Location</h3>
             <div className="space-y-1 text-xs sm:text-sm text-zinc-600">
               <p className="leading-relaxed">Aguas Zarcas</p>
               <p className="leading-relaxed">Costa Rica</p>
             </div>
           </div>
           <div className="space-y-3">
-            <h3 className="text-xs sm:text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">Horarios</h3>
+            <h3 className="text-xs sm:text-sm font-semibold text-white font-[family-name:var(--font-orbitron)]">Hours</h3>
             <div className="space-y-1 text-xs sm:text-sm text-zinc-600">
-              <p>Lunes - Sábado</p>
+              <p>Monday - Saturday</p>
               <p>5:00 AM - 8:00 PM</p>
-              <p className="text-zinc-700">Domingo: Cerrado</p>
+              <p className="text-zinc-700">Sunday: Closed</p>
             </div>
           </div>
         </div>
         <div className="border-t border-black/50 pt-6 sm:pt-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs sm:text-sm text-zinc-600 font-[family-name:var(--font-orbitron)] text-center sm:text-left">
-              &copy; {new Date().getFullYear()} <span className="font-black uppercase tracking-tight text-white">KRAKEN</span> <span className="text-red-500 font-bold uppercase">ELITE FITNESS</span>. Todos los derechos reservados.
+              &copy; {new Date().getFullYear()} <span className="font-black uppercase tracking-tight text-white">VENOM</span> <span className="text-red-500 font-bold uppercase">ELITE FITNESS</span>. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <a

@@ -14,7 +14,7 @@ Este proyecto utiliza [Resend](https://resend.com) para enviar correos electrón
 
 1. Una vez dentro del dashboard de Resend, ve a **API Keys**
 2. Haz clic en **Create API Key**
-3. Dale un nombre descriptivo (ej: "Kraken Fitness Production")
+3. Give it a descriptive name (e.g., "Venom Fitness Production")
 4. Copia la API key (comienza con `re_`)
 5. **Importante**: Guarda esta key de forma segura, solo se muestra una vez
 
@@ -37,7 +37,7 @@ Agrega las siguientes variables a tu archivo `.env.local`:
 ```env
 # Resend Configuration
 RESEND_API_KEY=re_tu_api_key_aqui
-RESEND_FROM_EMAIL=Kraken Elite Fitness <noreply@yourdomain.com>
+RESEND_FROM_EMAIL=Venom Elite Fitness <noreply@yourdomain.com>
 ```
 
 **Para Desarrollo Local:**
@@ -51,7 +51,7 @@ RESEND_FROM_EMAIL=Kraken Elite Fitness <onboarding@resend.dev>
 2. Ve a **Settings** > **Environment Variables**
 3. Agrega:
    - `RESEND_API_KEY`: Tu API key de Resend
-   - `RESEND_FROM_EMAIL`: Tu email verificado (ej: `Kraken Elite Fitness <noreply@yourdomain.com>`)
+   - `RESEND_FROM_EMAIL`: Your verified email (e.g., `Venom Elite Fitness <noreply@yourdomain.com>`)
 
 ### 5. Verificar la Configuración
 

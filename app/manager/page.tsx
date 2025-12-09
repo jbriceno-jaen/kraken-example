@@ -7,7 +7,7 @@ export default function ManagerPage() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/manager/usuarios");
+    router.replace("/manager/users");
   }, [router]);
 
   return null;

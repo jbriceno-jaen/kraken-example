@@ -1,4 +1,4 @@
-# Kraken Elite Fitness
+# Venom Elite Fitness
 
 A modern CrossFit gym management platform built with Next.js, featuring class reservations, personal record tracking, and member profiles.
 
@@ -12,7 +12,7 @@ A modern CrossFit gym management platform built with Next.js, featuring class re
 - ⏰ **Subscription Management**: Clients with expired subscriptions cannot log in and are notified
 - 💾 **Database**: PostgreSQL database (Neon) with Drizzle ORM
 - 🎨 **Modern UI**: Minimalist and professional design with black backgrounds and red accents
-- 🎯 **Brand Identity**: Consistent Kraken Elite Fitness branding with Orbitron font and custom red color scheme
+- 🎯 **Brand Identity**: Consistent Venom Elite Fitness branding with Orbitron font and custom red color scheme
 - 🎨 **Custom Select Styling**: Custom dropdown arrows positioned optimally for better UX
 - 🖤 **Minimalist Design**: Clean black backgrounds with subtle red borders and expanded spacing for better visual hierarchy
 - 👥 **Manager Dashboard**: Complete management system for gym administrators
@@ -28,7 +28,7 @@ A modern CrossFit gym management platform built with Next.js, featuring class re
 - 📈 **Interactive Results Section**: Showcase real physical changes with interactive progress graphs based on scientific studies
 - 📚 **CrossFit Education**: Dedicated page explaining CrossFit methodology and benefits with scientific sources
 - 🎯 **Marketing-Optimized Homepage**: Sections ordered using AIDA principles (Hero → Testimonials → Results → Workouts → Pricing → Location)
-- 🔗 **Enhanced Navigation**: Homepage navbar includes "Resultados" section linking to physical changes data
+- 🔗 **Enhanced Navigation**: Homepage navbar includes "Results" section linking to physical changes data
 - 📱 **Social Media Integration**: Footer includes Instagram and Facebook links with minimalist styling
 
 ## Tech Stack
@@ -56,7 +56,7 @@ A modern CrossFit gym management platform built with Next.js, featuring class re
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd kraken-example
+cd venom-example
 ```
 
 2. Install dependencies:
@@ -77,7 +77,7 @@ NEXTAUTH_URL=http://localhost:3000
 
 # Email (Resend) - Required for password reset functionality
 RESEND_API_KEY=re_your_api_key_here
-RESEND_FROM_EMAIL=Kraken Elite Fitness <noreply@yourdomain.com>
+RESEND_FROM_EMAIL=Venom Elite Fitness <noreply@yourdomain.com>
 ```
 
 **Generate NEXTAUTH_SECRET:**
@@ -119,7 +119,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Project Structure
 
 ```
-kraken-example/
+venom-example/
 ├── app/                    # Next.js app directory
 │   ├── api/               # API routes
 │   │   ├── auth/          # Authentication endpoints (login, register, forgot-password, reset-password)
@@ -128,17 +128,17 @@ kraken-example/
 │   │   ├── reservations/  # Class reservations
 │   │   └── personal-records/  # Personal records CRUD
 │   ├── dashboard/         # Client dashboard pages
-│   │   ├── reservas/      # Reservations page
-│   │   ├── perfil/        # Profile page
-│   │   ├── prs/           # Personal records page
-│   │   └── programacion/  # WOD viewing page
+│   │   ├── reservations/  # Reservations page
+│   │   ├── profile/       # Profile page
+│   │   ├── personal-records/  # Personal records page
+│   │   └── schedule/       # WOD viewing page
 │   ├── manager/            # Manager dashboard pages
-│   │   ├── usuarios/      # User management
+│   │   ├── users/         # User management
 │   │   ├── wod/           # WOD management
-│   │   ├── clases/        # Class attendance
-│   │   └── horarios/      # Class slots management
+│   │   ├── classes/       # Class attendance
+│   │   └── schedules/     # Class slots management
 │   ├── reset-password/    # Password reset page
-│   ├── que-es-crossfit/   # CrossFit education page
+│   ├── what-is-crossfit/  # CrossFit education page
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Home page
 ├── components/            # React components
@@ -230,7 +230,8 @@ kraken-example/
 - **profiles**: Extended user profile information
 - **reservations**: Class reservations
 - **personal_records**: Personal record tracking
-- **class_slots**: Available class time slots
+- **schedules**: Weekly class schedule slots (main table for time slot management)
+- **class_slots**: Legacy table (kept for backward compatibility, will be removed)
 - **workout_of_day**: Workout of the Day (WOD)
 - **class_attendees**: Manager-assigned class attendees
 - **password_reset_tokens**: Password reset tokens (expire after 1 hour)

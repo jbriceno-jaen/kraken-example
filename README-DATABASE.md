@@ -56,7 +56,7 @@ Para crear un usuario manager, ejecuta este SQL en tu base de datos:
 INSERT INTO users (name, email, password, role, approved, created_at, updated_at)
 VALUES (
   'Admin',
-  'admin@kraken.fit',
+  'admin@venom.fit',
   '$2a$10$...', -- Hash bcrypt de tu contraseña
   'manager',
   true, -- Los managers siempre están aprobados
@@ -113,7 +113,8 @@ El sistema utiliza las siguientes tablas:
 - **profiles**: Información extendida de usuarios
 - **personal_records**: Récords personales de usuarios
 - **reservations**: Reservas de clases (se eliminan automáticamente si el usuario es rechazado o eliminado)
-- **class_slots**: Horarios disponibles de clases
+- **schedules**: Horarios semanales de clases (tabla principal para gestión de horarios)
+- **class_slots**: Tabla legacy (mantenida para compatibilidad, será eliminada)
 - **workout_of_day**: Workout del día (WOD)
 - **class_attendees**: Asignación de usuarios a clases específicas
 - **password_reset_tokens**: Tokens para restablecimiento de contraseña (expiran después de 1 hora)

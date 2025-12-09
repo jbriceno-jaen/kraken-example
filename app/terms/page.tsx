@@ -6,8 +6,8 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 export const metadata = {
-  title: "Términos y Condiciones | Kraken Elite Fitness",
-  description: "Términos y condiciones de uso de Kraken Elite Fitness",
+  title: "Terms and Conditions | Venom Elite Fitness",
+  description: "Terms and conditions of use for Venom Elite Fitness",
 };
 
 export default function TermsPage() {
@@ -20,7 +20,7 @@ export default function TermsPage() {
           className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-red-500 transition-colors mb-4"
         >
           <ArrowLeft className="size-4" />
-          Volver al inicio
+          Back to home
         </Link>
 
         <div className="space-y-4">
@@ -28,123 +28,123 @@ export default function TermsPage() {
             Legal
           </Badge>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white">
-            TÉRMINOS Y
+            TERMS AND
             <br />
-            <span className="text-red-500">CONDICIONES</span>
+            <span className="text-red-500">CONDITIONS</span>
           </h1>
           <p className="text-base sm:text-lg text-zinc-500 font-light">
-            Última actualización: {new Date().toLocaleDateString("es-CR", { year: "numeric", month: "long", day: "numeric" })}
+            Last updated: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
           </p>
         </div>
 
         <Card className="bg-black p-6 sm:p-8 lg:p-10 shadow-2xl">
           <div className="prose prose-invert max-w-none space-y-8">
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">1. Aceptación de los Términos</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">1. Acceptance of Terms</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Al acceder y utilizar el sitio web y los servicios de Kraken Elite Fitness, aceptas cumplir con estos términos y condiciones. Si no estás de acuerdo con alguna parte de estos términos, no debes utilizar nuestros servicios.
+                By accessing and using the website and services of Venom Elite Fitness, you agree to comply with these terms and conditions. If you do not agree with any part of these terms, you must not use our services.
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">2. Uso del Servicio</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">2. Use of Service</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Nuestro servicio te permite:
+                Our service allows you to:
               </p>
               <ul className="list-disc list-inside space-y-2 text-zinc-500 ml-4 font-light">
-                <li>Reservar clases de CrossFit con un día de anticipación</li>
-                <li>Registrar y hacer seguimiento de tus récords personales</li>
-                <li>Actualizar tu perfil y objetivos de entrenamiento</li>
-                <li>Acceder a información sobre horarios y disponibilidad</li>
+                <li>Book CrossFit classes one day in advance</li>
+                <li>Record and track your personal records</li>
+                <li>Update your profile and training goals</li>
+                <li>Access information about schedules and availability</li>
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">3. Reglas de Reserva</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">3. Reservation Rules</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Al hacer una reserva, aceptas las siguientes reglas:
+                When making a reservation, you agree to the following rules:
               </p>
               <ul className="list-disc list-inside space-y-2 text-zinc-500 ml-4 font-light">
-                <li>Solo puedes reservar un horario por día</li>
-                <li>Solo puedes reservar con un día de anticipación</li>
-                <li>No puedes cancelar con menos de 1 hora de anticipación</li>
-                <li>No puedes seleccionar horarios que ya pasaron</li>
-                <li>Debes presentarte puntualmente a tu clase reservada</li>
+                <li>You can only book one time slot per day</li>
+                <li>You can only book one day in advance</li>
+                <li>You cannot cancel with less than 1 hour notice</li>
+                <li>You cannot select time slots that have already passed</li>
+                <li>You must arrive on time for your reserved class</li>
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">4. Cuenta de Usuario</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">4. User Account</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Eres responsable de:
+                You are responsible for:
               </p>
               <ul className="list-disc list-inside space-y-2 text-zinc-500 ml-4 font-light">
-                <li>Mantener la confidencialidad de tu cuenta y contraseña</li>
-                <li>Proporcionar información precisa y actualizada</li>
-                <li>Notificarnos inmediatamente sobre cualquier uso no autorizado</li>
-                <li>Ser responsable de todas las actividades que ocurran bajo tu cuenta</li>
+                <li>Maintaining the confidentiality of your account and password</li>
+                <li>Providing accurate and up-to-date information</li>
+                <li>Notifying us immediately of any unauthorized use</li>
+                <li>Being responsible for all activities that occur under your account</li>
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">5. Conducta del Usuario</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">5. User Conduct</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Te comprometes a no:
+                You agree not to:
               </p>
               <ul className="list-disc list-inside space-y-2 text-zinc-500 ml-4 font-light">
-                <li>Usar el servicio para fines ilegales o no autorizados</li>
-                <li>Interferir con el funcionamiento del servicio</li>
-                <li>Intentar acceder a áreas restringidas del sistema</li>
-                <li>Transmitir virus, malware o código malicioso</li>
-                <li>Usar bots o scripts automatizados sin autorización</li>
+                <li>Use the service for illegal or unauthorized purposes</li>
+                <li>Interfere with the operation of the service</li>
+                <li>Attempt to access restricted areas of the system</li>
+                <li>Transmit viruses, malware, or malicious code</li>
+                <li>Use bots or automated scripts without authorization</li>
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">6. Propiedad Intelectual</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">6. Intellectual Property</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Todo el contenido del sitio web, incluyendo textos, gráficos, logos, imágenes y software, es propiedad de Kraken Elite Fitness y está protegido por leyes de propiedad intelectual. No puedes reproducir, distribuir o crear obras derivadas sin nuestro consentimiento escrito.
+                All content on the website, including texts, graphics, logos, images, and software, is the property of Venom Elite Fitness and is protected by intellectual property laws. You may not reproduce, distribute, or create derivative works without our written consent.
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">7. Limitación de Responsabilidad</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">7. Limitation of Liability</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Kraken Elite Fitness no será responsable de:
+                Venom Elite Fitness will not be responsible for:
               </p>
               <ul className="list-disc list-inside space-y-2 text-zinc-500 ml-4 font-light">
-                <li>Daños indirectos, incidentales o consecuentes</li>
-                <li>Pérdida de datos o información</li>
-                <li>Interrupciones del servicio por causas fuera de nuestro control</li>
-                <li>Lesiones físicas que puedan ocurrir durante las clases de CrossFit</li>
+                <li>Indirect, incidental, or consequential damages</li>
+                <li>Loss of data or information</li>
+                <li>Service interruptions due to causes beyond our control</li>
+                <li>Physical injuries that may occur during CrossFit classes</li>
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">8. Modificaciones del Servicio</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">8. Service Modifications</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Nos reservamos el derecho de modificar, suspender o discontinuar cualquier aspecto del servicio en cualquier momento, con o sin previo aviso. No seremos responsables ante ti ni ante terceros por cualquier modificación, suspensión o discontinuación del servicio.
+                We reserve the right to modify, suspend, or discontinue any aspect of the service at any time, with or without prior notice. We will not be liable to you or any third party for any modification, suspension, or discontinuation of the service.
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">9. Terminación</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">9. Termination</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Podemos terminar o suspender tu acceso al servicio inmediatamente, sin previo aviso, por cualquier motivo, incluyendo si violas estos términos y condiciones.
+                We may terminate or suspend your access to the service immediately, without prior notice, for any reason, including if you violate these terms and conditions.
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">10. Ley Aplicable</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">10. Applicable Law</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Estos términos se rigen por las leyes de Costa Rica. Cualquier disputa relacionada con estos términos será resuelta en los tribunales competentes de Costa Rica.
+                These terms are governed by the laws of Costa Rica. Any dispute related to these terms will be resolved in the competent courts of Costa Rica.
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">11. Contacto</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">11. Contact</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Si tienes preguntas sobre estos términos y condiciones, puedes contactarnos a través de nuestra página de <Link href="/contact" className="text-red-500 hover:text-red-400 underline font-medium">contacto</Link>.
+                If you have questions about these terms and conditions, you can contact us through our <Link href="/contact" className="text-red-500 hover:text-red-400 underline font-medium">contact</Link> page.
               </p>
             </section>
           </div>

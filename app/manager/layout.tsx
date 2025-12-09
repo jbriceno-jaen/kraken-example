@@ -29,11 +29,11 @@ export default function ManagerLayout({
         <Navbar />
         <div className="flex flex-col items-center justify-center min-h-[60vh]">
           <div className="relative size-16">
-            <div className="size-full animate-spin rounded-full border-4 border-red-500/30 border-t-red-500" />
+            <div className="size-full animate-spin rounded-full border-4 border-red-500/20 border-t-red-500" />
             <Users className="absolute left-1/2 top-1/2 size-8 -translate-x-1/2 -translate-y-1/2 text-red-400 animate-pulse" />
           </div>
           <p className="mt-4 text-sm font-semibold text-zinc-400 font-[family-name:var(--font-orbitron)]">
-            Cargando...
+            Loading...
           </p>
         </div>
       </div>

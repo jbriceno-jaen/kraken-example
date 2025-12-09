@@ -47,12 +47,26 @@ export const reservations = pgTable("reservations", {
   createdAt: timestamp().defaultNow().notNull(),
 });
 
+// Main Schedules table - source of truth for weekly class schedule
+// This table stores the recurring weekly schedule template
+export const schedules = pgTable("schedules", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  day: varchar({ length: 20 }).notNull(), // Day of week: Monday, Tuesday, etc.
+  time: varchar({ length: 20 }).notNull(), // Time: "5:00 AM", "6:00 PM", etc.
+  capacity: integer().default(14).notNull(), // Maximum capacity for this slot (14 people)
+  available: boolean().default(true).notNull(), // Whether this slot is available (can be canceled)
+  createdAt: timestamp().defaultNow().notNull(),
+  updatedAt: timestamp().defaultNow().notNull(),
+});
+
+// Legacy classSlots table - kept for backward compatibility during migration
+// Will be removed after migration is complete
 export const classSlots = pgTable("class_slots", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   day: varchar({ length: 20 }).notNull(),
   time: varchar({ length: 20 }).notNull(),
-  capacity: integer().default(14).notNull(), // Maximum capacity for this slot (14 people)
-  available: boolean().default(true).notNull(), // Whether this slot is available
+  capacity: integer().default(14).notNull(),
+  available: boolean().default(true).notNull(),
   createdAt: timestamp().defaultNow().notNull(),
   updatedAt: timestamp().defaultNow().notNull(),
 });

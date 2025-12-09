@@ -1,0 +1,178 @@
+# Design System Rules for Component Creation
+
+## CRITICAL: All new components MUST follow these rules
+
+### Color Palette (STRICT)
+- **Backgrounds**: Only use `bg-black`, `bg-black/30`, `bg-black/50`, `bg-black/80`
+- **Primary Accent**: Only use `red-500`, `red-600`, `red-400` with opacity variants (`/20`, `/30`, `/50`, `/70`)
+- **Text**: `text-white` for primary, `text-zinc-300/400/500/600` for secondary
+- **Status Colors**: `green-400/500` (success), `blue-300/400/500` (info), `yellow-400/500` (warning)
+- **NEVER** use: gray, slate, neutral, or any colors outside this palette
+
+### Typography (REQUIRED)
+- **All headings**: MUST use `font-[family-name:var(--font-orbitron)]`
+- **Page titles**: `text-3xl sm:text-4xl font-black`
+- **Section headings**: `text-xl sm:text-2xl font-bold`
+- **Body text**: Default font (no Orbitron)
+- **Badges**: Always include `font-[family-name:var(--font-orbitron)]`
+
+### Cards (STANDARD PATTERN)
+```tsx
+<Card className="bg-black p-4 sm:p-6 lg:p-8 shadow-2xl border border-red-500/50">
+  {/* Content */}
+</Card>
+```
+- Background: `bg-black` or `bg-black/30`
+- Border: `border border-red-500/50` or `border-red-500/30`
+- Padding: `p-4 sm:p-6 lg:p-8` (responsive)
+- Hover: `hover:border-red-500/70 transition-all`
+
+### Buttons (STANDARD PATTERNS)
+```tsx
+// Primary
+<Button className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700">
+
+// Outline
+<Button variant="outline" className="border-red-500/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/70">
+```
+
+### Badges (STANDARD PATTERN)
+```tsx
+<Badge className="bg-red-500/20 border border-red-500/30 text-red-400 font-[family-name:var(--font-orbitron)] text-xs">
+```
+
+### Modals/Dialogs (REQUIRED STRUCTURE)
+1. Logo at top: `<Logo variant="compact" showLink={false} className="justify-center mb-1" />`
+2. Badge: Gradient badge with action label
+3. Title: White, centered, Orbitron font
+4. Description: Zinc-500, centered, light weight
+5. Content: `space-y-4 mt-4`
+
+### Confirmation Dialogs (REQUIRED PATTERN)
+**NEVER use `confirm()` or `alert()` - Always use styled Dialog components**
+
+```tsx
+// State
+const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+const [itemToDelete, setItemToDelete] = useState<number | null>(null);
+
+// Handler
+const handleDelete = (id: number) => {
+  setItemToDelete(id);
+  setShowDeleteConfirm(true);
+};
+
+const confirmDelete = async () => {
+  if (!itemToDelete) return;
+  // Delete logic here
+  setShowDeleteConfirm(false);
+  setItemToDelete(null);
+};
+
+// Dialog Component
+<Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+  <DialogContent className="border border-red-500/50 bg-black text-white">
+    <DialogHeader>
+      <Logo variant="compact" showLink={false} className="justify-center mb-1" />
+      <Badge className="bg-gradient-to-r from-red-500/30 via-red-600/25 to-red-500/30 border border-red-500/40 text-white backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs px-3 py-1 w-fit mx-auto">
+        Confirm Deletion
+      </Badge>
+      <DialogTitle className="text-lg sm:text-xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] text-white text-center pt-1">
+        Delete Item?
+      </DialogTitle>
+      <DialogDescription className="text-xs sm:text-sm text-zinc-500 text-center font-light">
+        Are you sure you want to delete this item? This action cannot be undone.
+      </DialogDescription>
+    </DialogHeader>
+    <div className="mt-4 p-3 rounded-lg border border-red-500/50 bg-black/30">
+      <div className="flex items-start gap-2">
+        <AlertTriangle className="size-4 text-red-400 flex-shrink-0 mt-0.5" />
+        <div className="flex-1">
+          <p className="text-xs text-red-400 font-[family-name:var(--font-orbitron)] font-semibold mb-1">
+            Warning
+          </p>
+          <p className="text-xs text-zinc-400 font-light">
+            Warning message describing the consequences.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div className="flex gap-2 sm:gap-3 pt-3">
+      <Button
+        type="button"
+        variant="outline"
+        onClick={() => {
+          setShowDeleteConfirm(false);
+          setItemToDelete(null);
+        }}
+        className="flex-1 border-red-500/50 bg-black/30 text-white hover:bg-black/50 hover:border-red-500/70"
+      >
+        Cancel
+      </Button>
+      <Button
+        type="button"
+        onClick={confirmDelete}
+        className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700"
+      >
+        Delete
+      </Button>
+    </div>
+  </DialogContent>
+</Dialog>
+```
+
+**Required Elements:**
+- Logo at top
+- Gradient badge with action label (e.g., "Confirm Deletion", "Confirm Cancellation")
+- Title with Orbitron font, white, centered
+- Description with zinc-500 text, centered, light weight
+- Warning section with AlertTriangle icon (`text-red-400`)
+- Two buttons: Cancel (outline) and Action (gradient red)
+- Import `AlertTriangle` from `lucide-react`
+
+### Spacing (CONSISTENT)
+- Between sections: `space-y-6`
+- Card padding: `p-4 sm:p-6 lg:p-8`
+- Main cards: MUST include `border border-red-500/50`
+- Gaps: `gap-3` or `gap-4` (never `gap-1`)
+- Button groups: `gap-2 sm:gap-3` with `pt-4` (not `pt-3`)
+- Form fields: `space-y-2` (not `space-y-1.5`)
+- Card content: `mb-4` for main content, `mb-2` for secondary text
+- Button spacing: Always `gap-2` minimum between buttons
+- Text spacing: Add `mt-2` to date/secondary text after main content
+
+### Icons
+- Sizes: `size-4` (small), `size-5` (medium), `size-8` (large), `size-12` (xlarge)
+- Colors: `text-red-400` (primary), `text-zinc-400/500` (secondary)
+- With text: `mr-2` or `ml-2`
+
+### Interactive States (REQUIRED)
+- Hover: Always include `hover:` variants with `transition-all`
+- Active: `active:scale-95` for buttons
+- Disabled: `disabled:opacity-50`
+- Focus: `focus:outline-none focus:ring-2 focus:ring-red-500/50`
+
+## Checklist Before Committing
+- [ ] All headings use Orbitron font
+- [ ] Only black/red/zinc/green/blue/yellow colors used
+- [ ] Cards have red borders with opacity (`border border-red-500/50`)
+- [ ] Buttons follow gradient or outline patterns
+- [ ] Badges use opacity backgrounds and `text-xs` size
+- [ ] Responsive padding applied (`p-4 sm:p-6 lg:p-8`)
+- [ ] Button spacing: `gap-2` minimum (never `gap-1`)
+- [ ] Form spacing: `space-y-2` (not `space-y-1.5`)
+- [ ] Button groups: `pt-4` (not `pt-3`)
+- [ ] Card content: `mb-4` for main, `mb-2` for secondary
+- [ ] Hover states included
+- [ ] Icons properly sized and colored
+- [ ] Modals include Logo + Badge + Title + Description structure
+- [ ] **NO `confirm()` or `alert()` calls - all use styled Dialog components**
+- [ ] Confirmation dialogs include Logo + Badge + Title + Description + Warning section
+- [ ] Buttons with icons include text labels (not icon-only unless necessary)
+- [ ] Cards use `min-w-0` and `flex-shrink-0` appropriately for text wrapping
+
+## Reference Components
+- `app/dashboard/reservations/page.tsx` - Complete page example
+- `components/manager/add-user-modal.tsx` - Modal pattern
+- `components/hero.tsx` - Section component
+- `components/pricing.tsx` - Card grid example

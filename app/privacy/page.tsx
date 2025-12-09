@@ -6,8 +6,8 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 export const metadata = {
-  title: "Política de Privacidad | Kraken Elite Fitness",
-  description: "Política de privacidad de Kraken Elite Fitness",
+  title: "Privacy Policy | Venom Elite Fitness",
+  description: "Privacy policy of Venom Elite Fitness",
 };
 
 export default function PrivacyPage() {
@@ -20,7 +20,7 @@ export default function PrivacyPage() {
           className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-red-500 transition-colors mb-4"
         >
           <ArrowLeft className="size-4" />
-          Volver al inicio
+          Back to home
         </Link>
 
         <div className="space-y-4">
@@ -28,94 +28,94 @@ export default function PrivacyPage() {
             Legal
           </Badge>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white">
-            POLÍTICA DE
+            PRIVACY
             <br />
-            <span className="text-red-500">PRIVACIDAD</span>
+            <span className="text-red-500">POLICY</span>
           </h1>
           <p className="text-base sm:text-lg text-zinc-500 font-light">
-            Última actualización: {new Date().toLocaleDateString("es-CR", { year: "numeric", month: "long", day: "numeric" })}
+            Last updated: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
           </p>
         </div>
 
         <Card className="bg-black p-6 sm:p-8 lg:p-10 shadow-2xl">
           <div className="prose prose-invert max-w-none space-y-8">
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">1. Información que Recopilamos</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">1. Information We Collect</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                En Kraken Elite Fitness, recopilamos información que nos ayuda a brindarte el mejor servicio posible:
+                At Venom Elite Fitness, we collect information that helps us provide you with the best possible service:
               </p>
               <ul className="list-disc list-inside space-y-2 text-zinc-500 ml-4 font-light">
-                <li>Información de perfil (nombre, correo electrónico, teléfono, objetivos de entrenamiento)</li>
-                <li>Récords personales y datos de entrenamiento</li>
-                <li>Reservas de clases y preferencias de horarios</li>
-                <li>Información de autenticación de tu cuenta de usuario</li>
+                <li>Profile information (name, email, phone, training goals)</li>
+                <li>Personal records and training data</li>
+                <li>Class reservations and schedule preferences</li>
+                <li>User account authentication information</li>
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">2. Uso de la Información</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">2. Use of Information</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Utilizamos tu información para:
+                We use your information to:
               </p>
               <ul className="list-disc list-inside space-y-2 text-zinc-500 ml-4 font-light">
-                <li>Gestionar tus reservas de clases y comunicarnos contigo sobre tu entrenamiento</li>
-                <li>Registrar y hacer seguimiento de tu progreso y récords personales</li>
-                <li>Mejorar nuestros servicios y personalizar tu experiencia</li>
-                <li>Enviar actualizaciones importantes sobre el gimnasio y cambios en los horarios</li>
+                <li>Manage your class reservations and communicate with you about your training</li>
+                <li>Record and track your progress and personal records</li>
+                <li>Improve our services and personalize your experience</li>
+                <li>Send important updates about the gym and schedule changes</li>
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">3. Protección de Datos</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">3. Data Protection</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Implementamos medidas de seguridad técnicas y organizativas para proteger tu información personal contra acceso no autorizado, pérdida o destrucción. Utilizamos servicios de autenticación seguros y almacenamos datos en bases de datos protegidas.
+                We implement technical and organizational security measures to protect your personal information against unauthorized access, loss, or destruction. We use secure authentication services and store data in protected databases.
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">4. Compartir Información</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">4. Sharing Information</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                No vendemos, alquilamos ni compartimos tu información personal con terceros, excepto:
+                We do not sell, rent, or share your personal information with third parties, except:
               </p>
               <ul className="list-disc list-inside space-y-2 text-zinc-500 ml-4 font-light">
-                <li>Cuando sea necesario para proporcionar nuestros servicios (proveedores de servicios autorizados)</li>
-                <li>Cuando sea requerido por ley o para proteger nuestros derechos legales</li>
-                <li>Con tu consentimiento explícito</li>
+                <li>When necessary to provide our services (authorized service providers)</li>
+                <li>When required by law or to protect our legal rights</li>
+                <li>With your explicit consent</li>
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">5. Tus Derechos</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">5. Your Rights</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Tienes derecho a:
+                You have the right to:
               </p>
               <ul className="list-disc list-inside space-y-2 text-zinc-500 ml-4 font-light">
-                <li>Acceder a tu información personal</li>
-                <li>Corregir información inexacta</li>
-                <li>Solicitar la eliminación de tus datos</li>
-                <li>Oponerte al procesamiento de tu información</li>
-                <li>Retirar tu consentimiento en cualquier momento</li>
+                <li>Access your personal information</li>
+                <li>Correct inaccurate information</li>
+                <li>Request deletion of your data</li>
+                <li>Object to the processing of your information</li>
+                <li>Withdraw your consent at any time</li>
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">6. Cookies y Tecnologías Similares</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">6. Cookies and Similar Technologies</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Utilizamos cookies y tecnologías similares para mejorar tu experiencia, analizar el uso del sitio y personalizar el contenido. Puedes gestionar tus preferencias de cookies a través de la configuración de tu navegador.
+                We use cookies and similar technologies to improve your experience, analyze site usage, and personalize content. You can manage your cookie preferences through your browser settings.
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">7. Cambios a esta Política</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">7. Changes to this Policy</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Podemos actualizar esta política de privacidad ocasionalmente. Te notificaremos sobre cambios significativos publicando la nueva política en esta página y actualizando la fecha de "Última actualización".
+                We may update this privacy policy occasionally. We will notify you of significant changes by posting the new policy on this page and updating the "Last updated" date.
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">8. Contacto</h2>
+              <h2 className="text-2xl font-bold text-white font-[family-name:var(--font-orbitron)]">8. Contact</h2>
               <p className="text-zinc-500 leading-relaxed font-light">
-                Si tienes preguntas sobre esta política de privacidad o sobre cómo manejamos tu información, puedes contactarnos a través de nuestra página de <Link href="/contact" className="text-red-500 hover:text-red-400 underline font-medium">contacto</Link>.
+                If you have questions about this privacy policy or how we handle your information, you can contact us through our <Link href="/contact" className="text-red-500 hover:text-red-400 underline font-medium">contact</Link> page.
               </p>
             </section>
           </div>

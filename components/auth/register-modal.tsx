@@ -41,39 +41,39 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
     // Name validation - allow spaces and multiple words
     const trimmedName = formData.name.trim();
     if (!trimmedName) {
-      newErrors.name = "El nombre es requerido";
+      newErrors.name = "Name is required";
     } else if (trimmedName.length < 2) {
-      newErrors.name = "El nombre debe tener al menos 2 caracteres";
+      newErrors.name = "Name must be at least 2 characters";
     } else if (trimmedName.length > 255) {
-      newErrors.name = "El nombre no puede exceder 255 caracteres";
+      newErrors.name = "Name cannot exceed 255 characters";
     } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(trimmedName)) {
-      newErrors.name = "El nombre solo puede contener letras y espacios";
+      newErrors.name = "Name can only contain letters and spaces";
     }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
-      newErrors.email = "El correo electrónico es requerido";
+      newErrors.email = "Email is required";
     } else if (!emailRegex.test(formData.email.trim())) {
-      newErrors.email = "Ingresa un correo electrónico válido";
+      newErrors.email = "Enter a valid email address";
     } else if (formData.email.length > 255) {
-      newErrors.email = "El correo no puede exceder 255 caracteres";
+      newErrors.email = "Email cannot exceed 255 characters";
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = "La contraseña es requerida";
+      newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
-      newErrors.password = "La contraseña debe tener al menos 6 caracteres";
+      newErrors.password = "Password must be at least 6 characters";
     } else if (formData.password.length > 128) {
-      newErrors.password = "La contraseña no puede exceder 128 caracteres";
+      newErrors.password = "Password cannot exceed 128 characters";
     }
 
     // Confirm password validation
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "Confirma tu contraseña";
+      newErrors.confirmPassword = "Confirm your password";
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Las contraseñas no coinciden";
+      newErrors.confirmPassword = "Passwords do not match";
     }
 
     setErrors(newErrors);
@@ -106,7 +106,7 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
 
       // Check if response is ok before trying to parse JSON
       if (!res.ok) {
-        let errorMessage = "Error al crear la cuenta";
+        let errorMessage = "Error creating account";
         try {
           const errorData = await res.json();
           errorMessage = errorData.error || errorMessage;
@@ -124,9 +124,9 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
       if (data.message || data.user) {
         setIsSuccess(true);
         if (data.requiresApproval) {
-          showToast("Cuenta creada. Esperando aprobación del administrador.", "info");
+          showToast("Account created. Waiting for administrator approval.", "info");
         } else {
-          showToast("¡Cuenta creada exitosamente!", "success");
+          showToast("Account created successfully!", "success");
         }
         // Don't auto-close if approval is required, let user read the message
         if (!data.requiresApproval) {
@@ -139,11 +139,11 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
           }, 2000);
         }
       } else {
-        showToast(data.error || "Error al crear la cuenta", "error");
+        showToast(data.error || "Error creating account", "error");
       }
     } catch (error) {
       console.error("Registration error:", error);
-      const errorMessage = error instanceof Error ? error.message : "Error al crear la cuenta. Por favor intenta de nuevo.";
+      const errorMessage = error instanceof Error ? error.message : "Error creating account. Please try again.";
       showToast(errorMessage, "error");
     } finally {
       setIsLoading(false);
@@ -162,28 +162,26 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="border border-red-500/50 bg-black text-white max-w-md max-h-[90vh] overflow-y-auto">
+      <DialogContent className="border border-red-500/50 bg-black text-white max-h-[90vh] overflow-y-auto">
         {isSuccess ? (
-          <div className="text-center space-y-6 py-4">
+          <div className="text-center space-y-4 py-3">
             <div className="flex justify-center">
-              <div className="rounded-full bg-blue-500/20 p-4">
-                <CheckCircle2 className="size-12 text-blue-400" />
+              <div className="rounded-full bg-blue-500/20 p-3">
+                <CheckCircle2 className="size-10 text-blue-400" />
               </div>
             </div>
-            <h2 className="text-2xl font-black tracking-tighter text-white font-[family-name:var(--font-orbitron)]">
-              CUENTA CREADA
-              <br />
-              <span className="text-red-500">EXITOSAMENTE</span>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-[family-name:var(--font-orbitron)]">
+              Account Created
             </h2>
-            <div className="space-y-3">
-              <p className="text-zinc-500 text-base font-light">
-                Tu cuenta ha sido creada y está pendiente de aprobación por parte del administrador.
+            <div className="space-y-2">
+              <p className="text-zinc-500 text-sm font-light">
+                Your account has been created and is pending approval by the administrator.
               </p>
-              <p className="text-zinc-600 text-sm font-light">
-                Recibirás una notificación cuando tu cuenta sea aprobada. Por favor, intenta iniciar sesión más tarde.
+              <p className="text-zinc-600 text-xs font-light">
+                You will receive a notification when your account is approved. Please try signing in later.
               </p>
             </div>
-            <div className="pt-4">
+            <div className="pt-3">
               <Button
                 onClick={() => {
                   onOpenChange(false);
@@ -192,36 +190,34 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
                   setErrors({});
                   onSwitchToLogin?.();
                 }}
-                className="w-full min-h-[48px] text-base sm:text-sm bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] shadow-lg shadow-red-500/50"
+                className="w-full bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 shadow-lg shadow-red-500/50"
               >
-                Entendido
+                Got it
               </Button>
             </div>
           </div>
         ) : (
           <>
             <DialogHeader>
-              <Logo variant="compact" showLink={false} className="justify-center mb-2" />
-              <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5 w-fit mx-auto">
-                Crear Cuenta
+              <Logo variant="compact" showLink={false} className="justify-center mb-1" />
+              <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs px-3 py-1 w-fit mx-auto">
+                Create Account
               </Badge>
-              <DialogTitle className="text-2xl sm:text-3xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white text-center pt-2">
-                ÚNETE A
-                <br />
-                <span className="text-red-500">KRAKEN</span>
+              <DialogTitle className="text-xl sm:text-2xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] text-white text-center pt-1">
+                Join Venom
               </DialogTitle>
-              <DialogDescription className="text-sm text-zinc-500 text-center font-light">
-                Crea tu cuenta para comenzar tu entrenamiento
+              <DialogDescription className="text-xs sm:text-sm text-zinc-500 text-center font-light">
+                Create your account to start your training
               </DialogDescription>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="space-y-5 mt-6">
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Nombre completo
+            <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+              <div className="space-y-1.5">
+                <label htmlFor="name" className="text-xs sm:text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
+                  Full name
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-600" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-600 pointer-events-none z-10" />
                   <Input
                     id="name"
                     type="text"
@@ -231,8 +227,8 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
                       setFormData({ ...formData, name: e.target.value });
                       if (errors.name) setErrors({ ...errors, name: "" });
                     }}
-                    placeholder="Tu nombre completo"
-                    className={`min-h-[48px] pl-10 text-base sm:text-sm bg-black/30 text-white placeholder:text-zinc-500 focus:ring-2 focus:ring-red-500/20 transition-all ${
+                    placeholder="Your full name"
+                    className={`!pl-11 bg-black/30 text-white placeholder:text-zinc-500 focus:ring-2 focus:ring-red-500/20 ${
                       errors.name ? "border-red-500 focus:border-red-500" : "border-red-500/50 focus:border-red-500/70"
                     }`}
                   />
@@ -242,12 +238,12 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
                 )}
               </div>
 
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Correo electrónico
+              <div className="space-y-1.5">
+                <label htmlFor="email" className="text-xs sm:text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
+                  Email
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-600" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-600 pointer-events-none z-10" />
                   <Input
                     id="email"
                     type="email"
@@ -257,8 +253,8 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
                       setFormData({ ...formData, email: e.target.value });
                       if (errors.email) setErrors({ ...errors, email: "" });
                     }}
-                    placeholder="tucorreo@ejemplo.com"
-                    className={`min-h-[48px] pl-10 text-base sm:text-sm bg-black/30 text-white placeholder:text-zinc-500 focus:ring-2 focus:ring-red-500/20 transition-all ${
+                    placeholder="your.email@example.com"
+                    className={`!pl-11 bg-black/30 text-white placeholder:text-zinc-500 focus:ring-2 focus:ring-red-500/20 ${
                       errors.email ? "border-red-500 focus:border-red-500" : "border-red-500/50 focus:border-red-500/70"
                     }`}
                   />
@@ -268,12 +264,12 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
                 )}
               </div>
 
-              <div className="space-y-2">
-                <label htmlFor="password" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Contraseña
+              <div className="space-y-1.5">
+                <label htmlFor="password" className="text-xs sm:text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
+                  Password
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-600" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-600 pointer-events-none z-10" />
                   <Input
                     id="password"
                     type="password"
@@ -283,8 +279,8 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
                       setFormData({ ...formData, password: e.target.value });
                       if (errors.password) setErrors({ ...errors, password: "" });
                     }}
-                    placeholder="Mínimo 6 caracteres"
-                    className={`min-h-[48px] pl-10 text-base sm:text-sm bg-black/30 text-white placeholder:text-zinc-500 focus:ring-2 focus:ring-red-500/20 transition-all ${
+                    placeholder="Minimum 6 characters"
+                    className={`!pl-11 bg-black/30 text-white placeholder:text-zinc-500 focus:ring-2 focus:ring-red-500/20 ${
                       errors.password ? "border-red-500 focus:border-red-500" : "border-red-500/50 focus:border-red-500/70"
                     }`}
                   />
@@ -292,16 +288,16 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
                 {errors.password ? (
                   <p className="text-xs text-red-400">{errors.password}</p>
                 ) : (
-                  <p className="text-xs text-zinc-500">La contraseña debe tener al menos 6 caracteres</p>
+                  <p className="text-xs text-zinc-500">Password must be at least 6 characters</p>
                 )}
               </div>
 
-              <div className="space-y-2">
-                <label htmlFor="confirmPassword" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Confirmar contraseña
+              <div className="space-y-1.5">
+                <label htmlFor="confirmPassword" className="text-xs sm:text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
+                  Confirm password
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-600" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-600 pointer-events-none z-10" />
                   <Input
                     id="confirmPassword"
                     type="password"
@@ -311,8 +307,8 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
                       setFormData({ ...formData, confirmPassword: e.target.value });
                       if (errors.confirmPassword) setErrors({ ...errors, confirmPassword: "" });
                     }}
-                    placeholder="Confirma tu contraseña"
-                    className={`min-h-[48px] pl-10 text-base sm:text-sm bg-white/5 text-white placeholder:text-zinc-500 focus:ring-2 focus:ring-red-500/20 transition-all ${
+                    placeholder="Confirm your password"
+                    className={`min-h-[48px] !pl-11 text-base sm:text-sm bg-white/5 text-white placeholder:text-zinc-500 focus:ring-2 focus:ring-red-500/20 transition-all ${
                       errors.confirmPassword ? "border-red-500 focus:border-red-500" : "border-red-500/20 focus:border-red-500/50"
                     }`}
                   />
@@ -325,25 +321,25 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full min-h-[48px] text-base sm:text-sm gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 hover:shadow-red-500/70 transition-all duration-300"
+                className="w-full gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 hover:shadow-red-500/70"
               >
                 {isLoading ? (
                   <>
                     <span className="animate-spin">⏳</span>
-                    Creando cuenta...
+                    Creating account...
                   </>
                 ) : (
                   <>
-                    Crear cuenta
+                    Create account
                     <ArrowRight className="size-5 sm:size-4" />
                   </>
                 )}
               </Button>
             </form>
 
-            <div className="text-center space-y-3 pt-4">
+            <div className="text-center space-y-2 pt-3">
               <p className="text-sm text-zinc-500">
-                ¿Ya tienes una cuenta?{" "}
+                Already have an account?{" "}
                 <button
                   type="button"
                   onClick={() => {
@@ -352,7 +348,7 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
                   }}
                   className="text-red-500 hover:text-red-400 font-semibold transition-colors"
                 >
-                  Inicia sesión aquí
+                  Sign in here
                 </button>
               </p>
             </div>

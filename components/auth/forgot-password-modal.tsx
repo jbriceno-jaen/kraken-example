@@ -43,7 +43,7 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
 
       if (response.ok) {
         setIsSuccess(true);
-        showToast(data.message || "Si el correo existe, recibirás instrucciones para restablecer tu contraseña.", "info");
+        showToast(data.message || "If the email exists, you will receive instructions to reset your password.", "info");
         
         setTimeout(() => {
           onOpenChange(false);
@@ -51,11 +51,11 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
           setEmail("");
         }, 3000);
       } else {
-        showToast(data.error || "Error al procesar la solicitud. Por favor intenta de nuevo.", "error");
+        showToast(data.error || "Error processing request. Please try again.", "error");
       }
     } catch (error) {
       console.error("Forgot password error:", error);
-      showToast("Error al procesar la solicitud. Por favor intenta de nuevo.", "error");
+      showToast("Error processing request. Please try again.", "error");
     } finally {
       setIsLoading(false);
     }
@@ -63,55 +63,51 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border border-red-500/50 bg-black text-white max-w-md">
+      <DialogContent className="border border-red-500/50 bg-black text-white max-h-[90vh] overflow-y-auto">
         {isSuccess ? (
-          <div className="text-center space-y-6 py-4">
+          <div className="text-center space-y-4 py-3">
             <div className="flex justify-center">
-              <div className="rounded-full bg-green-500/20 p-4">
-                <CheckCircle2 className="size-12 text-green-400" />
+              <div className="rounded-full bg-green-500/20 p-3">
+                <CheckCircle2 className="size-10 text-green-400" />
               </div>
             </div>
-            <h2 className="text-2xl font-black tracking-tighter text-white font-[family-name:var(--font-orbitron)]">
-              CORREO
-              <br />
-              <span className="text-red-500">ENVIADO</span>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white font-[family-name:var(--font-orbitron)]">
+              Email Sent
             </h2>
-            <p className="text-zinc-500 font-light">
-              Si el correo existe en nuestro sistema, recibirás instrucciones para restablecer tu contraseña.
+            <p className="text-sm text-zinc-500 font-light">
+              If the email exists in our system, you will receive instructions to reset your password.
             </p>
           </div>
         ) : (
           <>
             <DialogHeader>
-              <Logo variant="compact" showLink={false} className="justify-center mb-2" />
-              <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5 w-fit mx-auto">
-                Recuperar Contraseña
+              <Logo variant="compact" showLink={false} className="justify-center mb-1" />
+              <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs px-3 py-1 w-fit mx-auto">
+                Recover Password
               </Badge>
-              <DialogTitle className="text-2xl sm:text-3xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white text-center pt-2">
-                ¿OLVIDASTE TU
-                <br />
-                <span className="text-red-500">CONTRASEÑA?</span>
+              <DialogTitle className="text-xl sm:text-2xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] text-white text-center pt-1">
+                Forgot Password?
               </DialogTitle>
-              <DialogDescription className="text-sm text-zinc-500 text-center font-light">
-                Ingresa tu correo electrónico y te enviaremos instrucciones para restablecer tu contraseña
+              <DialogDescription className="text-xs sm:text-sm text-zinc-500 text-center font-light">
+                Enter your email address and we'll send you instructions to reset your password
               </DialogDescription>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="space-y-5 mt-6">
-              <div className="space-y-2">
-                <label htmlFor="reset-email" className="text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
-                  Correo electrónico
+            <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+              <div className="space-y-1.5">
+                <label htmlFor="reset-email" className="text-xs sm:text-sm font-medium text-white font-[family-name:var(--font-orbitron)]">
+                  Email
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-zinc-600" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-600 pointer-events-none z-10" />
                   <Input
                     id="reset-email"
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="tucorreo@ejemplo.com"
-                    className="min-h-[48px] pl-10 text-base sm:text-sm border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20 transition-all"
+                    placeholder="your.email@example.com"
+                    className="!pl-11 border-red-500/50 bg-black/30 text-white placeholder:text-zinc-500 focus:border-red-500/70 focus:ring-2 focus:ring-red-500/20"
                   />
                 </div>
               </div>
@@ -119,16 +115,16 @@ export function ForgotPasswordModal({ open, onOpenChange }: ForgotPasswordModalP
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full min-h-[48px] text-base sm:text-sm gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50 transition-all duration-300"
+                className="w-full gap-2 bg-gradient-to-r from-red-500 via-red-600 to-red-500 text-white hover:from-red-600 hover:via-red-700 hover:to-red-600 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-500/50"
               >
                 {isLoading ? (
                   <>
                     <span className="animate-spin">⏳</span>
-                    Enviando...
+                    Sending...
                   </>
                 ) : (
                   <>
-                    Enviar instrucciones
+                    Send instructions
                     <ArrowRight className="size-5 sm:size-4" />
                   </>
                 )}

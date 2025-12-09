@@ -12,22 +12,22 @@ type Plan = {
 
 const plans: Plan[] = [
   {
-    name: "Básico",
+    name: "Basic",
     price: "₡3000",
-    cadence: "Clase suelta / Casual",
-    perks: ["1 clase", "Open gym el mismo día", "Calentamiento guiado por coach"],
+    cadence: "Drop-in / Casual",
+    perks: ["1 class", "Open gym the same day", "Coach-guided warm-up"],
   },
   {
-    name: "Estándar",
+    name: "Standard",
     price: "₡15000",
-    cadence: "3x / semana",
-    perks: ["12 clases / mes", "Acceso a open gym", "Seguimiento de progreso + benchmarks"],
+    cadence: "3x / week",
+    perks: ["12 classes / month", "Open gym access", "Progress tracking + benchmarks"],
   },
   {
-    name: "Ilimitado",
+    name: "Unlimited",
     price: "₡30000",
-    cadence: "Clases ilimitadas",
-    perks: ["Clases ilimitadas", "Todos los programas especiales", "Prioridad en lista de espera + prep de comps"],
+    cadence: "Unlimited classes",
+    perks: ["Unlimited classes", "All special programs", "Priority on waitlist + competition prep"],
     highlighted: true,
   },
 ];
@@ -46,15 +46,15 @@ export default function Pricing() {
       <div className="relative space-y-5 sm:space-y-6">
         <div className="space-y-3">
           <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
-            Membresías
+            Memberships
           </Badge>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white break-words">
-            ELIGE EL PLAN
+            CHOOSE THE PLAN
             <br />
-            <span className="text-red-500">QUE VA CON TU RITMO</span>
+            <span className="text-red-500">THAT FITS YOUR PACE</span>
           </h2>
           <p className="text-sm sm:text-base lg:text-lg text-zinc-500 leading-relaxed font-light break-words">
-            Precios claros. Sin cargos ocultos. Pausa o cambia cuando quieras.
+            Clear prices. No hidden fees. Pause or change whenever you want.
           </p>
         </div>
         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -78,7 +78,7 @@ export default function Pricing() {
                 </div>
                 {plan.highlighted && (
                   <Badge className="bg-black border border-red-500/40 text-red-500 font-[family-name:var(--font-orbitron)] flex-shrink-0 text-xs">
-                    Recomendado
+                    Recommended
                   </Badge>
                 )}
               </div>

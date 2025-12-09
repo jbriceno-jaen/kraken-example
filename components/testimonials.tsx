@@ -13,28 +13,28 @@ export default function Testimonials() {
       
       <div className="relative space-y-6 sm:space-y-8">
         <Badge className="bg-black border border-red-500/30 text-red-500/90 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs sm:text-sm px-4 sm:px-5 py-1.5">
-          Comunidad
+          Community
         </Badge>
         <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter font-[family-name:var(--font-orbitron)] text-white leading-tight break-words">
-          UNA COMUNIDAD
+          A COMMUNITY
           <br />
-          <span className="text-red-500">QUE TE IMPULSA</span>
+          <span className="text-red-500">THAT PUSHES YOU</span>
         </h2>
         <p className="text-base sm:text-lg lg:text-xl text-zinc-500 leading-relaxed max-w-3xl font-light break-words">
-          Kraken se construye sobre compañeros responsables, coaches expertos que observan cada repetición y una
-          cultura que celebra el progreso desde tu primer pull-up hasta el día de competencia. Espera feedback
-          sobre tus levantamientos, planes de ritmo para cada MetCon y compañeros que llegan temprano para animar
-          al último en terminar.
+          Venom is built on responsible teammates, expert coaches who watch every repetition, and a
+          culture that celebrates progress from your first pull-up to competition day. Expect feedback
+          on your lifts, pacing plans for every MetCon, and teammates who arrive early to cheer on
+          the last to finish.
         </p>
         <div className="flex flex-wrap gap-2 sm:gap-3 pt-4">
           <div className="rounded-full bg-black border border-red-500/20 px-3 sm:px-4 py-2 text-xs sm:text-sm text-red-500/70 font-[family-name:var(--font-orbitron)] break-words hover:border-red-500/40 hover:text-red-500 transition-all duration-300">
-            Apoyo constante
+            Constant support
           </div>
           <div className="rounded-full bg-black border border-red-500/20 px-3 sm:px-4 py-2 text-xs sm:text-sm text-red-500/70 font-[family-name:var(--font-orbitron)] break-words hover:border-red-500/40 hover:text-red-500 transition-all duration-300">
-            Coaching experto
+            Expert coaching
           </div>
           <div className="rounded-full bg-black border border-red-500/20 px-3 sm:px-4 py-2 text-xs sm:text-sm text-red-500/70 font-[family-name:var(--font-orbitron)] break-words hover:border-red-500/40 hover:text-red-500 transition-all duration-300">
-            Cultura de progreso
+            Progress culture
           </div>
         </div>
       </div>

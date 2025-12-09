@@ -1,6 +1,6 @@
 # Deployment Guide - Vercel (Free Tier)
 
-This guide will help you deploy your Kraken Elite Fitness app to Vercel for free.
+This guide will help you deploy your Venom Elite Fitness app to Vercel for free.
 
 ## Prerequisites
 
@@ -86,7 +86,7 @@ RESEND_API_KEY=re_your_api_key_here
 ```
 
 ```
-RESEND_FROM_EMAIL=Kraken Elite Fitness <noreply@yourdomain.com>
+RESEND_FROM_EMAIL=Venom Elite Fitness <noreply@yourdomain.com>
 ```
 
 **Important:**
