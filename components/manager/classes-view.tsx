@@ -356,7 +356,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
         },
       });
       if (res.ok) {
-        const { slots: slotsData } = await res.json();
+        const { slots: slotsData }: { slots: any[] } = await res.json();
         // Convert day names from Spanish to English if needed
         // The database stores English day names, but we convert to ensure consistency
         // Type the raw API response to allow for flexible available types
@@ -404,8 +404,8 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
             time: monday6am.time,
             available: monday6am.available,
             availableType: typeof monday6am.available,
-            originalAvailable: slotsData.find(s => s.day === 'Monday' && s.time === '6:00 AM')?.available,
-            originalAvailableType: typeof slotsData.find(s => s.day === 'Monday' && s.time === '6:00 AM')?.available
+            originalAvailable: slotsData.find((s: any) => s.day === 'Monday' && s.time === '6:00 AM')?.available,
+            originalAvailableType: typeof slotsData.find((s: any) => s.day === 'Monday' && s.time === '6:00 AM')?.available
           });
         } else {
           console.warn('[ClassesView] Monday 6:00 AM slot NOT FOUND in converted slots');
