@@ -360,7 +360,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
         // Convert day names from Spanish to English if needed
         // The database stores English day names, but we convert to ensure consistency
         // Type the raw API response to allow for flexible available types
-        const convertedSlots = slotsData.map((slot: any) => {
+        const convertedSlots: ClassSlot[] = slotsData.map((slot: any) => {
           const convertedDay = toEnglishDay(slot.day);
           
           // Convert available to strict boolean
