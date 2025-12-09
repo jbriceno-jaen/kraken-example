@@ -359,7 +359,8 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
         const { slots: slotsData } = await res.json();
         // Convert day names from Spanish to English if needed
         // The database stores English day names, but we convert to ensure consistency
-        const convertedSlots = slotsData.map((slot: ClassSlot) => {
+        // Type the raw API response to allow for flexible available types
+        const convertedSlots = slotsData.map((slot: any) => {
           const convertedDay = toEnglishDay(slot.day);
           
           // Convert available to strict boolean
@@ -381,7 +382,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
             ...slot,
             day: convertedDay,
             available: available, // Always a boolean
-          };
+          } as ClassSlot;
         });
         
         // Debug: Log all slots to verify data
