@@ -493,7 +493,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
       return dayMatch && timeMatch;
     });
     
-    if (slot && (slot.available === false || slot.available === 0)) {
+    if (slot && slot.available === false) {
       showToast("This class is canceled. Actions cannot be performed.", "warning");
       return;
     }
@@ -548,7 +548,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
       return dayMatch && timeMatch;
     });
     
-    if (slot && (slot.available === false || slot.available === 0)) {
+    if (slot && slot.available === false) {
       showToast("This class is canceled. Attendees cannot be added.", "error");
       return;
     }
@@ -606,7 +606,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
         return dayMatch && timeMatch;
       });
       
-      if (slot && (slot.available === false || slot.available === 0)) {
+      if (slot && slot.available === false) {
         showToast("This class is canceled. Attendees cannot be removed.", "error");
         return;
       }
@@ -959,7 +959,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
                       return dayMatch && timeMatch;
                     });
                     
-                    if (slot && (slot.available === false || slot.available === 0)) {
+                    if (slot && slot.available === false) {
                       showToast("This class is canceled. Attendees cannot be added.", "error");
                       return;
                     }
@@ -977,7 +977,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
                       const timeMatch = s.time?.trim() === selectedTime?.trim();
                       return dayMatch && timeMatch;
                     });
-                    return slot && (slot.available === false || slot.available === 0);
+                    return slot && slot.available === false;
                   })()}
                   className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-lg shadow-red-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -1090,7 +1090,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
                                       const timeMatch = s.time?.trim() === attendeeTime;
                                       return dayMatch && timeMatch;
                                     });
-                                    return slot && (slot.available === false || slot.available === 0);
+                                    return slot && slot.available === false;
                                   })()}
                                   className={cn(
                                     "min-h-[36px] sm:min-h-[32px] min-w-[36px] sm:min-w-[32px] flex-shrink-0 ml-2 disabled:opacity-50 disabled:cursor-not-allowed",
@@ -1116,7 +1116,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
                                       const timeMatch = s.time?.trim() === attendeeTime;
                                       return dayMatch && timeMatch;
                                     });
-                                    return slot && (slot.available === false || slot.available === 0) ? "Class canceled - Attendees cannot be removed" : "Remove client";
+                                    return slot && slot.available === false ? "Class canceled - Attendees cannot be removed" : "Remove client";
                                   })()}
                                 </p>
                               </TooltipContent>
@@ -1228,7 +1228,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
                                       const timeMatch = s.time?.trim() === attendeeTime;
                                       return dayMatch && timeMatch;
                                     });
-                                    return (slot && (slot.available === false || slot.available === 0)) || isPast;
+                                    return (slot && slot.available === false) || isPast;
                                   })()}
                                   className={cn(
                                     "min-h-[36px] sm:min-h-[32px] min-w-[36px] sm:min-w-[32px] flex-shrink-0 ml-2 disabled:opacity-50 disabled:cursor-not-allowed",
@@ -1254,7 +1254,7 @@ export function ClassesView({ onAddAttendee, onLoadingChange }: ClassesViewProps
                                       const timeMatch = s.time?.trim() === attendeeTime;
                                       return dayMatch && timeMatch;
                                     });
-                                    return slot && (slot.available === false || slot.available === 0) ? "Class canceled - Attendees cannot be removed" : "Remove client";
+                                    return slot && slot.available === false ? "Class canceled - Attendees cannot be removed" : "Remove client";
                                   })()}
                                 </p>
                               </TooltipContent>
