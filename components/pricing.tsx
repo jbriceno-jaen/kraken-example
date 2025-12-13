@@ -8,24 +8,26 @@ type Plan = {
   cadence: string;
   perks: string[];
   highlighted?: boolean;
+  period?: string;
 };
 
 const plans: Plan[] = [
   {
     name: "Basic",
-    price: "₡3000",
+    price: "$10",
     cadence: "Drop-in / Casual",
     perks: ["1 class", "Open gym the same day", "Coach-guided warm-up"],
+    period: "day",
   },
   {
     name: "Standard",
-    price: "₡15000",
+    price: "$30",
     cadence: "3x / week",
     perks: ["12 classes / month", "Open gym access", "Progress tracking + benchmarks"],
   },
   {
     name: "Unlimited",
-    price: "₡30000",
+    price: "$60",
     cadence: "Unlimited classes",
     perks: ["Unlimited classes", "All special programs", "Priority on waitlist + competition prep"],
     highlighted: true,
@@ -82,11 +84,11 @@ export default function Pricing() {
                   </Badge>
                 )}
               </div>
-              <div className="relative overflow-hidden mt-3">
+              <div className="relative overflow-hidden mt-3 flex items-baseline gap-2">
                 <p className="text-2xl sm:text-3xl lg:text-4xl font-bold font-[family-name:var(--font-orbitron)] text-white break-words group-hover:text-red-500 transition-colors duration-300">
                   {plan.price}
                 </p>
-                <span className="text-xs sm:text-sm font-medium text-zinc-600 ml-2 group-hover:text-zinc-400 transition-colors duration-300">/mes</span>
+                <span className="text-xs sm:text-sm font-medium text-zinc-600 group-hover:text-zinc-400 transition-colors duration-300">/{plan.period || "month"}</span>
               </div>
               <div className="space-y-2 mt-3">
                 {plan.perks.map((perk) => (

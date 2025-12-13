@@ -135,7 +135,7 @@ export default function ResetPasswordPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white flex flex-col">
         <Navbar />
-        <div className="container mx-auto px-4 py-20 flex items-center justify-center flex-1">
+        <div className="container mx-auto px-4 pt-24 pb-20 flex items-center justify-center flex-1">
           <div className="max-w-md w-full space-y-6 text-center">
             <div className="flex justify-center">
               <div className="rounded-full bg-red-500/20 p-4">
@@ -164,7 +164,7 @@ export default function ResetPasswordPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white flex flex-col">
         <Navbar />
-        <div className="container mx-auto px-4 py-20 flex items-center justify-center flex-1">
+        <div className="container mx-auto px-4 pt-24 pb-20 flex items-center justify-center flex-1">
           <div className="max-w-md w-full space-y-6 text-center">
             <div className="flex justify-center">
               <div className="rounded-full bg-green-500/20 p-4">

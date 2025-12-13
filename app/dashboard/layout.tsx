@@ -60,7 +60,7 @@ export default function DashboardLayout({
     return (
       <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black">
         <Navbar />
-        <div className="flex flex-col items-center justify-center min-h-[60vh]">
+        <div className="flex flex-col items-center justify-center min-h-[60vh] pt-24">
           <div className="relative size-16">
             <div className="size-full animate-spin rounded-full border-4 border-red-500/20 border-t-red-500" />
             <User className="absolute left-1/2 top-1/2 size-8 -translate-x-1/2 -translate-y-1/2 text-red-400 animate-pulse" />
@@ -80,7 +80,7 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-slate-950 to-black flex flex-col">
       <Navbar />
-      <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8 flex-1">
+      <main className="mx-auto max-w-7xl px-4 pt-24 pb-6 sm:px-6 lg:px-8 lg:pt-8 lg:pb-8 flex-1">
         {children}
       </main>
       <Footer />

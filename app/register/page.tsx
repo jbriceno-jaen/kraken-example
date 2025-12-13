@@ -74,7 +74,7 @@ export default function RegisterPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white">
         <Navbar />
-        <main className="mx-auto flex max-w-6xl flex-col items-center justify-center px-4 py-16 sm:px-6 lg:px-8 min-h-[calc(100vh-80px)]">
+        <main className="mx-auto flex max-w-6xl flex-col items-center justify-center px-4 pt-24 pb-16 sm:px-6 lg:px-8 min-h-[calc(100vh-80px)]">
           <Card className="w-full max-w-md border border-green-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-8 shadow-2xl">
             <div className="text-center space-y-6">
               <div className="flex justify-center">
@@ -99,7 +99,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-slate-950 to-black text-white flex flex-col">
       <Navbar />
-      <main className="mx-auto flex max-w-6xl flex-col items-center justify-center px-4 py-16 sm:px-6 lg:px-8 flex-1">
+      <main className="mx-auto flex max-w-6xl flex-col items-center justify-center px-4 pt-24 pb-16 sm:px-6 lg:px-8 flex-1">
         <Card className="w-full max-w-md border border-red-500/20 bg-gradient-to-br from-black via-slate-950 to-black p-8 shadow-2xl">
           <div className="space-y-6">
             <div className="text-center space-y-4">
